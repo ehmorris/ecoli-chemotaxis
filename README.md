@@ -1,2 +1,1 @@
-# temp
-Created with CodeSandbox
+Simulates E. coli chemotaxis
