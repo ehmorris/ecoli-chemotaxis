@@ -66,9 +66,9 @@ export const getEntityIntersection = (entityArr1, entityArr2) =>
   entityArr1.filter((entity1) =>
     entityArr2.some((entity2) =>
       isColliding(
-        entity2.lastPosition(),
+        entity2.position,
         entity2.size,
-        entity1.lastPosition(),
+        entity1.position,
         entity1.size
       )
     )

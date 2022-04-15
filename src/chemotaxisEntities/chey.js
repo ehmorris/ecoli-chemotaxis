@@ -8,18 +8,10 @@ import { cheYProperties, canvasProperties } from "../data.js";
 
 export class CheY {
   constructor() {
-    this.positions = [
-      {
-        x: randomBetween(
-          0,
-          canvasProperties.width - cheYProperties.defaultSize
-        ),
-        y: randomBetween(
-          0,
-          canvasProperties.height - cheYProperties.defaultSize
-        )
-      }
-    ];
+    this.position = {
+      x: randomBetween(0, canvasProperties.width - cheYProperties.defaultSize),
+      y: randomBetween(0, canvasProperties.height - cheYProperties.defaultSize)
+    };
     this.heading = randomBetween(0, 359);
     this.type = "chey";
     this.color = cheYProperties.defaultColor;
@@ -29,17 +21,6 @@ export class CheY {
       cheYProperties.speedMin,
       cheYProperties.speedMax
     );
-  }
-
-  lastPosition() {
-    return this.positions.at(-1);
-  }
-
-  addPosition(position) {
-    this.positions.push(position);
-    if (this.positions.length > cheYProperties.maxTailLength) {
-      this.positions = this.positions.slice(-cheYProperties.maxTailLength);
-    }
   }
 
   changeHeading(heading, jitterAmount = 0) {
@@ -54,11 +35,10 @@ export class CheY {
 
   draw(CTX) {
     CTX.fillStyle = this.color;
-    const lastPosition = this.lastPosition();
 
     if (
       isAtBoundary(
-        lastPosition,
+        this.position,
         this.size,
         canvasProperties.width,
         canvasProperties.height
@@ -73,18 +53,18 @@ export class CheY {
 
     const newPosition = {
       x: clampNumber(
-        lastPosition.x + this.speed * Math.cos(degToRad(this.heading)),
+        this.position.x + this.speed * Math.cos(degToRad(this.heading)),
         0,
         canvasProperties.width
       ),
       y: clampNumber(
-        lastPosition.y + this.speed * Math.sin(degToRad(this.heading)),
+        this.position.y + this.speed * Math.sin(degToRad(this.heading)),
         0,
         canvasProperties.height
       )
     };
 
-    this.addPosition(newPosition);
+    this.position = newPosition;
 
     CTX.fillRect(newPosition.x, newPosition.y, this.size, this.size);
   }

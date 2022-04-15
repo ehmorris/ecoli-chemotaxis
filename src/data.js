@@ -18,7 +18,6 @@ export const cheYProperties = {
   phosphorylatedColor: "#ff0000",
   defaultSize: 5,
   phosphorylatedSize: 12,
-  maxTailLength: 2,
   movementJitter: 8,
   speedMin: 0.2,
   speedMax: 1.2
