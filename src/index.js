@@ -24,6 +24,8 @@ const drawFrame = () => {
     // Loop through all entities and bucket them for comparison
     const activeReceptors = [];
     const nonPhosphorylatedCheys = [];
+    const phosphorylatedCheys = [];
+    const motors = [];
     entities.forEach((e) => {
       if (e.type === "receptor" && e.active) {
         activeReceptors.push(e);
@@ -31,18 +33,36 @@ const drawFrame = () => {
       if (e.type === "chey" && !e.phosphorylated) {
         nonPhosphorylatedCheys.push(e);
       }
+      if (e.type === "chey" && e.phosphorylated) {
+        phosphorylatedCheys.push(e);
+      }
+      if (e.type === "motor") {
+        motors.push(e);
+      }
     });
 
     // Update state
     phosphorylatedCheYCount = numCheY - nonPhosphorylatedCheys.length;
 
-    const cheYsToPhosphorylate = getEntityIntersection(
+    const cheYsOnReceptors = getEntityIntersection(
       nonPhosphorylatedCheys,
       activeReceptors
     );
 
-    if (cheYsToPhosphorylate.length > 0) {
-      cheYsToPhosphorylate.forEach((chey) => chey.makePhosphorylated());
+    const cheYsOnMotors = getEntityIntersection(phosphorylatedCheys, motors);
+
+    if (cheYsOnReceptors.length > 0) {
+      cheYsOnReceptors.forEach((chey) => {
+        chey.phosphorylate();
+        chey.stick();
+      });
+    }
+
+    if (cheYsOnMotors.length > 0) {
+      cheYsOnMotors.forEach((chey) => {
+        chey.dephosphorylate();
+        chey.stick();
+      });
     }
 
     entity.draw(CTX);

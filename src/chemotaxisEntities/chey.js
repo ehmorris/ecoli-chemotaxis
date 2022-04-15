@@ -17,6 +17,8 @@ export class CheY {
     this.color = cheYProperties.defaultColor;
     this.phosphorylated = false;
     this.size = cheYProperties.defaultSize;
+    this.age = 0;
+    this.stuckAt = 0;
     this.speed = randomBetween(
       cheYProperties.speedMin,
       cheYProperties.speedMax
@@ -27,10 +29,33 @@ export class CheY {
     this.heading = heading + randomBetween(-jitterAmount, jitterAmount);
   }
 
-  makePhosphorylated() {
+  phosphorylate() {
     this.phosphorylated = true;
     this.color = cheYProperties.phosphorylatedColor;
-    this.size = cheYProperties.phosphorylatedSize;
+  }
+
+  dephosphorylate() {
+    this.phosphorylated = false;
+    this.color = cheYProperties.defaultColor;
+  }
+
+  stick() {
+    this.speed = 0;
+    this.color = "#cccccc";
+    this.stuckAt = this.age;
+  }
+
+  unstick() {
+    if (this.phosphorylated) {
+      this.color = cheYProperties.phosphorylatedColor;
+    } else {
+      this.color = cheYProperties.defaultColor;
+    }
+
+    this.speed = randomBetween(
+      cheYProperties.speedMin,
+      cheYProperties.speedMax
+    );
   }
 
   draw(CTX) {
@@ -51,6 +76,10 @@ export class CheY {
       this.changeHeading(this.heading, cheYProperties.movementJitter);
     }
 
+    if (this.age > this.stuckAt + 120) {
+      this.unstick();
+    }
+
     const newPosition = {
       x: clampNumber(
         this.position.x + this.speed * Math.cos(degToRad(this.heading)),
@@ -67,5 +96,6 @@ export class CheY {
     this.position = newPosition;
 
     CTX.fillRect(newPosition.x, newPosition.y, this.size, this.size);
+    this.age = this.age + 1;
   }
 }
