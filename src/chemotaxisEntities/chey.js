@@ -84,12 +84,12 @@ export class CheY {
       x: clampNumber(
         this.position.x + this.speed * Math.cos(degToRad(this.heading)),
         0,
-        canvasProperties.width
+        canvasProperties.width - this.size
       ),
       y: clampNumber(
         this.position.y + this.speed * Math.sin(degToRad(this.heading)),
         0,
-        canvasProperties.height
+        canvasProperties.height - this.size
       )
     };
 
