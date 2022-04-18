@@ -18,56 +18,55 @@ const CTX = generateCanvas(canvasProperties.width, canvasProperties.height);
 const drawFrame = () => {
   CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 
-  entities.forEach((entity) => {
-    CTX.save();
+  // Store filtered arrays that are used multiple times
+  const activeReceptors = entities.receptor.filter((r) => r.active);
+  const nonPhosphorylatedCheys = entities.chey.filter((c) => !c.phosphorylated);
 
-    // Loop through all entities and bucket them for comparison
-    const activeReceptors = [];
-    const nonPhosphorylatedCheys = [];
-    const phosphorylatedCheys = [];
-    const motors = [];
-    entities.forEach((e) => {
-      if (e.type === "receptor" && e.active) {
-        activeReceptors.push(e);
-      }
-      if (e.type === "chey" && !e.phosphorylated) {
-        nonPhosphorylatedCheys.push(e);
-      }
-      if (e.type === "chey" && e.phosphorylated) {
-        phosphorylatedCheys.push(e);
-      }
-      if (e.type === "motor") {
-        motors.push(e);
-      }
+  // Update state
+  phosphorylatedCheYCount = numCheY - nonPhosphorylatedCheys.length;
+
+  const attractantsOnReceptors = getEntityIntersection(
+    entities.attractant,
+    activeReceptors
+  );
+
+  const cheYsOnReceptors = getEntityIntersection(
+    nonPhosphorylatedCheys,
+    activeReceptors
+  );
+
+  const cheYsOnMotors = getEntityIntersection(
+    entities.chey.filter((c) => c.phosphorylated),
+    entities.motor
+  );
+
+  if (attractantsOnReceptors.length > 0) {
+    attractantsOnReceptors.forEach((attractant) => {
+      attractant.stick();
     });
+  }
 
-    // Update state
-    phosphorylatedCheYCount = numCheY - nonPhosphorylatedCheys.length;
+  if (cheYsOnReceptors.length > 0) {
+    cheYsOnReceptors.forEach((chey) => {
+      chey.phosphorylate();
+      chey.stick();
+    });
+  }
 
-    const cheYsOnReceptors = getEntityIntersection(
-      nonPhosphorylatedCheys,
-      activeReceptors
-    );
+  if (cheYsOnMotors.length > 0) {
+    cheYsOnMotors.forEach((chey) => {
+      chey.dephosphorylate();
+      chey.stick();
+    });
+  }
 
-    const cheYsOnMotors = getEntityIntersection(phosphorylatedCheys, motors);
-
-    if (cheYsOnReceptors.length > 0) {
-      cheYsOnReceptors.forEach((chey) => {
-        chey.phosphorylate();
-        chey.stick();
-      });
-    }
-
-    if (cheYsOnMotors.length > 0) {
-      cheYsOnMotors.forEach((chey) => {
-        chey.dephosphorylate();
-        chey.stick();
-      });
-    }
-
-    entity.draw(CTX);
-    CTX.restore();
-  });
+  Object.entries(entities).forEach(([key, entityType]) =>
+    entityType.forEach((entity) => {
+      CTX.save();
+      entity.draw(CTX);
+      CTX.restore();
+    })
+  );
 
   window.requestAnimationFrame(drawFrame);
 };
@@ -77,12 +76,12 @@ const generate = () => {
     return new Array(num).fill().map((_) => new object());
   };
 
-  entities = [].concat(
-    generateArrayOfEntities(5, Receptor),
-    generateArrayOfEntities(2, Motor),
-    generateArrayOfEntities(10, Attractant),
-    generateArrayOfEntities(numCheY, CheY)
-  );
+  entities = {
+    receptor: generateArrayOfEntities(5, Receptor),
+    motor: generateArrayOfEntities(2, Motor),
+    attractant: generateArrayOfEntities(10, Attractant),
+    chey: generateArrayOfEntities(numCheY, CheY)
+  };
 };
 
 const graph = spawnEntityGraph(

@@ -63,6 +63,7 @@ export const attractantProperties = {
   movementJitter: 6,
   speedMin: 0.4,
   speedMax: 0.6,
+  stickDuration: 400,
   boundaryTop: canvasProperties.height * attractantVerticalMargin,
   boundaryRight:
     canvasProperties.width -

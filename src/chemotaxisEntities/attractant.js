@@ -26,6 +26,21 @@ export class Attractant {
       attractantProperties.speedMin,
       attractantProperties.speedMax
     );
+    this.age = 0;
+    this.stuckAt = 0;
+  }
+
+  stick() {
+    // need some kind of constraint so attractant doesn't immediately re-stick
+    this.speed = 0;
+    this.stuckAt = this.age;
+  }
+
+  unstick() {
+    this.speed = randomBetween(
+      attractantProperties.speedMin,
+      attractantProperties.speedMax
+    );
   }
 
   draw(CTX) {
@@ -53,6 +68,10 @@ export class Attractant {
         );
     }
 
+    if (this.age > this.stuckAt + attractantProperties.stickDuration) {
+      this.unstick();
+    }
+
     const newPosition = {
       x: clampNumber(
         this.position.x + this.speed * Math.cos(degToRad(this.heading)),
@@ -69,5 +88,6 @@ export class Attractant {
     this.position = newPosition;
 
     CTX.fillRect(this.position.x, this.position.y, this.size, this.size);
+    this.age = this.age + 1;
   }
 }
