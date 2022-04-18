@@ -4,13 +4,19 @@ import {
   isAtBoundary,
   clampNumber
 } from "../helpers.js";
-import { cheYProperties, canvasProperties } from "../data.js";
+import { cheYProperties } from "../data.js";
 
 export class CheY {
   constructor() {
     this.position = {
-      x: randomBetween(0, canvasProperties.width - cheYProperties.defaultSize),
-      y: randomBetween(0, canvasProperties.height - cheYProperties.defaultSize)
+      x: randomBetween(
+        cheYProperties.boundaryLeft,
+        cheYProperties.boundaryRight
+      ),
+      y: randomBetween(
+        cheYProperties.boundaryTop,
+        cheYProperties.boundaryBottom
+      )
     };
     this.heading = randomBetween(0, 359);
     this.type = "chey";
@@ -23,10 +29,6 @@ export class CheY {
       cheYProperties.speedMin,
       cheYProperties.speedMax
     );
-  }
-
-  changeHeading(heading, jitterAmount = 0) {
-    this.heading = heading + randomBetween(-jitterAmount, jitterAmount);
   }
 
   phosphorylate() {
@@ -65,31 +67,38 @@ export class CheY {
       isAtBoundary(
         this.position,
         this.size,
-        canvasProperties.width,
-        canvasProperties.height
+        cheYProperties.boundaryTop,
+        cheYProperties.boundaryRight,
+        cheYProperties.boundaryBottom,
+        cheYProperties.boundaryLeft
       )
     ) {
       // change heading at edge of container
-      this.changeHeading((this.heading + 90) % 360, 30);
+      this.heading = ((this.heading + 90) % 360) + randomBetween(-20, 20);
     } else {
       // add a small amount of jitter
-      this.changeHeading(this.heading, cheYProperties.movementJitter);
+      this.heading =
+        this.heading +
+        randomBetween(
+          -cheYProperties.movementJitter,
+          cheYProperties.movementJitter
+        );
     }
 
-    if (this.age > this.stuckAt + 120) {
+    if (this.age > this.stuckAt + cheYProperties.stickDuration) {
       this.unstick();
     }
 
     const newPosition = {
       x: clampNumber(
         this.position.x + this.speed * Math.cos(degToRad(this.heading)),
-        0,
-        canvasProperties.width - this.size
+        cheYProperties.boundaryLeft,
+        cheYProperties.boundaryRight
       ),
       y: clampNumber(
         this.position.y + this.speed * Math.sin(degToRad(this.heading)),
-        0,
-        canvasProperties.height - this.size
+        cheYProperties.boundaryTop,
+        cheYProperties.boundaryBottom
       )
     };
 

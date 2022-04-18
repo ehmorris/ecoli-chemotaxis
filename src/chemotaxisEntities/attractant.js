@@ -1,25 +1,73 @@
-import { randomBetween } from "../helpers.js";
-import { attractantProperties, canvasProperties } from "../data.js";
+import {
+  randomBetween,
+  isAtBoundary,
+  clampNumber,
+  degToRad
+} from "../helpers.js";
+import { attractantProperties } from "../data.js";
 
 export class Attractant {
   constructor() {
     this.position = {
       x: randomBetween(
-        canvasProperties.width * 0,
-        canvasProperties.width * 0.12
+        attractantProperties.boundaryLeft,
+        attractantProperties.boundaryRight
       ),
       y: randomBetween(
-        canvasProperties.height * 0.2,
-        canvasProperties.height - canvasProperties.height * 0.2
+        attractantProperties.boundaryTop,
+        attractantProperties.boundaryBottom
       )
     };
     this.type = "attractant";
     this.color = attractantProperties.defaultColor;
     this.size = attractantProperties.defaultSize;
+    this.heading = randomBetween(0, 359);
+    this.speed = randomBetween(
+      attractantProperties.speedMin,
+      attractantProperties.speedMax
+    );
   }
 
   draw(CTX) {
     CTX.fillStyle = this.color;
+
+    if (
+      isAtBoundary(
+        this.position,
+        this.size,
+        attractantProperties.boundaryTop,
+        attractantProperties.boundaryRight,
+        attractantProperties.boundaryBottom,
+        attractantProperties.boundaryLeft
+      )
+    ) {
+      // change heading at edge of container
+      this.heading = ((this.heading + 90) % 360) + randomBetween(-20, 20);
+    } else {
+      // add a small amount of jitter
+      this.heading =
+        this.heading +
+        randomBetween(
+          -attractantProperties.movementJitter,
+          attractantProperties.movementJitter
+        );
+    }
+
+    const newPosition = {
+      x: clampNumber(
+        this.position.x + this.speed * Math.cos(degToRad(this.heading)),
+        attractantProperties.boundaryLeft,
+        attractantProperties.boundaryRight
+      ),
+      y: clampNumber(
+        this.position.y + this.speed * Math.sin(degToRad(this.heading)),
+        attractantProperties.boundaryTop,
+        attractantProperties.boundaryBottom
+      )
+    };
+
+    this.position = newPosition;
+
     CTX.fillRect(this.position.x, this.position.y, this.size, this.size);
   }
 }

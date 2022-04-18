@@ -1,16 +1,16 @@
 import { randomBetween } from "../helpers.js";
-import { receptorProperties, canvasProperties } from "../data.js";
+import { receptorProperties } from "../data.js";
 
 export class Receptor {
   constructor() {
     this.position = {
       x: randomBetween(
-        canvasProperties.width * 0.12,
-        canvasProperties.width * 0.24
+        receptorProperties.boundaryLeft,
+        receptorProperties.boundaryRight
       ),
       y: randomBetween(
-        canvasProperties.height * 0.2,
-        canvasProperties.height - canvasProperties.height * 0.2
+        receptorProperties.boundaryTop,
+        receptorProperties.boundaryBottom
       )
     };
     this.type = "receptor";
