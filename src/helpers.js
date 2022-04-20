@@ -43,18 +43,33 @@ export const generateSlider = (label, value, max, min = 1) => {
   return element;
 };
 
+// export const isAtBoundary = (
+//   point,
+//   size,
+//   boundaryTop,
+//   boundaryRight,
+//   boundaryBottom,
+//   boundaryLeft
+// ) => {
+//   return (
+//     point.x + size >= boundaryRight ||
+//     point.x <= boundaryLeft ||
+//     point.y + size >= boundaryBottom ||
+//     point.y <= boundaryTop
+//   );
+// };
+
 export const isAtBoundary = (
   point,
-  size,
   boundaryTop,
   boundaryRight,
   boundaryBottom,
   boundaryLeft
 ) => {
   return (
-    point.x + size >= boundaryRight ||
+    point.x >= boundaryRight ||
     point.x <= boundaryLeft ||
-    point.y + size >= boundaryBottom ||
+    point.y >= boundaryBottom ||
     point.y <= boundaryTop
   );
 };

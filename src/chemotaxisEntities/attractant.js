@@ -28,19 +28,32 @@ export class Attractant {
     );
     this.age = 0;
     this.stuckAt = 0;
+    this.isStuck = false;
   }
 
   stick() {
     // need some kind of constraint so attractant doesn't immediately re-stick
     this.speed = 0;
     this.stuckAt = this.age;
+    this.isStuck = true;
   }
 
   unstick() {
+    this.position = {
+      x: randomBetween(
+        attractantProperties.boundaryLeft,
+        attractantProperties.boundaryRight
+      ),
+      y: randomBetween(
+        attractantProperties.boundaryTop,
+        attractantProperties.boundaryBottom
+      )
+    };
     this.speed = randomBetween(
       attractantProperties.speedMin,
       attractantProperties.speedMax
     );
+    this.isStuck = false;
   }
 
   draw(CTX) {
@@ -49,7 +62,6 @@ export class Attractant {
     if (
       isAtBoundary(
         this.position,
-        this.size,
         attractantProperties.boundaryTop,
         attractantProperties.boundaryRight,
         attractantProperties.boundaryBottom,
@@ -68,7 +80,10 @@ export class Attractant {
         );
     }
 
-    if (this.age > this.stuckAt + attractantProperties.stickDuration) {
+    if (
+      this.isStuck &&
+      this.age > this.stuckAt + attractantProperties.stickDuration
+    ) {
       this.unstick();
     }
 

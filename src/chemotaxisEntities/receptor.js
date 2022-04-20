@@ -14,9 +14,19 @@ export class Receptor {
       )
     };
     this.type = "receptor";
-    this.color = receptorProperties.defaultColor;
+    this.color = receptorProperties.activeColor;
     this.size = receptorProperties.defaultSize;
     this.active = true;
+  }
+
+  activate() {
+    this.active = true;
+    this.color = receptorProperties.activeColor;
+  }
+
+  deactivate() {
+    this.active = false;
+    this.color = receptorProperties.defaultColor;
   }
 
   draw(CTX) {

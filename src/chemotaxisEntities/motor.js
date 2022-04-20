@@ -5,12 +5,12 @@ export class Motor {
   constructor() {
     this.position = {
       x: randomBetween(
-        canvasProperties.width * 0.82,
-        canvasProperties.width * 0.92
+        motorProperties.boundaryLeft,
+        motorProperties.boundaryRight
       ),
       y: randomBetween(
-        canvasProperties.height * 0.2,
-        canvasProperties.height - canvasProperties.height * 0.2
+        motorProperties.boundaryTop,
+        motorProperties.boundaryBottom
       )
     };
     this.type = "motor";

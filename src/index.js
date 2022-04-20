@@ -21,40 +21,59 @@ const drawFrame = () => {
   // Store filtered arrays that are used multiple times
   const activeReceptors = entities.receptor.filter((r) => r.active);
   const nonPhosphorylatedCheys = entities.chey.filter((c) => !c.phosphorylated);
+  const nonStuckAttractant = entities.attractant.filter((a) => !a.isStuck);
+  const stuckAttractant = entities.attractant.filter((a) => a.isStuck);
 
   // Update state
   phosphorylatedCheYCount = numCheY - nonPhosphorylatedCheys.length;
 
-  const attractantsOnReceptors = getEntityIntersection(
-    entities.attractant,
-    activeReceptors
+  const nonStuckAttractantsOnAnyReceptors = getEntityIntersection(
+    nonStuckAttractant,
+    entities.receptor
   );
 
-  const cheYsOnReceptors = getEntityIntersection(
+  const receptorsWithAttractant = getEntityIntersection(
+    entities.receptor,
+    stuckAttractant
+  );
+
+  const nonPhosphorylatedCheysOnActiveReceptors = getEntityIntersection(
     nonPhosphorylatedCheys,
     activeReceptors
   );
 
-  const cheYsOnMotors = getEntityIntersection(
+  const phosphorylatedCheYsOnMotors = getEntityIntersection(
     entities.chey.filter((c) => c.phosphorylated),
     entities.motor
   );
 
-  if (attractantsOnReceptors.length > 0) {
-    attractantsOnReceptors.forEach((attractant) => {
+  if (nonStuckAttractantsOnAnyReceptors.length > 0) {
+    nonStuckAttractantsOnAnyReceptors.forEach((attractant) => {
       attractant.stick();
     });
   }
 
-  if (cheYsOnReceptors.length > 0) {
-    cheYsOnReceptors.forEach((chey) => {
+  if (receptorsWithAttractant.length > 0) {
+    receptorsWithAttractant.forEach((receptor) => {
+      const attractantOnThisReceptor = getEntityIntersection(stuckAttractant, [
+        receptor
+      ]);
+
+      attractantOnThisReceptor.length > 1
+        ? receptor.deactivate()
+        : receptor.activate();
+    });
+  }
+
+  if (nonPhosphorylatedCheysOnActiveReceptors.length > 0) {
+    nonPhosphorylatedCheysOnActiveReceptors.forEach((chey) => {
       chey.phosphorylate();
       chey.stick();
     });
   }
 
-  if (cheYsOnMotors.length > 0) {
-    cheYsOnMotors.forEach((chey) => {
+  if (phosphorylatedCheYsOnMotors.length > 0) {
+    phosphorylatedCheYsOnMotors.forEach((chey) => {
       chey.dephosphorylate();
       chey.stick();
     });
@@ -78,7 +97,7 @@ const generate = () => {
 
   entities = {
     receptor: generateArrayOfEntities(5, Receptor),
-    motor: generateArrayOfEntities(2, Motor),
+    motor: generateArrayOfEntities(1, Motor),
     attractant: generateArrayOfEntities(10, Attractant),
     chey: generateArrayOfEntities(numCheY, CheY)
   };

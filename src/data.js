@@ -30,12 +30,13 @@ export const cheYProperties = {
   boundaryLeft: canvasProperties.width * cheYLeftMargin
 };
 
-const receptorSize = 5;
+const receptorSize = 8;
 const receptorVerticalMargin = 0.2;
 const receptorRightMargin = 0.76;
 const receptorLeftMargin = 0.12;
 export const receptorProperties = {
-  defaultColor: "#00da10",
+  defaultColor: "#007008",
+  activeColor: "#00da10",
   defaultSize: receptorSize,
   boundaryTop: canvasProperties.height * receptorVerticalMargin,
   boundaryRight:
@@ -49,9 +50,14 @@ export const receptorProperties = {
   boundaryLeft: canvasProperties.width * receptorLeftMargin
 };
 
+const motorSize = 20;
 export const motorProperties = {
   defaultColor: "black",
-  defaultSize: 12
+  defaultSize: motorSize,
+  boundaryTop: 0,
+  boundaryRight: canvasProperties.width - motorSize,
+  boundaryBottom: canvasProperties.height - motorSize,
+  boundaryLeft: canvasProperties.width - motorSize
 };
 
 const attractantSize = 3;
@@ -63,7 +69,7 @@ export const attractantProperties = {
   movementJitter: 6,
   speedMin: 0.4,
   speedMax: 0.6,
-  stickDuration: 400,
+  stickDuration: 100,
   boundaryTop: canvasProperties.height * attractantVerticalMargin,
   boundaryRight:
     canvasProperties.width -

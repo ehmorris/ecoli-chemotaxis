@@ -25,6 +25,7 @@ export class CheY {
     this.size = cheYProperties.defaultSize;
     this.age = 0;
     this.stuckAt = 0;
+    this.isStuck = false;
     this.speed = randomBetween(
       cheYProperties.speedMin,
       cheYProperties.speedMax
@@ -45,6 +46,7 @@ export class CheY {
     this.speed = 0;
     this.color = "#cccccc";
     this.stuckAt = this.age;
+    this.isStuck = true;
   }
 
   unstick() {
@@ -58,6 +60,8 @@ export class CheY {
       cheYProperties.speedMin,
       cheYProperties.speedMax
     );
+
+    this.isStuck = false;
   }
 
   draw(CTX) {
@@ -66,7 +70,6 @@ export class CheY {
     if (
       isAtBoundary(
         this.position,
-        this.size,
         cheYProperties.boundaryTop,
         cheYProperties.boundaryRight,
         cheYProperties.boundaryBottom,
@@ -85,7 +88,10 @@ export class CheY {
         );
     }
 
-    if (this.age > this.stuckAt + cheYProperties.stickDuration) {
+    if (
+      this.isStuck &&
+      this.age > this.stuckAt + cheYProperties.stickDuration
+    ) {
       this.unstick();
     }
 
