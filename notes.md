@@ -3,7 +3,6 @@
 - Motors need an accumulation of cheY to change direction
   - Motors could have an prop "direction", 0.0-1.0, which docked cheYs influence when attached
 - cheY needs to dock faster with receptors
-- Slider needs to be changing attractant
 - What happens to attractant after it's sensed? Is it "spent"?
   - Maybe could be absorbed / removed
   - If that's true then we need to be generate new attractant over time

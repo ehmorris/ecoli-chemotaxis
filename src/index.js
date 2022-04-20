@@ -8,10 +8,15 @@ import {
   getEntityIntersection
 } from "./helpers.js";
 import { spawnEntityGraph } from "./smallgraph.js";
-import { canvasProperties, sliderProperties } from "./data.js";
+import {
+  canvasProperties,
+  cheYSliderProperties,
+  attractantSliderProperties
+} from "./data.js";
 
 let entities;
-let numCheY = 10;
+let numCheY = cheYSliderProperties.defaultAmount;
+let numAttractant = attractantSliderProperties.defaultAmount;
 let phosphorylatedCheYCount = 0;
 const CTX = generateCanvas(canvasProperties.width, canvasProperties.height);
 
@@ -96,9 +101,9 @@ const generate = () => {
   };
 
   entities = {
-    receptor: generateArrayOfEntities(5, Receptor),
+    receptor: generateArrayOfEntities(2, Receptor),
     motor: generateArrayOfEntities(1, Motor),
-    attractant: generateArrayOfEntities(10, Attractant),
+    attractant: generateArrayOfEntities(numAttractant, Attractant),
     chey: generateArrayOfEntities(numCheY, CheY)
   };
 };
@@ -113,12 +118,24 @@ const graph = spawnEntityGraph(
 const cheYVolumeSlider = generateSlider(
   "cheY",
   numCheY,
-  sliderProperties.maxCheYAmount
+  cheYSliderProperties.maxCheYAmount
 );
 
 cheYVolumeSlider.addEventListener("input", ({ target: { value } }) => {
   numCheY = parseInt(value, 10);
   phosphorylatedCheYCount = 0;
+  graph.reset();
+  generate();
+});
+
+const attractantVolumeSlider = generateSlider(
+  "Attractant",
+  numAttractant,
+  attractantSliderProperties.maxAttractantAmount
+);
+
+attractantVolumeSlider.addEventListener("input", ({ target: { value } }) => {
+  numAttractant = parseInt(value, 10);
   graph.reset();
   generate();
 });

@@ -9,8 +9,14 @@ export const graphProperties = {
   maxDataPoints: 1000
 };
 
-export const sliderProperties = {
+export const cheYSliderProperties = {
+  defaultAmount: 10,
   maxCheYAmount: 300
+};
+
+export const attractantSliderProperties = {
+  defaultAmount: 10,
+  maxAttractantAmount: 100
 };
 
 const cheYSize = 5;
