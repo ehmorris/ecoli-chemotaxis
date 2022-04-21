@@ -44,6 +44,7 @@ export const receptorProperties = {
   defaultColor: "#007008",
   activeColor: "#00da10",
   defaultSize: receptorSize,
+  attractantRequiredToDeactivate: 2,
   boundaryTop: canvasProperties.height * receptorVerticalMargin,
   boundaryRight:
     canvasProperties.width -
@@ -67,7 +68,6 @@ export const motorProperties = {
 };
 
 const attractantSize = 3;
-const attractantVerticalMargin = 0.2;
 const attractantRightMargin = 0.75;
 export const attractantProperties = {
   defaultColor: "#0500ff",
@@ -75,15 +75,12 @@ export const attractantProperties = {
   movementJitter: 6,
   speedMin: 0.4,
   speedMax: 0.6,
-  stickDuration: 100,
-  boundaryTop: canvasProperties.height * attractantVerticalMargin,
+  stickDuration: 200,
+  boundaryTop: 0,
   boundaryRight:
     canvasProperties.width -
     canvasProperties.width * attractantRightMargin -
     attractantSize,
-  boundaryBottom:
-    canvasProperties.height -
-    canvasProperties.height * attractantVerticalMargin -
-    attractantSize,
+  boundaryBottom: canvasProperties.height - attractantSize,
   boundaryLeft: 0
 };

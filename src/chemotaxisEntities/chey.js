@@ -1,8 +1,7 @@
 import {
   randomBetween,
-  degToRad,
   isAtBoundary,
-  clampNumber
+  nextPositionAlongHeading
 } from "../helpers.js";
 import { cheYProperties } from "../data.js";
 
@@ -95,18 +94,15 @@ export class CheY {
       this.unstick();
     }
 
-    const newPosition = {
-      x: clampNumber(
-        this.position.x + this.speed * Math.cos(degToRad(this.heading)),
-        cheYProperties.boundaryLeft,
-        cheYProperties.boundaryRight
-      ),
-      y: clampNumber(
-        this.position.y + this.speed * Math.sin(degToRad(this.heading)),
-        cheYProperties.boundaryTop,
-        cheYProperties.boundaryBottom
-      )
-    };
+    const newPosition = nextPositionAlongHeading(
+      this.position,
+      this.speed,
+      this.heading,
+      cheYProperties.boundaryTop,
+      cheYProperties.boundaryRight,
+      cheYProperties.boundaryBottom,
+      cheYProperties.boundaryLeft
+    );
 
     this.position = newPosition;
 

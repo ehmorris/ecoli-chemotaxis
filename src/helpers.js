@@ -95,3 +95,24 @@ export const getEntityIntersection = (entityArr1, entityArr2) =>
       )
     )
   );
+
+export const nextPositionAlongHeading = (
+  position,
+  speed,
+  headingInDeg,
+  boundaryTop,
+  boundaryRight,
+  boundaryBottom,
+  boundaryLeft
+) => ({
+  x: clampNumber(
+    position.x + speed * Math.cos(degToRad(headingInDeg)),
+    boundaryLeft,
+    boundaryRight
+  ),
+  y: clampNumber(
+    position.y + speed * Math.sin(degToRad(headingInDeg)),
+    boundaryTop,
+    boundaryBottom
+  )
+});

@@ -11,6 +11,7 @@ import { spawnEntityGraph } from "./smallgraph.js";
 import {
   canvasProperties,
   cheYSliderProperties,
+  receptorProperties,
   attractantSliderProperties
 } from "./data.js";
 
@@ -24,65 +25,51 @@ const drawFrame = () => {
   CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 
   // Store filtered arrays that are used multiple times
-  const activeReceptors = entities.receptor.filter((r) => r.active);
   const nonPhosphorylatedCheys = entities.chey.filter((c) => !c.phosphorylated);
-  const nonStuckAttractant = entities.attractant.filter((a) => !a.isStuck);
   const stuckAttractant = entities.attractant.filter((a) => a.isStuck);
 
-  // Update state
+  // Update value for small time series graph
   phosphorylatedCheYCount = numCheY - nonPhosphorylatedCheys.length;
 
-  const nonStuckAttractantsOnAnyReceptors = getEntityIntersection(
-    nonStuckAttractant,
+  // Stick attractant onto any colliding receptor
+  getEntityIntersection(
+    entities.attractant.filter((a) => !a.isStuck),
     entities.receptor
-  );
+  ).forEach((attractant) => {
+    attractant.stick();
+  });
 
-  const receptorsWithAttractant = getEntityIntersection(
-    entities.receptor,
-    stuckAttractant
-  );
-
-  const nonPhosphorylatedCheysOnActiveReceptors = getEntityIntersection(
-    nonPhosphorylatedCheys,
-    activeReceptors
-  );
-
-  const phosphorylatedCheYsOnMotors = getEntityIntersection(
-    entities.chey.filter((c) => c.phosphorylated),
-    entities.motor
-  );
-
-  if (nonStuckAttractantsOnAnyReceptors.length > 0) {
-    nonStuckAttractantsOnAnyReceptors.forEach((attractant) => {
-      attractant.stick();
-    });
-  }
-
-  if (receptorsWithAttractant.length > 0) {
-    receptorsWithAttractant.forEach((receptor) => {
+  // Toggle receptor state based on how much attractant is on it
+  getEntityIntersection(entities.receptor, stuckAttractant).forEach(
+    (receptor) => {
       const attractantOnThisReceptor = getEntityIntersection(stuckAttractant, [
         receptor
       ]);
 
-      attractantOnThisReceptor.length > 1
+      attractantOnThisReceptor.length >=
+      receptorProperties.attractantRequiredToDeactivate
         ? receptor.deactivate()
         : receptor.activate();
-    });
-  }
+    }
+  );
 
-  if (nonPhosphorylatedCheysOnActiveReceptors.length > 0) {
-    nonPhosphorylatedCheysOnActiveReceptors.forEach((chey) => {
-      chey.phosphorylate();
-      chey.stick();
-    });
-  }
+  // Stick non-phosphorylated cheY to colliding receptors
+  getEntityIntersection(
+    nonPhosphorylatedCheys,
+    entities.receptor.filter((r) => r.active)
+  ).forEach((chey) => {
+    chey.phosphorylate();
+    chey.stick();
+  });
 
-  if (phosphorylatedCheYsOnMotors.length > 0) {
-    phosphorylatedCheYsOnMotors.forEach((chey) => {
-      chey.dephosphorylate();
-      chey.stick();
-    });
-  }
+  // Stick phosphorylated cheY to colliding motors
+  getEntityIntersection(
+    entities.chey.filter((c) => c.phosphorylated),
+    entities.motor
+  ).forEach((chey) => {
+    chey.dephosphorylate();
+    chey.stick();
+  });
 
   Object.entries(entities).forEach(([key, entityType]) =>
     entityType.forEach((entity) => {

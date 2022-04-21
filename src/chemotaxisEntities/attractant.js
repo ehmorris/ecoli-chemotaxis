@@ -1,8 +1,7 @@
 import {
   randomBetween,
   isAtBoundary,
-  clampNumber,
-  degToRad
+  nextPositionAlongHeading
 } from "../helpers.js";
 import { attractantProperties } from "../data.js";
 
@@ -87,18 +86,15 @@ export class Attractant {
       this.unstick();
     }
 
-    const newPosition = {
-      x: clampNumber(
-        this.position.x + this.speed * Math.cos(degToRad(this.heading)),
-        attractantProperties.boundaryLeft,
-        attractantProperties.boundaryRight
-      ),
-      y: clampNumber(
-        this.position.y + this.speed * Math.sin(degToRad(this.heading)),
-        attractantProperties.boundaryTop,
-        attractantProperties.boundaryBottom
-      )
-    };
+    const newPosition = nextPositionAlongHeading(
+      this.position,
+      this.speed,
+      this.heading,
+      attractantProperties.boundaryTop,
+      attractantProperties.boundaryRight,
+      attractantProperties.boundaryBottom,
+      attractantProperties.boundaryLeft
+    );
 
     this.position = newPosition;
 
