@@ -18,6 +18,14 @@ export class Motor {
     this.size = motorProperties.defaultSize;
   }
 
+  tumble() {
+    this.color = motorProperties.tumbleColor;
+  }
+
+  run() {
+    this.color = motorProperties.defaultColor;
+  }
+
   draw(CTX) {
     CTX.fillStyle = this.color;
     CTX.fillRect(this.position.x, this.position.y, this.size, this.size);

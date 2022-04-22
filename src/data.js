@@ -10,17 +10,17 @@ export const graphProperties = {
 };
 
 export const cheYSliderProperties = {
-  defaultAmount: 10,
+  defaultAmount: 25,
   maxCheYAmount: 300
 };
 
 export const attractantSliderProperties = {
-  defaultAmount: 10,
+  defaultAmount: 18,
   maxAttractantAmount: 100
 };
 
 const cheYSize = 5;
-const cheYLeftMargin = 0.12;
+const cheYLeftMargin = 0.2;
 export const cheYProperties = {
   defaultColor: "#c01515",
   phosphorylatedColor: "#ff0000",
@@ -38,8 +38,8 @@ export const cheYProperties = {
 
 const receptorSize = 8;
 const receptorVerticalMargin = 0.2;
-const receptorRightMargin = 0.76;
-const receptorLeftMargin = 0.12;
+const receptorRightMargin = 0.8;
+const receptorLeftMargin = 0.2;
 export const receptorProperties = {
   defaultColor: "#007008",
   activeColor: "#00da10",
@@ -60,15 +60,17 @@ export const receptorProperties = {
 const motorSize = 20;
 export const motorProperties = {
   defaultColor: "black",
+  tumbleColor: "#cccccc",
   defaultSize: motorSize,
   boundaryTop: 0,
+  cheYRequiredToTumble: 2,
   boundaryRight: canvasProperties.width - motorSize,
   boundaryBottom: canvasProperties.height - motorSize,
   boundaryLeft: canvasProperties.width - motorSize
 };
 
 const attractantSize = 3;
-const attractantRightMargin = 0.75;
+const attractantRightMargin = 0.8;
 export const attractantProperties = {
   defaultColor: "#0500ff",
   defaultSize: attractantSize,

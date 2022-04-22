@@ -12,6 +12,7 @@ import {
   canvasProperties,
   cheYSliderProperties,
   receptorProperties,
+  motorProperties,
   attractantSliderProperties
 } from "./data.js";
 
@@ -26,7 +27,6 @@ const drawFrame = () => {
 
   // Store filtered arrays that are used multiple times
   const nonPhosphorylatedCheys = entities.chey.filter((c) => !c.phosphorylated);
-  const stuckAttractant = entities.attractant.filter((a) => a.isStuck);
 
   // Update value for small time series graph
   phosphorylatedCheYCount = numCheY - nonPhosphorylatedCheys.length;
@@ -40,6 +40,7 @@ const drawFrame = () => {
   });
 
   // Toggle receptor state based on how much attractant is on it
+  const stuckAttractant = entities.attractant.filter((a) => a.isStuck);
   getEntityIntersection(entities.receptor, stuckAttractant).forEach(
     (receptor) => {
       const attractantOnThisReceptor = getEntityIntersection(stuckAttractant, [
@@ -52,6 +53,16 @@ const drawFrame = () => {
         : receptor.activate();
     }
   );
+
+  // Toggle motor state based on how much cheY is on it
+  const stuckCheY = entities.chey.filter((c) => c.isStuck);
+  getEntityIntersection(entities.motor, stuckCheY).forEach((motor) => {
+    const attractantOnThisMotor = getEntityIntersection(stuckCheY, [motor]);
+
+    attractantOnThisMotor.length >= motorProperties.cheYRequiredToTumble
+      ? motor.tumble()
+      : motor.run();
+  });
 
   // Stick non-phosphorylated cheY to colliding receptors
   getEntityIntersection(
@@ -82,7 +93,7 @@ const drawFrame = () => {
   window.requestAnimationFrame(drawFrame);
 };
 
-const generate = () => {
+const generateEntities = () => {
   const generateArrayOfEntities = (num, object) => {
     return new Array(num).fill().map((_) => new object());
   };
@@ -112,7 +123,7 @@ cheYVolumeSlider.addEventListener("input", ({ target: { value } }) => {
   numCheY = parseInt(value, 10);
   phosphorylatedCheYCount = 0;
   graph.reset();
-  generate();
+  generateEntities();
 });
 
 const attractantVolumeSlider = generateSlider(
@@ -124,8 +135,8 @@ const attractantVolumeSlider = generateSlider(
 attractantVolumeSlider.addEventListener("input", ({ target: { value } }) => {
   numAttractant = parseInt(value, 10);
   graph.reset();
-  generate();
+  generateEntities();
 });
 
-generate();
+generateEntities();
 window.requestAnimationFrame(drawFrame);

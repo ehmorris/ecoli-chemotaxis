@@ -8,6 +8,7 @@
 - Motors can appear on top and bottom edges
 - Receptors should be bigger and on the boundary of the shape
 - Should the number of cheY or attractant required to "flip" the receptors and motors be proportional to the number of entities?
+- Should maybe just get all intersecting entities and then filter over that list
 
 ## Polish
 
