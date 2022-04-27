@@ -8,6 +8,8 @@ export const degToRad = (deg) => deg * (Math.PI / 180);
 export const clampNumber = (number, min, max) =>
   Math.max(min, Math.min(number, max));
 
+export const generateID = () => Math.random().toString(16).slice(2);
+
 export const generateCanvas = (width, height) => {
   const element = document.createElement("canvas");
   const context = element.getContext("2d");

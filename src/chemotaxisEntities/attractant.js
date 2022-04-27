@@ -1,12 +1,14 @@
 import {
   randomBetween,
   isAtBoundary,
-  nextPositionAlongHeading
+  nextPositionAlongHeading,
+  generateID
 } from "../helpers.js";
 import { attractantProperties } from "../data.js";
 
 export class Attractant {
   constructor() {
+    this.id = generateID();
     this.position = {
       x: randomBetween(
         attractantProperties.boundaryLeft,

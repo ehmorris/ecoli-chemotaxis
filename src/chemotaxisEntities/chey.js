@@ -1,12 +1,14 @@
 import {
   randomBetween,
   isAtBoundary,
-  nextPositionAlongHeading
+  nextPositionAlongHeading,
+  generateID
 } from "../helpers.js";
 import { cheYProperties } from "../data.js";
 
 export class CheY {
   constructor() {
+    this.id = generateID();
     this.position = {
       x: randomBetween(
         cheYProperties.boundaryLeft,

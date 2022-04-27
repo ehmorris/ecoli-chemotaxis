@@ -5,7 +5,8 @@ import { Receptor } from "./chemotaxisEntities/receptor.js";
 import {
   generateCanvas,
   generateSlider,
-  getEntityIntersection
+  getEntityIntersection,
+  isColliding
 } from "./helpers.js";
 import { spawnEntityGraph } from "./smallgraph.js";
 import {
@@ -25,62 +26,95 @@ const CTX = generateCanvas(canvasProperties.width, canvasProperties.height);
 const drawFrame = () => {
   CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 
-  // Store filtered arrays that are used multiple times
-  const nonPhosphorylatedCheys = entities.chey.filter((c) => !c.phosphorylated);
+  // Find all intersecting entities
+  const flattenedEntities = Object.values(entities).flat();
+  const collidingEntitityPairs = [];
+  flattenedEntities.forEach((entity1) => {
+    flattenedEntities.forEach((entity2) => {
+      if (
+        entity1.id !== entity2.id &&
+        isColliding(
+          entity1.position,
+          entity1.size,
+          entity2.position,
+          entity2.size
+        )
+      ) {
+        collidingEntitityPairs.push({
+          entity: entity1,
+          collidingWith: entity2
+        });
+      }
+    });
+  });
 
-  // Update value for small time series graph
-  phosphorylatedCheYCount = numCheY - nonPhosphorylatedCheys.length;
+  // Trigger collision behavior in colliding entities
+  collidingEntitityPairs.forEach(({ entity, collidingWith }) => {
+    // Stick attractant onto any colliding receptor
+    if (
+      entity.type === "attractant" &&
+      !entity.isStuck &&
+      collidingWith.type === "receptor"
+    ) {
+      entity.stick();
+    }
 
-  // Stick attractant onto any colliding receptor
-  getEntityIntersection(
-    entities.attractant.filter((a) => !a.isStuck),
-    entities.receptor
-  ).forEach((attractant) => {
-    attractant.stick();
+    // Stick non-phosphorylated cheY to colliding receptors
+    if (
+      entity.type === "chey" &&
+      !entity.phosphorylated &&
+      collidingWith.type === "receptor" &&
+      collidingWith.active
+    ) {
+      entity.phosphorylate();
+      entity.stick();
+    }
+
+    // Stick phosphorylated cheY to colliding motors
+    if (
+      entity.type === "chey" &&
+      entity.phosphorylated &&
+      collidingWith.type === "motor"
+    ) {
+      entity.dephosphorylate();
+      entity.stick();
+    }
   });
 
   // Toggle receptor state based on how much attractant is on it
-  const stuckAttractant = entities.attractant.filter((a) => a.isStuck);
-  getEntityIntersection(entities.receptor, stuckAttractant).forEach(
-    (receptor) => {
-      const attractantOnThisReceptor = getEntityIntersection(stuckAttractant, [
-        receptor
-      ]);
+  const collidingEntities = collidingEntitityPairs.map(({ entity }) => entity);
+
+  collidingEntities
+    .filter(({ type }) => type === "receptor")
+    .forEach((receptor) => {
+      const attractantOnThisReceptor = getEntityIntersection(
+        collidingEntities.filter((e) => e.type === "attractant" && e.isStuck),
+        [receptor]
+      );
 
       attractantOnThisReceptor.length >=
       receptorProperties.attractantRequiredToDeactivate
         ? receptor.deactivate()
         : receptor.activate();
-    }
-  );
+    });
 
   // Toggle motor state based on how much cheY is on it
-  const stuckCheY = entities.chey.filter((c) => c.isStuck);
-  getEntityIntersection(entities.motor, stuckCheY).forEach((motor) => {
-    const attractantOnThisMotor = getEntityIntersection(stuckCheY, [motor]);
+  collidingEntities
+    .filter(({ type }) => type === "motor")
+    .forEach((motor) => {
+      const cheYOnThisMotor = getEntityIntersection(
+        collidingEntities.filter((e) => e.type === "chey" && e.isStuck),
+        [motor]
+      );
 
-    attractantOnThisMotor.length >= motorProperties.cheYRequiredToTumble
-      ? motor.tumble()
-      : motor.run();
-  });
+      cheYOnThisMotor.length >= motorProperties.cheYRequiredToTumble
+        ? motor.tumble()
+        : motor.run();
+    });
 
-  // Stick non-phosphorylated cheY to colliding receptors
-  getEntityIntersection(
-    nonPhosphorylatedCheys,
-    entities.receptor.filter((r) => r.active)
-  ).forEach((chey) => {
-    chey.phosphorylate();
-    chey.stick();
-  });
-
-  // Stick phosphorylated cheY to colliding motors
-  getEntityIntersection(
-    entities.chey.filter((c) => c.phosphorylated),
-    entities.motor
-  ).forEach((chey) => {
-    chey.dephosphorylate();
-    chey.stick();
-  });
+  // Update value for small time series graph
+  phosphorylatedCheYCount =
+    numCheY - entities.chey.filter((c) => !c.phosphorylated).length;
 
   Object.entries(entities).forEach(([key, entityType]) =>
     entityType.forEach((entity) => {

@@ -1,8 +1,9 @@
-import { randomBetween } from "../helpers.js";
+import { randomBetween, generateID } from "../helpers.js";
 import { receptorProperties } from "../data.js";
 
 export class Receptor {
   constructor() {
+    this.id = generateID();
     this.position = {
       x: randomBetween(
         receptorProperties.boundaryLeft,

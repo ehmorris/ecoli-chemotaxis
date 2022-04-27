@@ -1,8 +1,9 @@
-import { randomBetween } from "../helpers.js";
-import { motorProperties, canvasProperties } from "../data.js";
+import { randomBetween, generateID } from "../helpers.js";
+import { motorProperties } from "../data.js";
 
 export class Motor {
   constructor() {
+    this.id = generateID();
     this.position = {
       x: randomBetween(
         motorProperties.boundaryLeft,
