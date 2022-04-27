@@ -1,21 +1,21 @@
 export const canvasProperties = {
-  width: 300,
-  height: 180
+  width: 450,
+  height: 200
 };
 
 export const graphProperties = {
-  width: 300,
-  height: 100,
+  width: 150,
+  height: 60,
   maxDataPoints: 1000
 };
 
 export const cheYSliderProperties = {
-  defaultAmount: 50,
+  defaultAmount: 80,
   maxCheYAmount: 300
 };
 
 export const attractantSliderProperties = {
-  defaultAmount: 20,
+  defaultAmount: 40,
   maxAttractantAmount: 100
 };
 

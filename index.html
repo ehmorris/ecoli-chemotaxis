@@ -10,7 +10,7 @@
       body {
         margin: 0;
         padding: 0;
-        background: gray;
+        background: #e6e8ed;
         display: flex;
         flex-direction: column;
         grid-gap: 16px;
@@ -23,6 +23,33 @@
 
       canvas {
         background: white;
+        display: block;
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: 0 0 0 1px #b7bccb;
+      }
+
+      .container {
+        display: grid;
+        grid-gap: 8px;
+        grid: auto-flow / fit-content() fit-content();
+      }
+
+      .canvasContainer {
+        grid-column: 1 / span 2;
+      }
+
+      .sliderContainer {
+        display: flex;
+        flex-direction: column;
+        grid-gap: 8px;
+        padding-top: 3px;
+      }
+
+      .graphContainer {
+        display: flex;
+        grid-gap: 8px;
+        justify-content: end;
       }
 
       .slider {
@@ -37,14 +64,17 @@
       .input {
         margin: 0;
         width: 100%;
+        display: block;
       }
     </style>
   </head>
 
   <body>
-    <div class="canvasContainer"></div>
-    <div class="sliderContainer"></div>
-    <div class="graphContainer"></div>
+    <div class="container">
+      <div class="canvasContainer"></div>
+      <div class="sliderContainer"></div>
+      <div class="graphContainer"></div>
+    </div>
     <script src="src/index.js"></script>
   </body>
 </html>
