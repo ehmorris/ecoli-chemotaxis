@@ -1,3 +1,5 @@
+import { canvasProperties } from "./data";
+
 export const randomBetween = (min, max) => Math.random() * (max - min) + min;
 
 export const randomFromArray = (array) =>
@@ -10,7 +12,7 @@ export const clampNumber = (number, min, max) =>
 
 export const generateID = () => Math.random().toString(16).slice(2);
 
-export const generateCanvas = (width, height) => {
+export const generateCanvas = ({ width, height, attachNode }) => {
   const element = document.createElement("canvas");
   const context = element.getContext("2d");
 
@@ -22,25 +24,28 @@ export const generateCanvas = (width, height) => {
   element.height = Math.floor(height * scale);
   context.scale(scale, scale);
 
-  document.body.appendChild(element);
+  document.querySelector(attachNode).appendChild(element);
 
   return context;
 };
 
-export const generateSlider = (label, value, max, min = 1) => {
+export const generateSlider = ({ label, value, max, min, attachNode }) => {
   const element = document.createElement("input");
   element.value = value;
   element.max = max;
   element.min = min;
   element.type = "range";
+  element.classList.add("input");
 
   const elementLabel = document.createElement("label");
-  elementLabel.value = label;
+  elementLabel.classList.add("label");
+  elementLabel.append(label);
 
   const parent = document.createElement("div");
-  parent.append(element, label);
+  parent.classList.add("slider");
+  parent.append(elementLabel, element);
 
-  document.body.appendChild(parent);
+  document.querySelector(attachNode).appendChild(parent);
 
   return element;
 };

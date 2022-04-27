@@ -17,14 +17,17 @@ export class Motor {
     this.type = "motor";
     this.color = motorProperties.defaultColor;
     this.size = motorProperties.defaultSize;
+    this.tumbling = false;
   }
 
   tumble() {
     this.color = motorProperties.tumbleColor;
+    this.tumbling = true;
   }
 
   run() {
     this.color = motorProperties.defaultColor;
+    this.tumbling = false;
   }
 
   draw(CTX) {

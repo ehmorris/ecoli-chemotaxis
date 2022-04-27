@@ -12,6 +12,7 @@ import { spawnEntityGraph } from "./smallgraph.js";
 import {
   canvasProperties,
   cheYSliderProperties,
+  cheYProperties,
   receptorProperties,
   motorProperties,
   attractantSliderProperties
@@ -20,8 +21,14 @@ import {
 let entities;
 let numCheY = cheYSliderProperties.defaultAmount;
 let numAttractant = attractantSliderProperties.defaultAmount;
+let numMotor = 2;
 let phosphorylatedCheYCount = 0;
-const CTX = generateCanvas(canvasProperties.width, canvasProperties.height);
+let activeMotorCount = 0;
+const CTX = generateCanvas({
+  width: canvasProperties.width,
+  height: canvasProperties.height,
+  attachNode: ".canvasContainer"
+});
 
 const drawFrame = () => {
   CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
@@ -29,6 +36,7 @@ const drawFrame = () => {
   // Find all intersecting entities
   const flattenedEntities = Object.values(entities).flat();
   const collidingEntitityPairs = [];
+  const collidingEntitiesFlat = [];
   flattenedEntities.forEach((entity1) => {
     flattenedEntities.forEach((entity2) => {
       if (
@@ -44,6 +52,7 @@ const drawFrame = () => {
           entity: entity1,
           collidingWith: entity2
         });
+        collidingEntitiesFlat.push(entity1);
       }
     });
   });
@@ -82,13 +91,13 @@ const drawFrame = () => {
   });
 
   // Toggle receptor state based on how much attractant is on it
-  const collidingEntities = collidingEntitityPairs.map(({ entity }) => entity);
-
-  collidingEntities
+  collidingEntitiesFlat
     .filter(({ type }) => type === "receptor")
     .forEach((receptor) => {
       const attractantOnThisReceptor = getEntityIntersection(
-        collidingEntities.filter((e) => e.type === "attractant" && e.isStuck),
+        collidingEntitiesFlat.filter(
+          (e) => e.type === "attractant" && e.isStuck
+        ),
         [receptor]
       );
 
@@ -99,11 +108,11 @@ const drawFrame = () => {
     });
 
   // Toggle motor state based on how much cheY is on it
-  collidingEntities
+  collidingEntitiesFlat
     .filter(({ type }) => type === "motor")
     .forEach((motor) => {
       const cheYOnThisMotor = getEntityIntersection(
-        collidingEntities.filter((e) => e.type === "chey" && e.isStuck),
+        collidingEntitiesFlat.filter((e) => e.type === "chey" && e.isStuck),
         [motor]
       );
 
@@ -112,9 +121,12 @@ const drawFrame = () => {
         : motor.run();
     });
 
-  // Update value for small time series graph
+  // Update for phosphorylated timeseries
   phosphorylatedCheYCount =
     numCheY - entities.chey.filter((c) => !c.phosphorylated).length;
+
+  // Update for tumble/run timeseries
+  activeMotorCount = entities.motor.filter((m) => m.tumbling).length;
 
   Object.entries(entities).forEach(([key, entityType]) =>
     entityType.forEach((entity) => {
@@ -134,43 +146,63 @@ const generateEntities = () => {
 
   entities = {
     receptor: generateArrayOfEntities(2, Receptor),
-    motor: generateArrayOfEntities(1, Motor),
+    motor: generateArrayOfEntities(numMotor, Motor),
     attractant: generateArrayOfEntities(numAttractant, Attractant),
     chey: generateArrayOfEntities(numCheY, CheY)
   };
 };
 
-const graph = spawnEntityGraph(
-  () => phosphorylatedCheYCount,
-  () => numCheY,
-  "Total cheY",
-  "% Phosphorylated"
-);
+const cheYVolumeSlider = generateSlider({
+  label: "cheY",
+  value: numCheY,
+  max: cheYSliderProperties.maxCheYAmount,
+  min: 1,
+  attachNode: ".sliderContainer"
+});
 
-const cheYVolumeSlider = generateSlider(
-  "cheY",
-  numCheY,
-  cheYSliderProperties.maxCheYAmount
-);
+const attractantVolumeSlider = generateSlider({
+  label: "Attractant",
+  value: numAttractant,
+  max: attractantSliderProperties.maxAttractantAmount,
+  min: 1,
+  attachNode: ".sliderContainer"
+});
+
+const phosphorylatedTimeseries = spawnEntityGraph({
+  getNumerator: () => phosphorylatedCheYCount,
+  getDenominator: () => numCheY,
+  topLabel: "Total cheY",
+  bottomLabel: "% Phosphorylated",
+  showPercent: true,
+  backgroundColor: cheYProperties.defaultColor,
+  fillColor: cheYProperties.phosphorylatedColor
+});
+
+const tumbleRunTimeseries = spawnEntityGraph({
+  getNumerator: () => activeMotorCount,
+  getDenominator: () => numMotor,
+  topLabel: "Tumble",
+  bottomLabel: "Run",
+  showPercent: false,
+  backgroundColor: motorProperties.defaultColor,
+  fillColor: motorProperties.tumbleColor
+});
 
 cheYVolumeSlider.addEventListener("input", ({ target: { value } }) => {
   numCheY = parseInt(value, 10);
   phosphorylatedCheYCount = 0;
-  graph.reset();
+  phosphorylatedTimeseries.reset();
+  tumbleRunTimeseries.reset();
   generateEntities();
 });
-
-const attractantVolumeSlider = generateSlider(
-  "Attractant",
-  numAttractant,
-  attractantSliderProperties.maxAttractantAmount
-);
 
 attractantVolumeSlider.addEventListener("input", ({ target: { value } }) => {
   numAttractant = parseInt(value, 10);
-  graph.reset();
+  phosphorylatedTimeseries.reset();
+  tumbleRunTimeseries.reset();
   generateEntities();
 });
 
+// Kick off simulation
 generateEntities();
 window.requestAnimationFrame(drawFrame);

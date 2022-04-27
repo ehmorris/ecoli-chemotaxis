@@ -1,14 +1,21 @@
 import { generateCanvas } from "./helpers.js";
-import { cheYProperties, graphProperties } from "./data.js";
+import { graphProperties } from "./data.js";
 
-export const spawnEntityGraph = (
+export const spawnEntityGraph = ({
   getNumerator,
   getDenominator,
   topLabel,
-  bottomLabel
-) => {
+  bottomLabel,
+  showPercent,
+  backgroundColor,
+  fillColor
+}) => {
   let barLog = [];
-  const CTX = generateCanvas(graphProperties.width, graphProperties.height);
+  const CTX = generateCanvas({
+    width: graphProperties.width,
+    height: graphProperties.height,
+    attachNode: ".graphContainer"
+  });
 
   const addValueToBarLog = (value) => {
     barLog.push(value);
@@ -18,7 +25,7 @@ export const spawnEntityGraph = (
   };
 
   const drawGraphPolygon = (arrayOfNums) => {
-    CTX.fillStyle = cheYProperties.phosphorylatedColor;
+    CTX.fillStyle = fillColor;
     CTX.beginPath();
     CTX.moveTo(0, graphProperties.height);
     arrayOfNums.forEach((barHeightPercent, index) => {
@@ -33,21 +40,20 @@ export const spawnEntityGraph = (
   };
 
   const drawFrame = () => {
-    CTX.fillStyle = cheYProperties.defaultColor;
+    CTX.fillStyle = backgroundColor;
     CTX.fillRect(0, 0, graphProperties.width, graphProperties.height);
 
     const percentFill = getNumerator() / getDenominator();
     addValueToBarLog(percentFill);
     drawGraphPolygon(barLog);
+    const bottomLabelWithOptions = showPercent
+      ? `${bottomLabel} (${Math.round(percentFill * 1000) / 10}%)`
+      : bottomLabel;
 
     CTX.fillStyle = "#fff";
     CTX.font = "10px sans-serif";
     CTX.fillText(topLabel, 3, 12);
-    CTX.fillText(
-      `${bottomLabel} (${Math.round(percentFill * 1000) / 10}%)`,
-      3,
-      graphProperties.height - 5
-    );
+    CTX.fillText(bottomLabelWithOptions, 3, graphProperties.height - 5);
 
     window.requestAnimationFrame(drawFrame);
   };

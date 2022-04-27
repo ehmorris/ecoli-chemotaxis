@@ -10,12 +10,12 @@ export const graphProperties = {
 };
 
 export const cheYSliderProperties = {
-  defaultAmount: 25,
+  defaultAmount: 50,
   maxCheYAmount: 300
 };
 
 export const attractantSliderProperties = {
-  defaultAmount: 18,
+  defaultAmount: 20,
   maxAttractantAmount: 100
 };
 
