@@ -1,6 +1,6 @@
-import { canvasProperties } from "./data";
-
 export const randomBetween = (min, max) => Math.random() * (max - min) + min;
+
+export const randomBool = () => !!Math.round(Math.random());
 
 export const randomFromArray = (array) =>
   array[Math.floor(Math.random() * array.length)];

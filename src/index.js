@@ -21,7 +21,7 @@ import {
 let entities;
 let numCheY = cheYSliderProperties.defaultAmount;
 let numAttractant = attractantSliderProperties.defaultAmount;
-let numMotor = 2;
+let numMotor = 3;
 let phosphorylatedCheYCount = 0;
 let activeMotorCount = 0;
 const CTX = generateCanvas({
@@ -76,7 +76,7 @@ const drawFrame = () => {
       collidingWith.active
     ) {
       entity.phosphorylate();
-      entity.stick();
+      entity.stick(collidingWith);
     }
 
     // Stick phosphorylated cheY to colliding motors
@@ -86,7 +86,7 @@ const drawFrame = () => {
       collidingWith.type === "motor"
     ) {
       entity.dephosphorylate();
-      entity.stick();
+      entity.stick(collidingWith);
     }
   });
 
@@ -150,6 +150,9 @@ const generateEntities = () => {
     attractant: generateArrayOfEntities(numAttractant, Attractant),
     chey: generateArrayOfEntities(numCheY, CheY)
   };
+
+  // entities = entities.push({ somehow calculate number needed, subtracting number of existing N })
+  // if num < currentNum - do some array slicing
 };
 
 const cheYVolumeSlider = generateSlider({

@@ -2,7 +2,8 @@ import {
   randomBetween,
   isAtBoundary,
   nextPositionAlongHeading,
-  generateID
+  generateID,
+  randomBool
 } from "../helpers.js";
 import { cheYProperties } from "../data.js";
 
@@ -22,7 +23,6 @@ export class CheY {
     this.heading = randomBetween(0, 359);
     this.type = "chey";
     this.color = cheYProperties.defaultColor;
-    this.phosphorylated = false;
     this.size = cheYProperties.defaultSize;
     this.age = 0;
     this.stuckAt = 0;
@@ -31,6 +31,8 @@ export class CheY {
       cheYProperties.speedMin,
       cheYProperties.speedMax
     );
+
+    randomBool() ? this.phosphorylate() : this.dephosphorylate();
   }
 
   phosphorylate() {
@@ -43,11 +45,12 @@ export class CheY {
     this.color = cheYProperties.defaultColor;
   }
 
-  stick() {
+  stick(stuckTo) {
     this.speed = 0;
     this.color = "#cccccc";
     this.stuckAt = this.age;
     this.isStuck = true;
+    this.stuckTo = stuckTo;
   }
 
   unstick() {
@@ -63,6 +66,7 @@ export class CheY {
     );
 
     this.isStuck = false;
+    this.stuckTo = null;
   }
 
   draw(CTX) {
@@ -89,11 +93,14 @@ export class CheY {
         );
     }
 
-    if (
-      this.isStuck &&
-      this.age > this.stuckAt + cheYProperties.stickDuration
-    ) {
-      this.unstick();
+    if (this.isStuck && this.stuckTo.type === "motor") {
+      if (this.age > this.stuckAt + cheYProperties.motorStickDuration) {
+        this.unstick();
+      }
+    } else if (this.isStuck && this.stuckTo.type === "receptor") {
+      if (this.age > this.stuckAt + cheYProperties.receptorStickDuration) {
+        this.unstick();
+      }
     }
 
     const newPosition = nextPositionAlongHeading(
