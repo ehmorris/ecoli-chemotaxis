@@ -21,6 +21,7 @@ import {
 let entities;
 let numCheY = cheYSliderProperties.defaultAmount;
 let numAttractant = attractantSliderProperties.defaultAmount;
+let numReceptor = 2;
 let numMotor = 3;
 let phosphorylatedCheYCount = 0;
 let activeMotorCount = 0;
@@ -139,20 +140,79 @@ const drawFrame = () => {
   window.requestAnimationFrame(drawFrame);
 };
 
+const appendEntities = () => {
+  const generateArrayOfEntities = (num, object) => {
+    return new Array(num).fill().map((_) => new object());
+  };
+
+  const numExistingReceptors = entities.receptor.length;
+  const numExistingMotors = entities.motor.length;
+  const numExistingAttractant = entities.attractant.length;
+  const numExistingCheY = entities.chey.length;
+
+  const numNewReceptors = numReceptor - numExistingReceptors;
+  const numNewMotors = numMotor - numExistingMotors;
+  const numNewAttractant = numAttractant - numExistingAttractant;
+  const numNewCheY = numCheY - numExistingCheY;
+
+  let newReceptorArray;
+  let newMotorArray;
+  let newAttractantArray;
+  let newCheYArray;
+
+  if (numNewReceptors >= 0) {
+    const newReceptors = generateArrayOfEntities(numNewReceptors, Receptor);
+    newReceptorArray = [...new Set([...entities.receptor, ...newReceptors])];
+  } else {
+    entities.receptor.splice(numNewReceptors);
+    newReceptorArray = entities.receptor;
+  }
+
+  if (numNewMotors >= 0) {
+    const newMotors = generateArrayOfEntities(numNewMotors, Motor);
+    newMotorArray = [...new Set([...entities.motor, ...newMotors])];
+  } else {
+    entities.motor.splice(numNewMotors);
+    newMotorArray = entities.motor;
+  }
+
+  if (numNewAttractant >= 0) {
+    const newAttractant = generateArrayOfEntities(numNewAttractant, Attractant);
+    newAttractantArray = [
+      ...new Set([...entities.attractant, ...newAttractant])
+    ];
+  } else {
+    entities.attractant.splice(numNewAttractant);
+    newAttractantArray = entities.attractant;
+  }
+
+  if (numNewCheY >= 0) {
+    const newCheY = generateArrayOfEntities(numNewCheY, CheY);
+    newCheYArray = [...new Set([...entities.chey, ...newCheY])];
+  } else {
+    entities.chey.splice(numNewCheY);
+    newCheYArray = entities.chey;
+  }
+
+  entities = {
+    receptor: newReceptorArray,
+    motor: newMotorArray,
+    attractant: newAttractantArray,
+    chey: newCheYArray
+  };
+};
+
 const generateEntities = () => {
   const generateArrayOfEntities = (num, object) => {
     return new Array(num).fill().map((_) => new object());
   };
 
   entities = {
-    receptor: generateArrayOfEntities(2, Receptor),
+    receptor: generateArrayOfEntities(numReceptor, Receptor),
     motor: generateArrayOfEntities(numMotor, Motor),
     attractant: generateArrayOfEntities(numAttractant, Attractant),
     chey: generateArrayOfEntities(numCheY, CheY)
   };
-
-  // entities = entities.push({ somehow calculate number needed, subtracting number of existing N })
-  // if num < currentNum - do some array slicing
 };
 
 const cheYVolumeSlider = generateSlider({
@@ -171,7 +231,7 @@ const attractantVolumeSlider = generateSlider({
   attachNode: ".sliderContainer"
 });
 
-const phosphorylatedTimeseries = spawnEntityGraph({
+spawnEntityGraph({
   getNumerator: () => phosphorylatedCheYCount,
   getDenominator: () => numCheY,
   topLabel: "Total cheY",
@@ -181,7 +241,7 @@ const phosphorylatedTimeseries = spawnEntityGraph({
   fillColor: cheYProperties.phosphorylatedColor
 });
 
-const tumbleRunTimeseries = spawnEntityGraph({
+spawnEntityGraph({
   getNumerator: () => activeMotorCount,
   getDenominator: () => numMotor,
   topLabel: "Tumble",
@@ -193,17 +253,13 @@ const tumbleRunTimeseries = spawnEntityGraph({
 
 cheYVolumeSlider.addEventListener("input", ({ target: { value } }) => {
   numCheY = parseInt(value, 10);
-  phosphorylatedCheYCount = 0;
-  phosphorylatedTimeseries.reset();
-  tumbleRunTimeseries.reset();
-  generateEntities();
+  //phosphorylatedCheYCount = 0;
+  appendEntities();
 });
 
 attractantVolumeSlider.addEventListener("input", ({ target: { value } }) => {
   numAttractant = parseInt(value, 10);
-  phosphorylatedTimeseries.reset();
-  tumbleRunTimeseries.reset();
-  generateEntities();
+  appendEntities();
 });
 
 // Kick off simulation
