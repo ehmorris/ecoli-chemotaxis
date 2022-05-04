@@ -6,7 +6,8 @@ import {
   generateCanvas,
   generateSlider,
   getEntityIntersection,
-  isColliding
+  isColliding,
+  generateArrayOfObjects
 } from "./helpers.js";
 import { spawnEntityGraph } from "./smallgraph.js";
 import {
@@ -141,77 +142,55 @@ const drawFrame = () => {
 };
 
 const appendEntities = () => {
-  const generateArrayOfEntities = (num, object) => {
-    return new Array(num).fill().map((_) => new object());
-  };
-
-  const numExistingReceptors = entities.receptor.length;
-  const numExistingMotors = entities.motor.length;
-  const numExistingAttractant = entities.attractant.length;
-  const numExistingCheY = entities.chey.length;
-
-  const numNewReceptors = numReceptor - numExistingReceptors;
-  const numNewMotors = numMotor - numExistingMotors;
-  const numNewAttractant = numAttractant - numExistingAttractant;
-  const numNewCheY = numCheY - numExistingCheY;
-
-  let newReceptorArray;
-  let newMotorArray;
-  let newAttractantArray;
-  let newCheYArray;
+  const unionArrays = (arr1, arr2) => [...new Set([...arr1, ...arr2])];
+  const numNewReceptors = numReceptor - entities.receptor.length;
+  const numNewMotors = numMotor - entities.motor.length;
+  const numNewAttractant = numAttractant - entities.attractant.length;
+  const numNewCheY = numCheY - entities.chey.length;
 
   if (numNewReceptors >= 0) {
-    const newReceptors = generateArrayOfEntities(numNewReceptors, Receptor);
-    newReceptorArray = [...new Set([...entities.receptor, ...newReceptors])];
+    entities.receptor = unionArrays(
+      entities.receptor,
+      generateArrayOfObjects(numNewReceptors, Receptor)
+    );
   } else {
     entities.receptor.splice(numNewReceptors);
-    newReceptorArray = entities.receptor;
   }
 
   if (numNewMotors >= 0) {
-    const newMotors = generateArrayOfEntities(numNewMotors, Motor);
-    newMotorArray = [...new Set([...entities.motor, ...newMotors])];
+    entities.motor = unionArrays(
+      entities.motor,
+      generateArrayOfObjects(numNewMotors, Motor)
+    );
   } else {
     entities.motor.splice(numNewMotors);
-    newMotorArray = entities.motor;
   }
 
   if (numNewAttractant >= 0) {
-    const newAttractant = generateArrayOfEntities(numNewAttractant, Attractant);
-    newAttractantArray = [
-      ...new Set([...entities.attractant, ...newAttractant])
-    ];
+    entities.attractant = unionArrays(
+      entities.attractant,
+      generateArrayOfObjects(numNewAttractant, Attractant)
+    );
   } else {
     entities.attractant.splice(numNewAttractant);
-    newAttractantArray = entities.attractant;
   }
 
   if (numNewCheY >= 0) {
-    const newCheY = generateArrayOfEntities(numNewCheY, CheY);
-    newCheYArray = [...new Set([...entities.chey, ...newCheY])];
+    entities.chey = unionArrays(
+      entities.chey,
+      generateArrayOfObjects(numNewCheY, CheY)
+    );
   } else {
     entities.chey.splice(numNewCheY);
-    newCheYArray = entities.chey;
   }
-
-  entities = {
-    receptor: newReceptorArray,
-    motor: newMotorArray,
-    attractant: newAttractantArray,
-    chey: newCheYArray
-  };
 };
 
 const generateEntities = () => {
-  const generateArrayOfEntities = (num, object) => {
-    return new Array(num).fill().map((_) => new object());
-  };
-
   entities = {
-    receptor: generateArrayOfEntities(numReceptor, Receptor),
-    motor: generateArrayOfEntities(numMotor, Motor),
-    attractant: generateArrayOfEntities(numAttractant, Attractant),
-    chey: generateArrayOfEntities(numCheY, CheY)
+    receptor: generateArrayOfObjects(numReceptor, Receptor),
+    motor: generateArrayOfObjects(numMotor, Motor),
+    attractant: generateArrayOfObjects(numAttractant, Attractant),
+    chey: generateArrayOfObjects(numCheY, CheY)
   };
 };
 

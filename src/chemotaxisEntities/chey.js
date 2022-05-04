@@ -27,12 +27,13 @@ export class CheY {
     this.age = 0;
     this.stuckAt = 0;
     this.isStuck = false;
+    this.stuckTo = null;
     this.speed = randomBetween(
       cheYProperties.speedMin,
       cheYProperties.speedMax
     );
 
-    randomBool() ? this.phosphorylate() : this.dephosphorylate();
+    randomBool(0.75) ? this.phosphorylate() : this.dephosphorylate();
   }
 
   phosphorylate() {

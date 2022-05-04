@@ -1,6 +1,6 @@
 export const randomBetween = (min, max) => Math.random() * (max - min) + min;
 
-export const randomBool = () => !!Math.round(Math.random());
+export const randomBool = (probability = 0.5) => Math.random() >= probability;
 
 export const randomFromArray = (array) =>
   array[Math.floor(Math.random() * array.length)];
@@ -50,21 +50,9 @@ export const generateSlider = ({ label, value, max, min, attachNode }) => {
   return element;
 };
 
-// export const isAtBoundary = (
-//   point,
-//   size,
-//   boundaryTop,
-//   boundaryRight,
-//   boundaryBottom,
-//   boundaryLeft
-// ) => {
-//   return (
-//     point.x + size >= boundaryRight ||
-//     point.x <= boundaryLeft ||
-//     point.y + size >= boundaryBottom ||
-//     point.y <= boundaryTop
-//   );
-// };
+export const generateArrayOfObjects = (num, object) => {
+  return new Array(num).fill().map((_) => new object());
+};
 
 export const isAtBoundary = (
   point,
