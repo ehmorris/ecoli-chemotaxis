@@ -43,6 +43,7 @@ const drawFrame = () => {
     flattenedEntities.forEach((entity2) => {
       if (
         entity1.id !== entity2.id &&
+        entity1.type !== entity2.type &&
         isColliding(
           entity1.position,
           entity1.size,

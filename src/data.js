@@ -37,7 +37,7 @@ export const cheYProperties = {
   boundaryLeft: canvasProperties.width * cheYLeftMargin
 };
 
-const receptorSize = 8;
+const receptorSize = 16;
 const receptorVerticalMargin = 0.2;
 const receptorRightMargin = 0.8;
 const receptorLeftMargin = 0.2;
@@ -58,7 +58,7 @@ export const receptorProperties = {
   boundaryLeft: canvasProperties.width * receptorLeftMargin
 };
 
-const motorSize = 20;
+const motorSize = 24;
 export const motorProperties = {
   defaultColor: "black",
   tumbleColor: "#cccccc",
