@@ -13,6 +13,7 @@ import { spawnEntityGraph } from "./smallgraph.js";
 import { spawnTopDown } from "./topdown.js";
 import {
   canvasProperties,
+  ecoliProperties,
   cheYSliderProperties,
   cheYProperties,
   receptorProperties,
@@ -23,8 +24,8 @@ import {
 let entities;
 let numCheY = cheYSliderProperties.defaultAmount;
 let numAttractant = attractantSliderProperties.defaultAmount;
-let numReceptor = 2;
-let numMotor = 3;
+let numReceptor = ecoliProperties.numReceptor;
+let numMotor = ecoliProperties.numMotor;
 let phosphorylatedCheYCount = 0;
 let activeMotorCount = 0;
 const CTX = generateCanvas({
@@ -38,10 +39,10 @@ const drawFrame = () => {
 
   // Draw E.coli boundary
   CTX.strokeRect(
-    cheYProperties.boundaryLeft,
-    cheYProperties.boundaryTop,
-    cheYProperties.boundaryRight,
-    cheYProperties.boundaryBottom + cheYProperties.defaultSize
+    ecoliProperties.boundaryLeft,
+    ecoliProperties.boundaryTop,
+    ecoliProperties.boundaryRight - ecoliProperties.boundaryLeft,
+    ecoliProperties.boundaryBottom - ecoliProperties.boundaryTop
   );
 
   // Find all intersecting entities
