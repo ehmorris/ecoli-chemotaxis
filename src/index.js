@@ -10,6 +10,7 @@ import {
   generateArrayOfObjects
 } from "./helpers.js";
 import { spawnEntityGraph } from "./smallgraph.js";
+import { spawnTopDown } from "./topdown.js";
 import {
   canvasProperties,
   cheYSliderProperties,
@@ -34,6 +35,14 @@ const CTX = generateCanvas({
 
 const drawFrame = () => {
   CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
+
+  // Draw E.coli boundary
+  CTX.strokeRect(
+    cheYProperties.boundaryLeft,
+    cheYProperties.boundaryTop,
+    cheYProperties.boundaryRight,
+    cheYProperties.boundaryBottom + cheYProperties.defaultSize
+  );
 
   // Find all intersecting entities
   const flattenedEntities = Object.values(entities).flat();
@@ -221,14 +230,9 @@ spawnEntityGraph({
   fillColor: cheYProperties.phosphorylatedColor
 });
 
-spawnEntityGraph({
+spawnTopDown({
   getNumerator: () => activeMotorCount,
-  getDenominator: () => numMotor,
-  topLabel: "Tumble",
-  bottomLabel: "Run",
-  showPercent: false,
-  backgroundColor: motorProperties.defaultColor,
-  fillColor: motorProperties.tumbleColor
+  getDenominator: () => numMotor
 });
 
 cheYVolumeSlider.addEventListener("input", ({ target: { value } }) => {

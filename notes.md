@@ -1,16 +1,19 @@
 # Notes 4/19/22
 
-- Motors could have an prop "direction", 0.0-1.0, which docked cheYs influence when attached
+- Motors can appear on top and bottom edges
+
 - cheY needs to dock faster with receptors
 - Can phospohralted cheY stick to receptors? Right now they don't
-- Motors can appear on top and bottom edges
-- Receptors should be bigger and on the boundary of the shape
+
 - Should the number of cheY or attractant required to "flip" the receptors and motors be proportional to the number of entities?
 
 ## Polish
 
 - Motor animation
+- Draw the edge of the e coli
 - Edge bounce behavior needs to be a reflected bounce
+- Illustrations for entities
+- Video of real entity
 
 ## Minor
 

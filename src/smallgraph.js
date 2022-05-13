@@ -58,11 +58,5 @@ export const spawnEntityGraph = ({
     window.requestAnimationFrame(drawFrame);
   };
 
-  const reset = () => {
-    barLog = [];
-  };
-
   window.requestAnimationFrame(drawFrame);
-
-  return { reset };
 };

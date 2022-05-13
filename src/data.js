@@ -1,6 +1,6 @@
 export const canvasProperties = {
   width: 370,
-  height: 390
+  height: 140
 };
 
 export const graphProperties = {
@@ -10,7 +10,7 @@ export const graphProperties = {
 };
 
 export const cheYSliderProperties = {
-  defaultAmount: 80,
+  defaultAmount: 140,
   maxCheYAmount: 500
 };
 
