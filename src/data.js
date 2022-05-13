@@ -30,8 +30,9 @@ export const ecoliProperties = {
 
 const cheYSize = 5;
 export const cheYProperties = {
-  defaultColor: "#c01515",
-  phosphorylatedColor: "#ff0000",
+  defaultColor: "#096729",
+  phosphorylatedColor: "#00FF85",
+  stuckColor: "#000",
   defaultSize: cheYSize,
   phosphorylatedSize: 12,
   movementJitter: 40,
@@ -47,8 +48,8 @@ export const cheYProperties = {
 
 const receptorSize = 16;
 export const receptorProperties = {
-  defaultColor: "#007008",
-  activeColor: "#00da10",
+  defaultColor: "#096729",
+  activeColor: "#00FF85",
   defaultSize: receptorSize,
   attractantRequiredToDeactivate: 2,
   boundaryTop: ecoliProperties.boundaryTop,
@@ -59,8 +60,8 @@ export const receptorProperties = {
 
 const motorSize = 24;
 export const motorProperties = {
-  defaultColor: "black",
-  tumbleColor: "#cccccc",
+  defaultColor: "#096729",
+  tumbleColor: "#00FF85",
   defaultSize: motorSize,
   cheYRequiredToTumble: 2,
   boundaryTop: ecoliProperties.boundaryTop,
@@ -71,7 +72,7 @@ export const motorProperties = {
 
 const attractantSize = 3;
 export const attractantProperties = {
-  defaultColor: "#0500ff",
+  defaultColor: "#265A15",
   defaultSize: attractantSize,
   movementJitter: 6,
   speedMin: 0.4,

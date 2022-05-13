@@ -7,6 +7,8 @@
 
 - Should the number of cheY or attractant required to "flip" the receptors and motors be proportional to the number of entities?
 
+- Should phosphorylation wear off after some timeout? As-is, cheY MUST bind to a motor to become dephosphorylated
+
 ## Polish
 
 - Motor animation

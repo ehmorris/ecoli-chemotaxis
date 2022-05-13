@@ -48,7 +48,7 @@ export class CheY {
 
   stick(stuckTo) {
     this.speed = 0;
-    this.color = "#cccccc";
+    this.color = cheYProperties.stuckColor;
     this.stuckAt = this.age;
     this.isStuck = true;
     this.stuckTo = stuckTo;

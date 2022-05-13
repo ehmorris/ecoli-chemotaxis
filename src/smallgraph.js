@@ -50,7 +50,7 @@ export const spawnEntityGraph = ({
       ? `${bottomLabel} (${Math.round(percentFill * 1000) / 10}%)`
       : bottomLabel;
 
-    CTX.fillStyle = "#fff";
+    CTX.fillStyle = "#000";
     CTX.font = "10px sans-serif";
     CTX.fillText(topLabel, 3, 12);
     CTX.fillText(bottomLabelWithOptions, 3, graphProperties.height - 5);

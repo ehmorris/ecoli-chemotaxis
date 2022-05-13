@@ -225,7 +225,7 @@ spawnEntityGraph({
   getNumerator: () => phosphorylatedCheYCount,
   getDenominator: () => numCheY,
   topLabel: "Total cheY",
-  bottomLabel: "% Phosphorylated",
+  bottomLabel: "Phosphory...",
   showPercent: true,
   backgroundColor: cheYProperties.defaultColor,
   fillColor: cheYProperties.phosphorylatedColor
