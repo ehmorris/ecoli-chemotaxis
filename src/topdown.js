@@ -1,33 +1,25 @@
-import { generateCanvas } from "./helpers.js";
 import { graphProperties } from "./data.js";
+import RunGIF from "./images/Run.gif";
+import TumbleGIF from "./images/Tumble.gif";
 
 export const spawnTopDown = ({ getNumerator, getDenominator }) => {
-  const backgroundColor = "#000";
-  let tumbleState = false;
-  const CTX = generateCanvas({
-    width: graphProperties.width,
-    height: graphProperties.height,
-    attachNode: ".graphContainer"
-  });
-
-  const drawGraph = (state) => {
-    CTX.fillStyle = state ? "#ddd" : "#222";
-    CTX.fillRect(
-      graphProperties.width / 4,
-      graphProperties.height / 4,
-      graphProperties.width / 2,
-      graphProperties.height / 2
-    );
-    CTX.fill();
+  const generateImageTag = (src) => {
+    const element = document.createElement("img");
+    element.width = graphProperties.width;
+    element.height = graphProperties.height;
+    element.src = src;
+    document.querySelector(".graphContainer").appendChild(element);
+    return element;
   };
 
-  const drawFrame = () => {
-    CTX.fillStyle = backgroundColor;
-    CTX.fillRect(0, 0, graphProperties.width, graphProperties.height);
+  const imageTag = generateImageTag(RunGIF);
 
+  const drawFrame = () => {
     const percentFill = getNumerator() / getDenominator();
-    tumbleState = percentFill > 0.5;
-    drawGraph(tumbleState);
+    const newSrc = percentFill > 0.5 ? TumbleGIF : RunGIF;
+    if (newSrc !== imageTag.src) {
+      imageTag.src = newSrc;
+    }
 
     window.requestAnimationFrame(drawFrame);
   };

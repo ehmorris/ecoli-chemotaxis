@@ -6,10 +6,11 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>E. coli</title>
+    <link rel="preload" href="./src/images/Run.gif" as="image" />
+    <link rel="preload" href="./src/images/Tumble.gif" as="image" />
     <style>
       body {
         margin: 0;
-        padding: 16px 0;
         background: #030c01;
         color: #00ff85;
         display: flex;
@@ -30,9 +31,15 @@
         border: 2px solid #949494;
       }
 
+      img {
+        border: 2px solid #949494;
+        display: block;
+      }
+
       .container {
         display: grid;
         grid-gap: 8px;
+        margin: 16px;
         grid: auto-flow / fit-content() fit-content();
       }
 
