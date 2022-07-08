@@ -1,15 +1,15 @@
 import {
   randomBetween,
-  isAtBoundary,
   nextPositionAlongHeading,
   generateID,
   randomBool
 } from "../helpers.js";
-import { cheYProperties } from "../data.js";
+import { cheYProperties, ecoliProperties } from "../data.js";
 
 export class CheY {
   constructor() {
     this.id = generateID();
+    this.containerPath = new Path2D(ecoliProperties.boundaryPath);
     this.position = {
       x: randomBetween(
         cheYProperties.boundaryLeft,
@@ -74,17 +74,13 @@ export class CheY {
     CTX.fillStyle = this.color;
 
     if (
-      isAtBoundary(
-        this.position,
-        cheYProperties.boundaryTop,
-        cheYProperties.boundaryRight,
-        cheYProperties.boundaryBottom,
-        cheYProperties.boundaryLeft
-      )
+      !CTX.isPointInPath(this.containerPath, this.position.x, this.position.y)
     ) {
       // change heading at edge of container
+      this.color = "red";
       this.heading = ((this.heading + 90) % 360) + randomBetween(-20, 20);
     } else {
+      this.color = "blue";
       // add a small amount of jitter
       this.heading =
         this.heading +
