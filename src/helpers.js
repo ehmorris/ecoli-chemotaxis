@@ -100,14 +100,6 @@ export const nextPositionAlongHeading = (
   boundaryBottom,
   boundaryLeft
 ) => ({
-  x: clampNumber(
-    position.x + speed * Math.cos(degToRad(headingInDeg)),
-    boundaryLeft,
-    boundaryRight
-  ),
-  y: clampNumber(
-    position.y + speed * Math.sin(degToRad(headingInDeg)),
-    boundaryTop,
-    boundaryBottom
-  )
+  x: position.x + speed * Math.cos(degToRad(headingInDeg)),
+  y: position.y + speed * Math.sin(degToRad(headingInDeg))
 });
