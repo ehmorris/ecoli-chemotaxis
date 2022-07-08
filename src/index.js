@@ -2,6 +2,7 @@ import { CheY } from "./chemotaxisEntities/chey.js";
 import { Attractant } from "./chemotaxisEntities/attractant.js";
 import { Motor } from "./chemotaxisEntities/motor.js";
 import { Receptor } from "./chemotaxisEntities/receptor.js";
+import { CellBoundaryPath } from "./images/CellBoundaryPath.js";
 import {
   generateCanvas,
   generateSlider,
@@ -38,12 +39,11 @@ const drawFrame = () => {
   CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 
   // Draw E.coli boundary
-  CTX.strokeRect(
-    ecoliProperties.boundaryLeft,
-    ecoliProperties.boundaryTop,
-    ecoliProperties.boundaryRight - ecoliProperties.boundaryLeft,
-    ecoliProperties.boundaryBottom - ecoliProperties.boundaryTop
-  );
+  let ecoliBoundaryIllustration = new Path2D(CellBoundaryPath);
+  CTX.translate(ecoliProperties.boundaryLeft, ecoliProperties.boundaryTop);
+  CTX.strokeStyle = "white";
+  CTX.stroke(ecoliBoundaryIllustration);
+  CTX.translate(-ecoliProperties.boundaryLeft, -ecoliProperties.boundaryTop);
 
   // Find all intersecting entities
   const flattenedEntities = Object.values(entities).flat();
