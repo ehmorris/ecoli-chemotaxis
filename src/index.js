@@ -1,3 +1,4 @@
+import { Ecoli } from "./chemotaxisEntities/ecoli.js";
 import { CheY } from "./chemotaxisEntities/chey.js";
 import { Attractant } from "./chemotaxisEntities/attractant.js";
 import { Motor } from "./chemotaxisEntities/motor.js";
@@ -22,6 +23,7 @@ import {
 } from "./data.js";
 
 let entities;
+const ecoliEntity = new Ecoli();
 let numCheY = cheYSliderProperties.defaultAmount;
 let numAttractant = attractantSliderProperties.defaultAmount;
 let numReceptor = ecoliProperties.numReceptor;
@@ -37,12 +39,8 @@ const CTX = generateCanvas({
 const drawFrame = () => {
   CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 
-  // Draw E.coli boundary
-  CTX.save();
-  CTX.translate(ecoliProperties.boundaryLeft, ecoliProperties.boundaryTop);
-  CTX.strokeStyle = "white";
-  CTX.stroke(new Path2D(ecoliProperties.boundaryPath));
-  CTX.restore();
+  // Draw background
+  ecoliEntity.draw(CTX);
 
   // Find all intersecting entities
   const flattenedEntities = Object.values(entities).flat();
@@ -137,9 +135,10 @@ const drawFrame = () => {
   phosphorylatedCheYCount =
     numCheY - entities.chey.filter((c) => !c.phosphorylated).length;
 
-  // Update for tumble/run timeseries
+  // Update for tumble/run viz
   activeMotorCount = entities.motor.filter((m) => m.tumbling).length;
 
+  // Draw scene
   Object.entries(entities).forEach(([key, entityType]) =>
     entityType.forEach((entity) => {
       CTX.save();
