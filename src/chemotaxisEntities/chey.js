@@ -11,14 +11,8 @@ export class CheY {
     this.id = generateID();
     this.containerPath = new Path2D(ecoliProperties.boundaryPath);
     this.position = {
-      x: randomBetween(
-        cheYProperties.boundaryLeft,
-        cheYProperties.boundaryRight
-      ),
-      y: randomBetween(
-        cheYProperties.boundaryTop,
-        cheYProperties.boundaryBottom
-      )
+      x: 200,
+      y: 80
     };
     this.heading = randomBetween(0, 359);
     this.type = "chey";
@@ -72,15 +66,15 @@ export class CheY {
   }
 
   draw(CTX) {
-    const boundaryPath = new Path2D(ecoliProperties.boundaryPath);
-    CTX.stroke(boundaryPath);
+    CTX.strokeStyle = "red";
+    CTX.stroke(this.containerPath);
     getNewLocationInBoundary(
       CTX,
       this.heading,
       this.speed,
       this.position,
       this.size,
-      boundaryPath,
+      this.containerPath,
       ecoliProperties.boundaryLeft,
       ecoliProperties.boundaryTop
     ).then(({ x, y, heading }) => {
@@ -103,7 +97,7 @@ export class CheY {
       CTX.translate(shapeCenter.x, shapeCenter.y);
       CTX.rotate(rotationAmount);
       CTX.translate(-this.size / 2, -this.size / 2);
-      CTX.fill(new Path2D(cheYProperties.boundaryPath));
+      CTX.fill(new Path2D(cheYProperties.shapePath));
       CTX.restore();
 
       // update props
