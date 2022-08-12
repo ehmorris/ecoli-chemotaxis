@@ -69,6 +69,57 @@ export const isAtBoundary = (
   );
 };
 
+// test all corners of a square against a boundary
+const isShapeInPath = (context, path, location, size) =>
+  context.isPointInPath(path, location.x, location.y) &&
+  context.isPointInPath(path, location.x + size, location.y) &&
+  context.isPointInPath(path, location.x + size, location.y + size) &&
+  context.isPointInPath(path, location.x, location.y + size);
+
+// recurse until new location inside boundary is found
+export const getNewLocationInBoundary = (
+  context,
+  heading,
+  currentSpeed,
+  currentLocation,
+  currentSize,
+  boundaryPath,
+  offsetX,
+  offsetY
+) => {
+  // add jitter to movement
+  const headingWithJitter = heading + randomBetween(-20, 20);
+
+  // test new locations
+  return new Promise((resolve) => {
+    const prospectiveNewLocation = nextPositionAlongHeading(
+      currentLocation,
+      currentSpeed,
+      headingWithJitter
+    );
+
+    if (
+      !isShapeInPath(context, boundaryPath, prospectiveNewLocation, currentSize)
+    ) {
+      const newHeading = randomBetween(1, 360);
+      return resolve(
+        getNewLocationInBoundary(
+          context,
+          newHeading,
+          currentSpeed,
+          currentLocation,
+          currentSize,
+          boundaryPath,
+          offsetX,
+          offsetY
+        )
+      );
+    } else {
+      return resolve(prospectiveNewLocation);
+    }
+  });
+};
+
 // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 export const isColliding = (pos1, size1, pos2, size2) => {
   return (
@@ -91,15 +142,8 @@ export const getEntityIntersection = (entityArr1, entityArr2) =>
     )
   );
 
-export const nextPositionAlongHeading = (
-  position,
-  speed,
-  headingInDeg,
-  boundaryTop,
-  boundaryRight,
-  boundaryBottom,
-  boundaryLeft
-) => ({
-  x: position.x + speed * Math.cos(degToRad(headingInDeg)),
-  y: position.y + speed * Math.sin(degToRad(headingInDeg))
+export const nextPositionAlongHeading = (position, speed, headingInDeg) => ({
+  x: position.x + speed * Math.cos(headingInDeg * (Math.PI / 180)),
+  y: position.y + speed * Math.sin(headingInDeg * (Math.PI / 180)),
+  heading: headingInDeg
 });

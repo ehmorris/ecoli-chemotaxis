@@ -38,11 +38,11 @@ const drawFrame = () => {
   CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 
   // Draw E.coli boundary
-  let ecoliBoundaryIllustration = new Path2D(ecoliProperties.boundaryPath);
+  CTX.save();
   CTX.translate(ecoliProperties.boundaryLeft, ecoliProperties.boundaryTop);
   CTX.strokeStyle = "white";
-  CTX.stroke(ecoliBoundaryIllustration);
-  CTX.translate(-ecoliProperties.boundaryLeft, -ecoliProperties.boundaryTop);
+  CTX.stroke(new Path2D(ecoliProperties.boundaryPath));
+  CTX.restore();
 
   // Find all intersecting entities
   const flattenedEntities = Object.values(entities).flat();
