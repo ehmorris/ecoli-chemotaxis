@@ -70,11 +70,29 @@ export const isAtBoundary = (
 };
 
 // test all corners of a square against a boundary
-const isShapeInPath = (context, path, location, size) =>
-  context.isPointInPath(path, location.x, location.y) &&
-  context.isPointInPath(path, location.x + size, location.y) &&
-  context.isPointInPath(path, location.x + size, location.y + size) &&
-  context.isPointInPath(path, location.x, location.y + size);
+const isShapeInPath = (context, path, location, size) => {
+  const scaleFactor = window.devicePixelRatio;
+  const scaledLocation = {
+    x: location.x * scaleFactor,
+    y: location.y * scaleFactor,
+  };
+  const scaledSize = size * scaleFactor;
+
+  return (
+    context.isPointInPath(path, scaledLocation.x, scaledLocation.y) &&
+    context.isPointInPath(
+      path,
+      scaledLocation.x + scaledSize,
+      scaledLocation.y
+    ) &&
+    context.isPointInPath(
+      path,
+      scaledLocation.x + scaledSize,
+      scaledLocation.y + scaledSize
+    ) &&
+    context.isPointInPath(path, scaledLocation.x, scaledLocation.y + scaledSize)
+  );
+};
 
 // recurse until new location inside boundary is found
 export const getNewLocationInBoundary = (
@@ -145,5 +163,5 @@ export const getEntityIntersection = (entityArr1, entityArr2) =>
 export const nextPositionAlongHeading = (position, speed, headingInDeg) => ({
   x: position.x + speed * Math.cos(headingInDeg * (Math.PI / 180)),
   y: position.y + speed * Math.sin(headingInDeg * (Math.PI / 180)),
-  heading: headingInDeg
+  heading: headingInDeg,
 });
