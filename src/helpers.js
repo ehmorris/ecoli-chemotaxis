@@ -14,7 +14,7 @@ export const generateID = () => Math.random().toString(16).slice(2);
 
 export const generateCanvas = ({ width, height, attachNode }) => {
   const element = document.createElement("canvas");
-  const CTX = element.getContext("2d");
+  const context = element.getContext("2d");
 
   element.style.width = width + "px";
   element.style.height = height + "px";
@@ -22,11 +22,11 @@ export const generateCanvas = ({ width, height, attachNode }) => {
   const scale = window.devicePixelRatio;
   element.width = Math.floor(width * scale);
   element.height = Math.floor(height * scale);
-  CTX.scale(scale, scale);
+  context.scale(scale, scale);
 
   document.querySelector(attachNode).appendChild(element);
 
-  return CTX;
+  return context;
 };
 
 export const generateSlider = ({ label, value, max, min, attachNode }) => {
@@ -70,15 +70,15 @@ export const isAtBoundary = (
 };
 
 // test all corners of a square against a boundary
-export const isShapeInPath = (CTX, path, location, size) =>
-  CTX.isPointInPath(path, location.x, location.y) &&
-  CTX.isPointInPath(path, location.x + size, location.y) &&
-  CTX.isPointInPath(path, location.x + size, location.y + size) &&
-  CTX.isPointInPath(path, location.x, location.y + size);
+const isShapeInPath = (context, path, location, size) =>
+  context.isPointInPath(path, location.x, location.y) &&
+  context.isPointInPath(path, location.x + size, location.y) &&
+  context.isPointInPath(path, location.x + size, location.y + size) &&
+  context.isPointInPath(path, location.x, location.y + size);
 
 // recurse until new location inside boundary is found
 export const getNewLocationInBoundary = (
-  CTX,
+  context,
   heading,
   currentSpeed,
   currentLocation,
@@ -99,12 +99,12 @@ export const getNewLocationInBoundary = (
     );
 
     if (
-      !isShapeInPath(CTX, boundaryPath, prospectiveNewLocation, currentSize)
+      !isShapeInPath(context, boundaryPath, prospectiveNewLocation, currentSize)
     ) {
       const newHeading = randomBetween(1, 360);
       return resolve(
         getNewLocationInBoundary(
-          CTX,
+          context,
           newHeading,
           currentSpeed,
           currentLocation,
@@ -145,5 +145,5 @@ export const getEntityIntersection = (entityArr1, entityArr2) =>
 export const nextPositionAlongHeading = (position, speed, headingInDeg) => ({
   x: position.x + speed * Math.cos(headingInDeg * (Math.PI / 180)),
   y: position.y + speed * Math.sin(headingInDeg * (Math.PI / 180)),
-  heading: headingInDeg,
+  heading: headingInDeg
 });

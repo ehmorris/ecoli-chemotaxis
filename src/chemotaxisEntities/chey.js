@@ -2,7 +2,7 @@ import {
   randomBetween,
   generateID,
   randomBool,
-  getNewLocationInBoundary,
+  getNewLocationInBoundary
 } from "../helpers.js";
 import { cheYProperties, ecoliProperties } from "../data.js";
 
@@ -12,7 +12,7 @@ export class CheY {
     this.containerPath = new Path2D(ecoliProperties.boundaryPath);
     this.position = {
       x: 200,
-      y: 80,
+      y: 80
     };
     this.heading = randomBetween(0, 359);
     this.type = "chey";
@@ -66,6 +66,8 @@ export class CheY {
   }
 
   draw(CTX) {
+    CTX.strokeStyle = "red";
+    CTX.stroke(this.containerPath);
     getNewLocationInBoundary(
       CTX,
       this.heading,
