@@ -1,22 +1,23 @@
 import { graphProperties } from "./data.js";
-import RunGIF from "./images/Run.gif";
-import TumbleGIF from "./images/Tumble.gif";
 
 export const spawnTopDown = ({ getNumerator, getDenominator }) => {
-  const generateImageTag = (src) => {
+  const generateImageTag = (srcurl) => {
     const element = document.createElement("img");
     element.width = graphProperties.width;
     element.height = graphProperties.height;
-    element.src = src;
+    element.src = srcurl;
     document.querySelector(".graphContainer").appendChild(element);
     return element;
   };
 
-  const imageTag = generateImageTag(RunGIF);
+  const runGifURL = `${window.location.href}/src/images/Run.gif`;
+  const tumbleGifURL = `${window.location.href}/src/images/Tumble.gif`;
+
+  const imageTag = generateImageTag(runGifURL);
 
   const drawFrame = () => {
     const percentFill = getNumerator() / getDenominator();
-    const newSrc = percentFill > 0.5 ? TumbleGIF : RunGIF;
+    const newSrc = percentFill > 0.5 ? tumbleGifURL : runGifURL;
     if (newSrc !== imageTag.src) {
       imageTag.src = newSrc;
     }

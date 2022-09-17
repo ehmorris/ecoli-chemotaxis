@@ -69,6 +69,73 @@ export const isAtBoundary = (
   );
 };
 
+// test all corners of a square against a boundary
+const isShapeInPath = (context, path, location, size) => {
+  // isPointInPath is basing its result on a 2X size version of the input
+  // path. Not sure how to fix this, so we pass in a 2X size coordinate
+  const scaleFactor = window.devicePixelRatio;
+  const scaledLocation = {
+    x: location.x * scaleFactor,
+    y: location.y * scaleFactor,
+  };
+  const scaledSize = size * scaleFactor;
+
+  return (
+    context.isPointInPath(path, scaledLocation.x, scaledLocation.y) &&
+    context.isPointInPath(
+      path,
+      scaledLocation.x + scaledSize,
+      scaledLocation.y
+    ) &&
+    context.isPointInPath(
+      path,
+      scaledLocation.x + scaledSize,
+      scaledLocation.y + scaledSize
+    ) &&
+    context.isPointInPath(path, scaledLocation.x, scaledLocation.y + scaledSize)
+  );
+};
+
+// recurse until new location inside boundary is found
+export const getNewLocationInBoundary = (
+  context,
+  heading,
+  currentSpeed,
+  currentLocation,
+  currentSize,
+  boundaryPath
+) => {
+  // add jitter to movement
+  const headingWithJitter = heading + randomBetween(-20, 20);
+
+  // test new locations
+  return new Promise((resolve) => {
+    const prospectiveNewLocation = nextPositionAlongHeading(
+      currentLocation,
+      currentSpeed,
+      headingWithJitter
+    );
+
+    if (
+      !isShapeInPath(context, boundaryPath, prospectiveNewLocation, currentSize)
+    ) {
+      const newHeading = randomBetween(1, 360);
+      return resolve(
+        getNewLocationInBoundary(
+          context,
+          newHeading,
+          currentSpeed,
+          currentLocation,
+          currentSize,
+          boundaryPath
+        )
+      );
+    } else {
+      return resolve(prospectiveNewLocation);
+    }
+  });
+};
+
 // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 export const isColliding = (pos1, size1, pos2, size2) => {
   return (
@@ -91,23 +158,8 @@ export const getEntityIntersection = (entityArr1, entityArr2) =>
     )
   );
 
-export const nextPositionAlongHeading = (
-  position,
-  speed,
-  headingInDeg,
-  boundaryTop,
-  boundaryRight,
-  boundaryBottom,
-  boundaryLeft
-) => ({
-  x: clampNumber(
-    position.x + speed * Math.cos(degToRad(headingInDeg)),
-    boundaryLeft,
-    boundaryRight
-  ),
-  y: clampNumber(
-    position.y + speed * Math.sin(degToRad(headingInDeg)),
-    boundaryTop,
-    boundaryBottom
-  )
+export const nextPositionAlongHeading = (position, speed, headingInDeg) => ({
+  x: position.x + speed * Math.cos(headingInDeg * (Math.PI / 180)),
+  y: position.y + speed * Math.sin(headingInDeg * (Math.PI / 180)),
+  heading: headingInDeg,
 });

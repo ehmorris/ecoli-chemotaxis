@@ -1,22 +1,18 @@
-# Notes 4/19/22
+# Notes 9/16/22
 
-- Motors can appear on top and bottom edges
+- Paths for motors, receptors, and attractant
+  - Effects, like the focus-plane blurring of the run/tumble GIF
+- Some kind of illustrative background texture / noise similar to run/tumble GIF
+- Scale everything up / make responsive
+- Motors should animate / rotate, and change direction depending on state
+- Docked state of cheY on receptor and motor should be more illustrative
+  - Plus attractant
+- Motors should appear on top and bottom edges
+- Import improved tiny graph from lunar lander
+- UI should be for attractant only and not cheY, make UI nicer also
 
-- cheY needs to dock faster with receptors
-- Can phospohralted cheY stick to receptors? Right now they don't
+## Methylation and bio questions next steps:
 
 - Should the number of cheY or attractant required to "flip" the receptors and motors be proportional to the number of entities?
-
 - Should phosphorylation wear off after some timeout? As-is, cheY MUST bind to a motor to become dephosphorylated
-
-## Polish
-
-- Motor animation
-- Draw the edge of the e coli
-- Edge bounce behavior needs to be a reflected bounce
-- Illustrations for entities
-- Video of real entity
-
-## Minor
-
-- Would be nice to fix the hot reload issue just for annoyance-sake
+- Can phospohralted cheY stick to receptors? Right now they don't

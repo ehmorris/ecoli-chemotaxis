@@ -1,14 +1,14 @@
+import { Ecoli } from "./chemotaxisEntities/ecoli.js";
 import { CheY } from "./chemotaxisEntities/chey.js";
 import { Attractant } from "./chemotaxisEntities/attractant.js";
 import { Motor } from "./chemotaxisEntities/motor.js";
 import { Receptor } from "./chemotaxisEntities/receptor.js";
-import { CellBoundaryPath } from "./images/CellBoundaryPath.js";
 import {
   generateCanvas,
   generateSlider,
   getEntityIntersection,
   isColliding,
-  generateArrayOfObjects
+  generateArrayOfObjects,
 } from "./helpers.js";
 import { spawnEntityGraph } from "./smallgraph.js";
 import { spawnTopDown } from "./topdown.js";
@@ -19,10 +19,11 @@ import {
   cheYProperties,
   receptorProperties,
   motorProperties,
-  attractantSliderProperties
+  attractantSliderProperties,
 } from "./data.js";
 
 let entities;
+const ecoliEntity = new Ecoli();
 let numCheY = cheYSliderProperties.defaultAmount;
 let numAttractant = attractantSliderProperties.defaultAmount;
 let numReceptor = ecoliProperties.numReceptor;
@@ -32,18 +33,14 @@ let activeMotorCount = 0;
 const CTX = generateCanvas({
   width: canvasProperties.width,
   height: canvasProperties.height,
-  attachNode: ".canvasContainer"
+  attachNode: ".canvasContainer",
 });
 
 const drawFrame = () => {
-  CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
+  //CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 
-  // Draw E.coli boundary
-  let ecoliBoundaryIllustration = new Path2D(CellBoundaryPath);
-  CTX.translate(ecoliProperties.boundaryLeft, ecoliProperties.boundaryTop);
-  CTX.strokeStyle = "white";
-  CTX.stroke(ecoliBoundaryIllustration);
-  CTX.translate(-ecoliProperties.boundaryLeft, -ecoliProperties.boundaryTop);
+  // Draw background
+  ecoliEntity.draw(CTX);
 
   // Find all intersecting entities
   const flattenedEntities = Object.values(entities).flat();
@@ -63,7 +60,7 @@ const drawFrame = () => {
       ) {
         collidingEntitityPairs.push({
           entity: entity1,
-          collidingWith: entity2
+          collidingWith: entity2,
         });
         collidingEntitiesFlat.push(entity1);
       }
@@ -138,9 +135,10 @@ const drawFrame = () => {
   phosphorylatedCheYCount =
     numCheY - entities.chey.filter((c) => !c.phosphorylated).length;
 
-  // Update for tumble/run timeseries
+  // Update for tumble/run viz
   activeMotorCount = entities.motor.filter((m) => m.tumbling).length;
 
+  // Draw scene
   Object.entries(entities).forEach(([key, entityType]) =>
     entityType.forEach((entity) => {
       CTX.save();
@@ -201,7 +199,7 @@ const generateEntities = () => {
     receptor: generateArrayOfObjects(numReceptor, Receptor),
     motor: generateArrayOfObjects(numMotor, Motor),
     attractant: generateArrayOfObjects(numAttractant, Attractant),
-    chey: generateArrayOfObjects(numCheY, CheY)
+    chey: generateArrayOfObjects(numCheY, CheY),
   };
 };
 
@@ -210,7 +208,7 @@ const cheYVolumeSlider = generateSlider({
   value: numCheY,
   max: cheYSliderProperties.maxCheYAmount,
   min: 1,
-  attachNode: ".sliderContainer"
+  attachNode: ".sliderContainer",
 });
 
 const attractantVolumeSlider = generateSlider({
@@ -218,7 +216,7 @@ const attractantVolumeSlider = generateSlider({
   value: numAttractant,
   max: attractantSliderProperties.maxAttractantAmount,
   min: 1,
-  attachNode: ".sliderContainer"
+  attachNode: ".sliderContainer",
 });
 
 spawnEntityGraph({
@@ -228,12 +226,12 @@ spawnEntityGraph({
   bottomLabel: "Phosphory...",
   showPercent: true,
   backgroundColor: cheYProperties.defaultColor,
-  fillColor: cheYProperties.phosphorylatedColor
+  fillColor: cheYProperties.phosphorylatedColor,
 });
 
 spawnTopDown({
   getNumerator: () => activeMotorCount,
-  getDenominator: () => numMotor
+  getDenominator: () => numMotor,
 });
 
 cheYVolumeSlider.addEventListener("input", ({ target: { value } }) => {

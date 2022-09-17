@@ -1,24 +1,18 @@
 import {
   randomBetween,
-  isAtBoundary,
-  nextPositionAlongHeading,
   generateID,
-  randomBool
+  randomBool,
+  getNewLocationInBoundary,
 } from "../helpers.js";
-import { cheYProperties } from "../data.js";
+import { cheYProperties, ecoliProperties } from "../data.js";
 
 export class CheY {
   constructor() {
     this.id = generateID();
+    this.containerPath = new Path2D(ecoliProperties.boundaryPath);
     this.position = {
-      x: randomBetween(
-        cheYProperties.boundaryLeft,
-        cheYProperties.boundaryRight
-      ),
-      y: randomBetween(
-        cheYProperties.boundaryTop,
-        cheYProperties.boundaryBottom
-      )
+      x: 200,
+      y: 80,
     };
     this.heading = randomBetween(0, 359);
     this.type = "chey";
@@ -28,6 +22,7 @@ export class CheY {
     this.stuckAt = 0;
     this.isStuck = false;
     this.stuckTo = null;
+    this.rotation = 0;
     this.speed = randomBetween(
       cheYProperties.speedMin,
       cheYProperties.speedMax
@@ -71,52 +66,44 @@ export class CheY {
   }
 
   draw(CTX) {
-    CTX.fillStyle = this.color;
-
-    if (
-      isAtBoundary(
-        this.position,
-        cheYProperties.boundaryTop,
-        cheYProperties.boundaryRight,
-        cheYProperties.boundaryBottom,
-        cheYProperties.boundaryLeft
-      )
-    ) {
-      // change heading at edge of container
-      this.heading = ((this.heading + 90) % 360) + randomBetween(-20, 20);
-    } else {
-      // add a small amount of jitter
-      this.heading =
-        this.heading +
-        randomBetween(
-          -cheYProperties.movementJitter,
-          cheYProperties.movementJitter
-        );
-    }
-
-    if (this.isStuck && this.stuckTo.type === "motor") {
-      if (this.age > this.stuckAt + cheYProperties.motorStickDuration) {
-        this.unstick();
-      }
-    } else if (this.isStuck && this.stuckTo.type === "receptor") {
-      if (this.age > this.stuckAt + cheYProperties.receptorStickDuration) {
-        this.unstick();
-      }
-    }
-
-    const newPosition = nextPositionAlongHeading(
-      this.position,
-      this.speed,
+    getNewLocationInBoundary(
+      CTX,
       this.heading,
-      cheYProperties.boundaryTop,
-      cheYProperties.boundaryRight,
-      cheYProperties.boundaryBottom,
-      cheYProperties.boundaryLeft
-    );
+      this.speed,
+      this.position,
+      this.size,
+      this.containerPath
+    ).then(({ x, y, heading }) => {
+      if (this.isStuck && this.stuckTo.type === "motor") {
+        if (this.age > this.stuckAt + cheYProperties.motorStickDuration) {
+          this.unstick();
+        }
+      } else if (this.isStuck && this.stuckTo.type === "receptor") {
+        if (this.age > this.stuckAt + cheYProperties.receptorStickDuration) {
+          this.unstick();
+        }
+      }
 
-    this.position = newPosition;
+      // fill in dot shape
+      const shapeCenter = {
+        x: x + ecoliProperties.boundaryLeft + this.size / 2,
+        y: y + ecoliProperties.boundaryTop + this.size / 2,
+      };
+      const rotationAmount = (Math.PI / 180) * this.rotation;
 
-    CTX.fillRect(newPosition.x, newPosition.y, this.size, this.size);
-    this.age = this.age + 1;
+      CTX.fillStyle = this.color;
+      CTX.save();
+      CTX.translate(shapeCenter.x, shapeCenter.y);
+      CTX.rotate(rotationAmount);
+      CTX.translate(-this.size / 2, -this.size / 2);
+      CTX.fill(new Path2D(cheYProperties.shapePath));
+      CTX.restore();
+
+      // update props
+      this.rotation = this.rotation + 2;
+      this.position = { x, y };
+      this.heading = heading;
+      this.age = this.age + 1;
+    });
   }
 }
