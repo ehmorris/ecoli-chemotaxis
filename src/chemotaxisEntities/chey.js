@@ -2,7 +2,7 @@ import {
   randomBetween,
   generateID,
   randomBool,
-  getNewLocationInBoundary
+  getNewLocationInBoundary,
 } from "../helpers.js";
 import { cheYProperties, ecoliProperties } from "../data.js";
 
@@ -12,7 +12,7 @@ export class CheY {
     this.containerPath = new Path2D(ecoliProperties.boundaryPath);
     this.position = {
       x: 200,
-      y: 80
+      y: 80,
     };
     this.heading = randomBetween(0, 359);
     this.type = "chey";
@@ -66,17 +66,13 @@ export class CheY {
   }
 
   draw(CTX) {
-    CTX.strokeStyle = "red";
-    CTX.stroke(this.containerPath);
     getNewLocationInBoundary(
       CTX,
       this.heading,
       this.speed,
       this.position,
       this.size,
-      this.containerPath,
-      ecoliProperties.boundaryLeft,
-      ecoliProperties.boundaryTop
+      this.containerPath
     ).then(({ x, y, heading }) => {
       if (this.isStuck && this.stuckTo.type === "motor") {
         if (this.age > this.stuckAt + cheYProperties.motorStickDuration) {
@@ -89,7 +85,10 @@ export class CheY {
       }
 
       // fill in dot shape
-      const shapeCenter = { x: x + this.size / 2, y: y + this.size / 2 };
+      const shapeCenter = {
+        x: x + ecoliProperties.boundaryLeft + this.size / 2,
+        y: y + ecoliProperties.boundaryTop + this.size / 2,
+      };
       const rotationAmount = (Math.PI / 180) * this.rotation;
 
       CTX.fillStyle = this.color;
