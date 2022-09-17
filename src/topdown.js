@@ -10,12 +10,14 @@ export const spawnTopDown = ({ getNumerator, getDenominator }) => {
     return element;
   };
 
-  const imageTag = generateImageTag("./src/images/Run.gif");
+  const runGifURL = `${window.location.href}/src/images/Run.gif`;
+  const tumbleGifURL = `${window.location.href}/src/images/Tumble.gif`;
+
+  const imageTag = generateImageTag(runGifURL);
 
   const drawFrame = () => {
     const percentFill = getNumerator() / getDenominator();
-    const newSrc =
-      percentFill > 0.5 ? "./src/images/Tumble.gif" : "./src/images/Run.gif";
+    const newSrc = percentFill > 0.5 ? tumbleGifURL : runGifURL;
     if (newSrc !== imageTag.src) {
       imageTag.src = newSrc;
     }
