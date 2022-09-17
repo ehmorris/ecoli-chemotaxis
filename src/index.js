@@ -8,7 +8,9 @@ import {
   generateSlider,
   getEntityIntersection,
   isColliding,
-  generateArrayOfObjects
+  generateArrayOfObjects,
+  isShapeInPath,
+  randomBetween,
 } from "./helpers.js";
 import { spawnEntityGraph } from "./smallgraph.js";
 import { spawnTopDown } from "./topdown.js";
@@ -19,7 +21,7 @@ import {
   cheYProperties,
   receptorProperties,
   motorProperties,
-  attractantSliderProperties
+  attractantSliderProperties,
 } from "./data.js";
 
 let entities;
@@ -33,11 +35,20 @@ let activeMotorCount = 0;
 const CTX = generateCanvas({
   width: canvasProperties.width,
   height: canvasProperties.height,
-  attachNode: ".canvasContainer"
+  attachNode: ".canvasContainer",
 });
 
+// DEBUG
+const debugpath = new Path2D(ecoliProperties.boundaryPath);
+for (let inc = 0; inc <= 50000; inc++) {
+  const location = { x: randomBetween(0, 1000), y: randomBetween(0, 1000) };
+  const isIn = isShapeInPath(CTX, debugpath, location, 4);
+  CTX.fillStyle = isIn ? "blue" : "red";
+  CTX.fillRect(location.x, location.y, 4, 4);
+}
+
 const drawFrame = () => {
-  CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
+  //CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 
   // Draw background
   ecoliEntity.draw(CTX);
@@ -60,7 +71,7 @@ const drawFrame = () => {
       ) {
         collidingEntitityPairs.push({
           entity: entity1,
-          collidingWith: entity2
+          collidingWith: entity2,
         });
         collidingEntitiesFlat.push(entity1);
       }
@@ -199,7 +210,7 @@ const generateEntities = () => {
     receptor: generateArrayOfObjects(numReceptor, Receptor),
     motor: generateArrayOfObjects(numMotor, Motor),
     attractant: generateArrayOfObjects(numAttractant, Attractant),
-    chey: generateArrayOfObjects(numCheY, CheY)
+    chey: generateArrayOfObjects(numCheY, CheY),
   };
 };
 
@@ -208,7 +219,7 @@ const cheYVolumeSlider = generateSlider({
   value: numCheY,
   max: cheYSliderProperties.maxCheYAmount,
   min: 1,
-  attachNode: ".sliderContainer"
+  attachNode: ".sliderContainer",
 });
 
 const attractantVolumeSlider = generateSlider({
@@ -216,7 +227,7 @@ const attractantVolumeSlider = generateSlider({
   value: numAttractant,
   max: attractantSliderProperties.maxAttractantAmount,
   min: 1,
-  attachNode: ".sliderContainer"
+  attachNode: ".sliderContainer",
 });
 
 spawnEntityGraph({
@@ -226,12 +237,12 @@ spawnEntityGraph({
   bottomLabel: "Phosphory...",
   showPercent: true,
   backgroundColor: cheYProperties.defaultColor,
-  fillColor: cheYProperties.phosphorylatedColor
+  fillColor: cheYProperties.phosphorylatedColor,
 });
 
 spawnTopDown({
   getNumerator: () => activeMotorCount,
-  getDenominator: () => numMotor
+  getDenominator: () => numMotor,
 });
 
 cheYVolumeSlider.addEventListener("input", ({ target: { value } }) => {
