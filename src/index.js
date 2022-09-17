@@ -37,7 +37,7 @@ const CTX = generateCanvas({
 });
 
 const drawFrame = () => {
-  //CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
+  CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 
   // Draw background
   ecoliEntity.draw(CTX);
