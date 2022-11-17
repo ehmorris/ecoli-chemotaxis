@@ -4,16 +4,7 @@ import { receptorProperties } from "../data.js";
 export class Receptor {
   constructor() {
     this.id = generateID();
-    this.position = {
-      x: randomBetween(
-        receptorProperties.boundaryLeft,
-        receptorProperties.boundaryRight
-      ),
-      y: randomBetween(
-        receptorProperties.boundaryTop,
-        receptorProperties.boundaryBottom
-      )
-    };
+    this.position = receptorProperties.positions.pop();
     this.type = "receptor";
     this.color = receptorProperties.activeColor;
     this.size = receptorProperties.defaultSize;

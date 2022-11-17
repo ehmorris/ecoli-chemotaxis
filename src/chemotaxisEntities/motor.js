@@ -4,16 +4,7 @@ import { motorProperties } from "../data.js";
 export class Motor {
   constructor() {
     this.id = generateID();
-    this.position = {
-      x: randomBetween(
-        motorProperties.boundaryLeft,
-        motorProperties.boundaryRight
-      ),
-      y: randomBetween(
-        motorProperties.boundaryTop,
-        motorProperties.boundaryBottom
-      )
-    };
+    this.position = motorProperties.positions.pop();
     this.type = "motor";
     this.color = motorProperties.defaultColor;
     this.size = motorProperties.defaultSize;

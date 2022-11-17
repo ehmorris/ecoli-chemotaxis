@@ -55,7 +55,11 @@ export const receptorProperties = {
   boundaryTop: ecoliProperties.boundaryTop,
   boundaryRight: ecoliProperties.boundaryLeft - receptorSize / 2,
   boundaryBottom: ecoliProperties.boundaryBottom - receptorSize,
-  boundaryLeft: ecoliProperties.boundaryLeft - receptorSize / 2
+  boundaryLeft: ecoliProperties.boundaryLeft - receptorSize / 2,
+  positions: [
+    { x: 100, y: 60 },
+    { x: 92, y: 100 }
+  ],
 };
 
 const motorSize = 24;
@@ -67,7 +71,11 @@ export const motorProperties = {
   boundaryTop: ecoliProperties.boundaryTop,
   boundaryRight: ecoliProperties.boundaryRight - motorSize / 2,
   boundaryBottom: ecoliProperties.boundaryBottom - motorSize,
-  boundaryLeft: ecoliProperties.boundaryRight - motorSize / 2
+  boundaryLeft: ecoliProperties.boundaryRight - motorSize / 2,
+  positions: [
+    { x: 454, y: 50 },
+    { x: 459, y: 134 }
+  ],
 };
 
 const attractantSize = 3;
