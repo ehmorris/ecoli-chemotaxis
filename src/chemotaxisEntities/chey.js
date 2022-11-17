@@ -72,7 +72,9 @@ export class CheY {
       this.speed,
       this.position,
       this.size,
-      this.containerPath
+      this.containerPath,
+      ecoliProperties.boundaryLeft,
+      ecoliProperties.boundaryTop
     ).then(({ x, y, heading }) => {
       if (this.isStuck && this.stuckTo.type === "motor") {
         if (this.age > this.stuckAt + cheYProperties.motorStickDuration) {
@@ -86,11 +88,18 @@ export class CheY {
 
       // fill in dot shape
       const shapeCenter = {
-        x: x + ecoliProperties.boundaryLeft + this.size / 2,
-        y: y + ecoliProperties.boundaryTop + this.size / 2,
+        x: x + this.size / 2,
+        y: y + this.size / 2,
       };
       const rotationAmount = (Math.PI / 180) * this.rotation;
 
+      // debug rectangle
+      // CTX.fillStyle = "red";
+      // CTX.save();
+      // CTX.fillRect(x, y, this.size, this.size);
+      // CTX.restore();
+
+      // draw dot shape
       CTX.fillStyle = this.color;
       CTX.save();
       CTX.translate(shapeCenter.x, shapeCenter.y);

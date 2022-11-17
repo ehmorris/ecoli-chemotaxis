@@ -70,13 +70,13 @@ export const isAtBoundary = (
 };
 
 // test all corners of a square against a boundary
-const isShapeInPath = (context, path, location, size) => {
+const isShapeInPath = (context, path, pathXOffset, pathYOffset, location, size) => {
   // isPointInPath is basing its result on a 2X size version of the input
   // path. Not sure how to fix this, so we pass in a 2X size coordinate
   const scaleFactor = window.devicePixelRatio;
   const scaledLocation = {
-    x: location.x * scaleFactor,
-    y: location.y * scaleFactor,
+    x: (location.x - pathXOffset) * scaleFactor,
+    y: (location.y - pathYOffset) * scaleFactor,
   };
   const scaledSize = size * scaleFactor;
 
@@ -103,7 +103,9 @@ export const getNewLocationInBoundary = (
   currentSpeed,
   currentLocation,
   currentSize,
-  boundaryPath
+  boundaryPath,
+  boundaryPathXOffset,
+  boundaryPathYOffset
 ) => {
   // add jitter to movement
   const headingWithJitter = heading + randomBetween(-20, 20);
@@ -117,7 +119,14 @@ export const getNewLocationInBoundary = (
     );
 
     if (
-      !isShapeInPath(context, boundaryPath, prospectiveNewLocation, currentSize)
+      !isShapeInPath(
+        context,
+        boundaryPath,
+        boundaryPathXOffset,
+        boundaryPathYOffset,
+        prospectiveNewLocation,
+        currentSize
+      )
     ) {
       const newHeading = randomBetween(1, 360);
       return resolve(
@@ -127,7 +136,9 @@ export const getNewLocationInBoundary = (
           currentSpeed,
           currentLocation,
           currentSize,
-          boundaryPath
+          boundaryPath,
+          boundaryPathXOffset,
+          boundaryPathYOffset
         )
       );
     } else {
