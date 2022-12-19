@@ -11,8 +11,8 @@ export class CheY {
     this.id = generateID();
     this.containerPath = new Path2D(ecoliProperties.boundaryPath);
     this.position = {
-      x: 200,
-      y: 80,
+      x: ecoliProperties.boundaryLeft + ecoliProperties.width / 2,
+      y: ecoliProperties.boundaryTop + ecoliProperties.height / 2,
     };
     this.heading = randomBetween(0, 359);
     this.type = "chey";

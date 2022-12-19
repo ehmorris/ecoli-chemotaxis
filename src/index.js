@@ -15,8 +15,8 @@ import { spawnTopDown } from "./topdown.js";
 import {
   canvasProperties,
   ecoliProperties,
-  cheYSliderProperties,
   cheYProperties,
+  numCheY,
   receptorProperties,
   motorProperties,
   attractantSliderProperties,
@@ -24,7 +24,6 @@ import {
 
 let entities;
 const ecoliEntity = new Ecoli();
-let numCheY = cheYSliderProperties.defaultAmount;
 let numAttractant = attractantSliderProperties.defaultAmount;
 let numReceptor = ecoliProperties.numReceptor;
 let numMotor = ecoliProperties.numMotor;
@@ -203,14 +202,6 @@ const generateEntities = () => {
   };
 };
 
-const cheYVolumeSlider = generateSlider({
-  label: "cheY",
-  value: numCheY,
-  max: cheYSliderProperties.maxCheYAmount,
-  min: 1,
-  attachNode: ".sliderContainer",
-});
-
 const attractantVolumeSlider = generateSlider({
   label: "Attractant",
   value: numAttractant,
@@ -232,12 +223,6 @@ spawnEntityGraph({
 spawnTopDown({
   getNumerator: () => activeMotorCount,
   getDenominator: () => numMotor,
-});
-
-cheYVolumeSlider.addEventListener("input", ({ target: { value } }) => {
-  numCheY = parseInt(value, 10);
-  //phosphorylatedCheYCount = 0;
-  appendEntities();
 });
 
 attractantVolumeSlider.addEventListener("input", ({ target: { value } }) => {

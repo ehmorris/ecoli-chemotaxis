@@ -1,6 +1,6 @@
 export const canvasProperties = {
-  width: 500,
-  height: 200
+  width: 800,
+  height: 300
 };
 
 export const graphProperties = {
@@ -9,27 +9,27 @@ export const graphProperties = {
   maxDataPoints: 500
 };
 
-export const cheYSliderProperties = {
-  defaultAmount: 100,
-  maxCheYAmount: 500
-};
-
 export const attractantSliderProperties = {
   defaultAmount: 40,
   maxAttractantAmount: 200
 };
 
+const ecoliWidth = 380;
+const ecoliHeight = 159;
 export const ecoliProperties = {
-  boundaryTop: 20,
-  boundaryRight: canvasProperties.width - 20,
-  boundaryBottom: canvasProperties.height - 20,
-  boundaryLeft: canvasProperties.width * 0.2,
+  width: ecoliWidth,
+  height: ecoliHeight,
+  boundaryTop: (canvasProperties.height / 2) - (ecoliHeight / 2),
+  boundaryRight: (canvasProperties.width / 2) + (ecoliWidth / 2),
+  boundaryBottom: (canvasProperties.height / 2) + (ecoliHeight / 2),
+  boundaryLeft: (canvasProperties.width / 2) - (ecoliWidth / 2),
   numMotor: 3,
   numReceptor: 2,
   boundaryPath:
     "M0 80.954C0 51.64 21.5 14.865 53 7.5 87.452-.555 118.061 1 153.226 1 198.529 1 260.839 5.124 312 9.5c38.609 3.302 68 40.941 68 75.494 0 39.247-32.985 78.645-78.5 74.506-44.469-4.043-89.804-7.763-129.887-7.763-33.017 0-55.544.952-87.113 4.263C37.391 160.941 0 125.911 0 80.954z"
 };
 
+export const numCheY = 200;
 const cheYSize = 10;
 export const cheYProperties = {
   defaultColor: "#096729",
@@ -57,8 +57,8 @@ export const receptorProperties = {
   boundaryBottom: ecoliProperties.boundaryBottom - receptorSize,
   boundaryLeft: ecoliProperties.boundaryLeft - receptorSize / 2,
   positions: [
-    { x: 100, y: 60 },
-    { x: 92, y: 100 }
+    { x: ecoliProperties.boundaryLeft, y: ecoliProperties.boundaryTop + 40 },
+    { x: ecoliProperties.boundaryLeft - 4, y: ecoliProperties.boundaryTop + 92 }
   ],
 };
 
@@ -73,9 +73,9 @@ export const motorProperties = {
   boundaryBottom: ecoliProperties.boundaryBottom - motorSize,
   boundaryLeft: ecoliProperties.boundaryRight - motorSize / 2,
   positions: [
-    { x: 454, y: 50 },
-    { x: 468, y: 89 },
-    { x: 459, y: 134 }
+    { x: ecoliProperties.boundaryRight - 24, y: ecoliProperties.boundaryTop + 30 },
+    { x: ecoliProperties.boundaryRight - 14, y: ecoliProperties.boundaryTop + 80 },
+    { x: ecoliProperties.boundaryRight - 30, y: ecoliProperties.boundaryTop + 120 }
   ],
 };
 
