@@ -2,22 +2,18 @@ import {
   randomBetween,
   isAtBoundary,
   nextPositionAlongHeading,
+  getNewLocationOutsideBoundary,
   generateID
 } from "../helpers.js";
-import { attractantProperties } from "../data.js";
+import { attractantProperties, ecoliProperties } from "../data.js";
 
 export class Attractant {
   constructor() {
     this.id = generateID();
+    this.containerPath = new Path2D(ecoliProperties.boundaryPath);
     this.position = {
-      x: randomBetween(
-        attractantProperties.boundaryLeft,
-        attractantProperties.boundaryRight
-      ),
-      y: randomBetween(
-        attractantProperties.boundaryTop,
-        attractantProperties.boundaryBottom
-      )
+      x: 40,
+      y: 40
     };
     this.type = "attractant";
     this.color = attractantProperties.defaultColor;
@@ -41,14 +37,8 @@ export class Attractant {
 
   unstick() {
     this.position = {
-      x: randomBetween(
-        attractantProperties.boundaryLeft,
-        attractantProperties.boundaryRight
-      ),
-      y: randomBetween(
-        attractantProperties.boundaryTop,
-        attractantProperties.boundaryBottom
-      )
+      x: 0,
+      y: 0
     };
     this.speed = randomBetween(
       attractantProperties.speedMin,
@@ -58,49 +48,30 @@ export class Attractant {
   }
 
   draw(CTX) {
-    CTX.fillStyle = this.color;
-
-    if (
-      isAtBoundary(
-        this.position,
-        attractantProperties.boundaryTop,
-        attractantProperties.boundaryRight,
-        attractantProperties.boundaryBottom,
-        attractantProperties.boundaryLeft
-      )
-    ) {
-      // change heading at edge of container
-      this.heading = ((this.heading + 90) % 360) + randomBetween(-20, 20);
-    } else {
-      // add a small amount of jitter
-      this.heading =
-        this.heading +
-        randomBetween(
-          -attractantProperties.movementJitter,
-          attractantProperties.movementJitter
-        );
-    }
-
-    if (
-      this.isStuck &&
-      this.age > this.stuckAt + attractantProperties.stickDuration
-    ) {
-      this.unstick();
-    }
-
-    const newPosition = nextPositionAlongHeading(
-      this.position,
-      this.speed,
+    getNewLocationOutsideBoundary(
+      CTX,
       this.heading,
-      attractantProperties.boundaryTop,
-      attractantProperties.boundaryRight,
-      attractantProperties.boundaryBottom,
-      attractantProperties.boundaryLeft
-    );
+      this.speed,
+      this.position,
+      this.size,
+      this.containerPath,
+      ecoliProperties.boundaryLeft,
+      ecoliProperties.boundaryTop
+    ).then(({ x, y, heading }) => {
+      if (
+        this.isStuck &&
+        this.age > this.stuckAt + attractantProperties.stickDuration
+      ) {
+        this.unstick();
+      }
 
-    this.position = newPosition;
+      CTX.fillStyle = this.color;
+      CTX.fillRect(this.position.x, this.position.y, this.size, this.size);
 
-    CTX.fillRect(this.position.x, this.position.y, this.size, this.size);
-    this.age = this.age + 1;
+      // update props
+      this.position = { x, y };
+      this.heading = heading;
+      this.age = this.age + 1;
+    });
   }
 }

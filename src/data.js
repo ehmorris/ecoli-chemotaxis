@@ -10,8 +10,8 @@ export const graphProperties = {
 };
 
 export const attractantSliderProperties = {
-  defaultAmount: 40,
-  maxAttractantAmount: 200
+  defaultAmount: 300,
+  maxAttractantAmount: 1000
 };
 
 const ecoliWidth = 380;
@@ -88,7 +88,7 @@ export const attractantProperties = {
   speedMax: 0.6,
   stickDuration: 200,
   boundaryTop: 0,
-  boundaryRight: ecoliProperties.boundaryLeft - attractantSize,
+  boundaryRight: canvasProperties.width - attractantSize,
   boundaryBottom: canvasProperties.height - attractantSize,
   boundaryLeft: 0
 };

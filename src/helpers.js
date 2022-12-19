@@ -1,3 +1,5 @@
+import { canvasProperties } from "./data.js";
+
 export const randomBetween = (min, max) => Math.random() * (max - min) + min;
 
 export const randomBool = (probability = 0.5) => Math.random() >= probability;
@@ -110,7 +112,7 @@ export const getNewLocationInBoundary = (
   // add jitter to movement
   const headingWithJitter = heading + randomBetween(-20, 20);
 
-  // test new locations
+  // test new location
   return new Promise((resolve) => {
     const prospectiveNewLocation = nextPositionAlongHeading(
       currentLocation,
@@ -131,6 +133,62 @@ export const getNewLocationInBoundary = (
       const newHeading = randomBetween(1, 360);
       return resolve(
         getNewLocationInBoundary(
+          context,
+          newHeading,
+          currentSpeed,
+          currentLocation,
+          currentSize,
+          boundaryPath,
+          boundaryPathXOffset,
+          boundaryPathYOffset
+        )
+      );
+    } else {
+      return resolve(prospectiveNewLocation);
+    }
+  });
+};
+
+export const getNewLocationOutsideBoundary = (
+  context,
+  heading,
+  currentSpeed,
+  currentLocation,
+  currentSize,
+  boundaryPath,
+  boundaryPathXOffset,
+  boundaryPathYOffset
+) => {
+  // add jitter to movement
+  const headingWithJitter = heading + randomBetween(-20, 20);
+
+  // test new location
+  return new Promise((resolve) => {
+    const prospectiveNewLocation = nextPositionAlongHeading(
+      currentLocation,
+      currentSpeed,
+      headingWithJitter
+    );
+
+    if (
+      isShapeInPath(
+        context,
+        boundaryPath,
+        boundaryPathXOffset,
+        boundaryPathYOffset,
+        prospectiveNewLocation,
+        currentSize
+      ) || isAtBoundary(
+        prospectiveNewLocation,
+        0,
+        canvasProperties.width,
+        canvasProperties.height,
+        0
+      )
+    ) {
+      const newHeading = randomBetween(1, 360);
+      return resolve(
+        getNewLocationOutsideBoundary(
           context,
           newHeading,
           currentSpeed,
