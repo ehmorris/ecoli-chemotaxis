@@ -9,7 +9,7 @@ import {
   getEntityIntersection,
   isColliding,
   generateArrayOfObjects,
-  isShapeInPath
+  isShapeInPath,
 } from "./helpers.js";
 import { spawnEntityGraph } from "./smallgraph.js";
 import { spawnTopDown } from "./topdown.js";
@@ -180,7 +180,9 @@ const appendEntities = () => {
   if (numNewAttractant >= 0) {
     entities.attractant = unionArrays(
       entities.attractant,
-      new Array(numNewAttractant).fill().map((_) => new Attractant(attractantSpawnPosition))
+      new Array(numNewAttractant)
+        .fill()
+        .map((_) => new Attractant(attractantSpawnPosition))
     );
   } else {
     entities.attractant.splice(numNewAttractant);
@@ -233,7 +235,7 @@ attractantVolumeSlider.addEventListener("input", ({ target: { value } }) => {
   appendEntities();
 });
 
-CTX.canvas.addEventListener("click", ({layerX: x, layerY: y}) => {
+CTX.canvas.addEventListener("click", ({ layerX: x, layerY: y }) => {
   numAttractant = numAttractant + 30;
 
   if (
@@ -242,13 +244,13 @@ CTX.canvas.addEventListener("click", ({layerX: x, layerY: y}) => {
       new Path2D(ecoliProperties.boundaryPath),
       ecoliProperties.boundaryLeft,
       ecoliProperties.boundaryTop,
-      {x, y},
+      { x, y },
       attractantProperties.defaultSize
     )
   ) {
-    attractantSpawnPosition = {x, y};
+    attractantSpawnPosition = { x, y };
   }
-  
+
   attractantVolumeSlider.value = numAttractant;
   appendEntities();
 });
