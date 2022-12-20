@@ -72,7 +72,7 @@ export const isAtBoundary = (
 };
 
 // test all corners of a square against a boundary
-const isShapeInPath = (context, path, pathXOffset, pathYOffset, location, size) => {
+export const isShapeInPath = (context, path, pathXOffset, pathYOffset, location, size) => {
   // isPointInPath is basing its result on a 2X size version of the input
   // path. Not sure how to fix this, so we pass in a 2X size coordinate
   const scaleFactor = window.devicePixelRatio;

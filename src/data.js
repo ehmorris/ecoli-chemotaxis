@@ -10,8 +10,8 @@ export const graphProperties = {
 };
 
 export const attractantSliderProperties = {
-  defaultAmount: 300,
-  maxAttractantAmount: 1000
+  defaultAmount: 100,
+  maxAttractantAmount: 8000
 };
 
 const ecoliWidth = 380;
@@ -29,7 +29,7 @@ export const ecoliProperties = {
     "M0 80.954C0 51.64 21.5 14.865 53 7.5 87.452-.555 118.061 1 153.226 1 198.529 1 260.839 5.124 312 9.5c38.609 3.302 68 40.941 68 75.494 0 39.247-32.985 78.645-78.5 74.506-44.469-4.043-89.804-7.763-129.887-7.763-33.017 0-55.544.952-87.113 4.263C37.391 160.941 0 125.911 0 80.954z"
 };
 
-export const numCheY = 200;
+export const numCheY = 150;
 const cheYSize = 10;
 export const cheYProperties = {
   defaultColor: "#096729",
@@ -90,5 +90,6 @@ export const attractantProperties = {
   boundaryTop: 0,
   boundaryRight: canvasProperties.width - attractantSize,
   boundaryBottom: canvasProperties.height - attractantSize,
-  boundaryLeft: 0
+  boundaryLeft: 0,
+  defaultPosition: { x: 40, y: 40 }
 };

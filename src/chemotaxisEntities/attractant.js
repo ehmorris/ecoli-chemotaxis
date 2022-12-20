@@ -8,13 +8,15 @@ import {
 import { attractantProperties, ecoliProperties } from "../data.js";
 
 export class Attractant {
-  constructor() {
+  constructor(passedPosition) {
+    if (passedPosition) {
+      this.position = passedPosition;
+    } else {
+      this.position = attractantProperties.defaultPosition;
+    }
+
     this.id = generateID();
     this.containerPath = new Path2D(ecoliProperties.boundaryPath);
-    this.position = {
-      x: 40,
-      y: 40
-    };
     this.type = "attractant";
     this.color = attractantProperties.defaultColor;
     this.size = attractantProperties.defaultSize;

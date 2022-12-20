@@ -9,6 +9,7 @@ import {
   getEntityIntersection,
   isColliding,
   generateArrayOfObjects,
+  isShapeInPath
 } from "./helpers.js";
 import { spawnEntityGraph } from "./smallgraph.js";
 import { spawnTopDown } from "./topdown.js";
@@ -20,11 +21,13 @@ import {
   receptorProperties,
   motorProperties,
   attractantSliderProperties,
+  attractantProperties,
 } from "./data.js";
 
 let entities;
 const ecoliEntity = new Ecoli();
 let numAttractant = attractantSliderProperties.defaultAmount;
+let attractantSpawnPosition = null;
 let numReceptor = ecoliProperties.numReceptor;
 let numMotor = ecoliProperties.numMotor;
 let phosphorylatedCheYCount = 0;
@@ -177,7 +180,7 @@ const appendEntities = () => {
   if (numNewAttractant >= 0) {
     entities.attractant = unionArrays(
       entities.attractant,
-      generateArrayOfObjects(numNewAttractant, Attractant)
+      new Array(numNewAttractant).fill().map((_) => new Attractant(attractantSpawnPosition))
     );
   } else {
     entities.attractant.splice(numNewAttractant);
@@ -227,6 +230,26 @@ spawnTopDown({
 
 attractantVolumeSlider.addEventListener("input", ({ target: { value } }) => {
   numAttractant = parseInt(value, 10);
+  appendEntities();
+});
+
+CTX.canvas.addEventListener("click", ({layerX: x, layerY: y}) => {
+  numAttractant = numAttractant + 30;
+
+  if (
+    !isShapeInPath(
+      CTX,
+      new Path2D(ecoliProperties.boundaryPath),
+      ecoliProperties.boundaryLeft,
+      ecoliProperties.boundaryTop,
+      {x, y},
+      attractantProperties.defaultSize
+    )
+  ) {
+    attractantSpawnPosition = {x, y};
+  }
+  
+  attractantVolumeSlider.value = numAttractant;
   appendEntities();
 });
 
