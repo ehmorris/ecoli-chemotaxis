@@ -3,7 +3,7 @@ import {
   isAtBoundary,
   nextPositionAlongHeading,
   getNewLocationOutsideBoundary,
-  generateID
+  generateID,
 } from "../helpers.js";
 import { attractantProperties, ecoliProperties } from "../data.js";
 
@@ -38,10 +38,7 @@ export class Attractant {
   }
 
   unstick() {
-    this.position = {
-      x: 0,
-      y: 0
-    };
+    this.position = attractantProperties.defaultPosition;
     this.speed = randomBetween(
       attractantProperties.speedMin,
       attractantProperties.speedMax
@@ -60,19 +57,20 @@ export class Attractant {
       ecoliProperties.boundaryLeft,
       ecoliProperties.boundaryTop
     ).then(({ x, y, heading }) => {
+      CTX.fillStyle = this.color;
+      CTX.fillRect(this.position.x, this.position.y, this.size, this.size);
+
       if (
         this.isStuck &&
         this.age > this.stuckAt + attractantProperties.stickDuration
       ) {
         this.unstick();
+      } else {
+        // only change these props when unstuck
+        this.position = { x, y };
+        this.heading = heading;
       }
 
-      CTX.fillStyle = this.color;
-      CTX.fillRect(this.position.x, this.position.y, this.size, this.size);
-
-      // update props
-      this.position = { x, y };
-      this.heading = heading;
       this.age = this.age + 1;
     });
   }

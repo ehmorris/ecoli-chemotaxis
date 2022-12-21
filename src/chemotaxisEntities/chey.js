@@ -76,28 +76,12 @@ export class CheY {
       ecoliProperties.boundaryLeft,
       ecoliProperties.boundaryTop
     ).then(({ x, y, heading }) => {
-      if (this.isStuck && this.stuckTo.type === "motor") {
-        if (this.age > this.stuckAt + cheYProperties.motorStickDuration) {
-          this.unstick();
-        }
-      } else if (this.isStuck && this.stuckTo.type === "receptor") {
-        if (this.age > this.stuckAt + cheYProperties.receptorStickDuration) {
-          this.unstick();
-        }
-      }
-
       // fill in dot shape
       const shapeCenter = {
         x: x + this.size / 2,
         y: y + this.size / 2,
       };
       const rotationAmount = (Math.PI / 180) * this.rotation;
-
-      // debug rectangle
-      // CTX.fillStyle = "red";
-      // CTX.save();
-      // CTX.fillRect(x, y, this.size, this.size);
-      // CTX.restore();
 
       // draw dot shape
       CTX.fillStyle = this.color;
@@ -108,10 +92,21 @@ export class CheY {
       CTX.fill(new Path2D(cheYProperties.shapePath));
       CTX.restore();
 
-      // update props
-      this.rotation = this.rotation + 2;
-      this.position = { x, y };
-      this.heading = heading;
+      if (this.isStuck && this.stuckTo.type === "motor") {
+        if (this.age > this.stuckAt + cheYProperties.motorStickDuration) {
+          this.unstick();
+        }
+      } else if (this.isStuck && this.stuckTo.type === "receptor") {
+        if (this.age > this.stuckAt + cheYProperties.receptorStickDuration) {
+          this.unstick();
+        }
+      } else {
+        // only change these props when unstuck
+        this.rotation = this.rotation + 2;
+        this.position = { x, y };
+        this.heading = heading;
+      }
+
       this.age = this.age + 1;
     });
   }

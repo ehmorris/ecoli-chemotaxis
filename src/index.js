@@ -48,11 +48,11 @@ const drawFrame = () => {
   const flattenedEntities = Object.values(entities).flat();
   const collidingEntitityPairs = [];
   const collidingEntitiesFlat = [];
-  flattenedEntities.forEach((entity1) => {
-    flattenedEntities.forEach((entity2) => {
+  for (const entity1 of flattenedEntities) {
+    for (const entity2 of flattenedEntities) {
       if (
-        entity1.id !== entity2.id &&
         entity1.type !== entity2.type &&
+        entity1.id !== entity2.id &&
         isColliding(
           entity1.position,
           entity1.size,
@@ -66,8 +66,8 @@ const drawFrame = () => {
         });
         collidingEntitiesFlat.push(entity1);
       }
-    });
-  });
+    }
+  }
 
   // Trigger collision behavior in colliding entities
   collidingEntitityPairs.forEach(({ entity, collidingWith }) => {
