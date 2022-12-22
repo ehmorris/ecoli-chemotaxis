@@ -45,26 +45,25 @@ const drawFrame = () => {
   ecoliEntity.draw(CTX);
 
   // Find all intersecting entities
-  const flattenedEntities = Object.values(entities).flat();
+  const acceptsStickyEntities = entities.receptor.concat(entities.motor);
+  const entitiesThatStick = entities.chey.concat(entities.attractant);
   const collidingEntitityPairs = [];
   const collidingEntitiesFlat = [];
-  for (const entity1 of flattenedEntities) {
-    for (const entity2 of flattenedEntities) {
+  for (const acceptsSticky of acceptsStickyEntities) {
+    for (const sticky of entitiesThatStick) {
       if (
-        entity1.type !== entity2.type &&
-        entity1.id !== entity2.id &&
         isColliding(
-          entity1.position,
-          entity1.size,
-          entity2.position,
-          entity2.size
+          acceptsSticky.position,
+          acceptsSticky.size,
+          sticky.position,
+          sticky.size
         )
       ) {
         collidingEntitityPairs.push({
-          entity: entity1,
-          collidingWith: entity2,
+          entity: sticky,
+          collidingWith: acceptsSticky,
         });
-        collidingEntitiesFlat.push(entity1);
+        collidingEntitiesFlat.push(acceptsSticky);
       }
     }
   }
