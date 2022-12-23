@@ -1,12 +1,16 @@
+# Notes 12/23/22
+
+
 # Notes 11/16/22
 
-- Find the right cheY balance for a good simulation and remove the control
-- Find way to make attractant not stop at a "wall" - can we inverse the "is in path" method?
-- Draw shapes for motors and receptors
-- Real colors
-- Larger size / maybe proportional?
-- Port graph things back in from lunar lander
-- Make distinction between run and tumble gif more obvious - shorten GIFs to clearest states
+- [x] Find the right cheY balance for a good simulation and remove the control
+- [x] Find way to make attractant not stop at a "wall" - can we inverse the "is in path" method?
+- [x] Draw shapes for motors
+- [ ] Draw shapes for receptors
+- [x] Better colors
+- [ ] Larger size / maybe proportional?
+- [ ] Port graph things back in from lunar lander
+- [ ] Make distinction between run and tumble gif more obvious - shorten GIFs to clearest states
 
 # Notes 9/16/22
 

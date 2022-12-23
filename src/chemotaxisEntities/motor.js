@@ -4,7 +4,7 @@ import { motorProperties } from "../data.js";
 export class Motor {
   constructor() {
     this.id = generateID();
-    this.position = motorProperties.positions.pop();
+    this.position = motorProperties.positionsAndRotations.pop();
     this.type = "motor";
     this.color = motorProperties.defaultColor;
     this.size = motorProperties.defaultSize;
@@ -22,11 +22,19 @@ export class Motor {
   }
 
   draw(CTX) {
+    const shapeCenter = {
+      x: this.position.x + this.size / 2,
+      y: this.position.y + this.size / 2,
+    };
+    const rotationAmount = (Math.PI / 180) * this.position.r;
+
     CTX.fillStyle = this.color;
-    CTX.save();
-    CTX.translate(this.position.x, this.position.y);
-    CTX.fill(new Path2D(motorProperties.shapePath));
     CTX.strokeStyle = "#010103";
+    CTX.save();
+    CTX.translate(shapeCenter.x, shapeCenter.y);
+    CTX.rotate(rotationAmount);
+    CTX.translate(-this.size / 2, -this.size / 2);
+    CTX.fill(new Path2D(motorProperties.shapePath));
     CTX.stroke(new Path2D(motorProperties.shapePath));
     CTX.restore();
   }
