@@ -63,6 +63,7 @@ const drawFrame = () => {
           entity: sticky,
           collidingWith: acceptsSticky,
         });
+        collidingEntitiesFlat.push(sticky);
         collidingEntitiesFlat.push(acceptsSticky);
       }
     }
