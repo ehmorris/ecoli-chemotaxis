@@ -26,6 +26,8 @@ export class Motor {
     CTX.save();
     CTX.translate(this.position.x, this.position.y);
     CTX.fill(new Path2D(motorProperties.shapePath));
+    CTX.strokeStyle = "#010103";
+    CTX.stroke(new Path2D(motorProperties.shapePath));
     CTX.restore();
   }
 }
