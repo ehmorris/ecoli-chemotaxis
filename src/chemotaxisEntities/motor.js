@@ -23,6 +23,9 @@ export class Motor {
 
   draw(CTX) {
     CTX.fillStyle = this.color;
-    CTX.fillRect(this.position.x, this.position.y, this.size, this.size);
+    CTX.save();
+    CTX.translate(this.position.x, this.position.y);
+    CTX.fill(new Path2D(motorProperties.shapePath));
+    CTX.restore();
   }
 }
