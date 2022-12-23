@@ -1,5 +1,8 @@
 # Notes 12/23/22
 
+- [ ] Make flagella look like they're moving in 3D space (rather than up and down on a plane as they do now) 
+- [ ] Make run flagella look coiled together https://www.youtube.com/watch?v=25FtMdIFtXM
+- [ ] Some flagella can be different opacity to imply depth https://www.figma.com/file/2RcSVfM0iCMwMsBaLmPINC/E.-Coli-Project?node-id=311%3A20&t=Lj8p1mVwXxgar80y-1
 
 # Notes 11/16/22
 

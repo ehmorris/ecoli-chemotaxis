@@ -1,5 +1,5 @@
 export const canvasProperties = {
-  width: 520,
+  width: 800,
   height: 280,
 };
 
