@@ -106,7 +106,7 @@ export const isShapeInPath = (
 };
 
 // recurse until new location inside boundary is found
-export const getNewLocationInBoundary = (
+export const getNewRandomLocationInBoundary = (
   context,
   heading,
   currentSpeed,
@@ -139,7 +139,7 @@ export const getNewLocationInBoundary = (
     ) {
       const newHeading = randomBetween(1, 360);
       return resolve(
-        getNewLocationInBoundary(
+        getNewRandomLocationInBoundary(
           context,
           newHeading,
           currentSpeed,
@@ -156,7 +156,7 @@ export const getNewLocationInBoundary = (
   });
 };
 
-export const getNewLocationOutsideBoundary = (
+export const getNewAttractantLocationOutsideBoundary = (
   context,
   heading,
   currentSpeed,
@@ -167,7 +167,13 @@ export const getNewLocationOutsideBoundary = (
   boundaryPathYOffset
 ) => {
   // add jitter to movement
-  const headingWithJitter = heading + randomBetween(-20, 20);
+  const minClamp = randomBetween(-90, -70);
+  const maxClamp = randomBetween(70, 90);
+  const headingWithJitter = clampNumber(
+    heading + randomBetween(-90, 90),
+    minClamp,
+    maxClamp
+  );
 
   // test new location
   return new Promise((resolve) => {
@@ -194,13 +200,17 @@ export const getNewLocationOutsideBoundary = (
         0
       )
     ) {
-      const newHeading = randomBetween(1, 360);
+      const newLocation =
+        prospectiveNewLocation.x >= canvasProperties.width
+          ? { x: 0, y: prospectiveNewLocation.y }
+          : currentLocation;
+
       return resolve(
-        getNewLocationOutsideBoundary(
+        getNewAttractantLocationOutsideBoundary(
           context,
-          newHeading,
+          headingWithJitter,
           currentSpeed,
-          currentLocation,
+          newLocation,
           currentSize,
           boundaryPath,
           boundaryPathXOffset,

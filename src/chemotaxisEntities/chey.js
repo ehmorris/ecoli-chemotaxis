@@ -2,7 +2,7 @@ import {
   randomBetween,
   generateID,
   randomBool,
-  getNewLocationInBoundary,
+  getNewRandomLocationInBoundary,
 } from "../helpers.js";
 import { cheYProperties, ecoliProperties } from "../data.js";
 
@@ -66,7 +66,7 @@ export class CheY {
   }
 
   draw(CTX) {
-    getNewLocationInBoundary(
+    getNewRandomLocationInBoundary(
       CTX,
       this.heading,
       this.speed,

@@ -2,7 +2,7 @@ import {
   randomBetween,
   isAtBoundary,
   nextPositionAlongHeading,
-  getNewLocationOutsideBoundary,
+  getNewAttractantLocationOutsideBoundary,
   generateID,
 } from "../helpers.js";
 import { attractantProperties, ecoliProperties } from "../data.js";
@@ -47,7 +47,7 @@ export class Attractant {
   }
 
   draw(CTX) {
-    getNewLocationOutsideBoundary(
+    getNewAttractantLocationOutsideBoundary(
       CTX,
       this.heading,
       this.speed,
