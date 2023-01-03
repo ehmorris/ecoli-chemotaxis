@@ -2,10 +2,15 @@ import {
   randomBetween,
   isAtBoundary,
   nextPositionAlongHeading,
-  getNewAttractantLocationOutsideBoundary,
+  isShapeInPath,
+  clampNumber,
   generateID,
 } from "../helpers.js";
-import { attractantProperties, ecoliProperties } from "../data.js";
+import {
+  attractantProperties,
+  ecoliProperties,
+  canvasProperties,
+} from "../data.js";
 
 export class Attractant {
   constructor(passedPosition) {
@@ -46,16 +51,72 @@ export class Attractant {
     this.isStuck = false;
   }
 
+  getNewPositionOutsideBoundary(
+    context,
+    currentHeading,
+    currentSpeed,
+    currentPosition
+  ) {
+    // add jitter to movement
+    const minClamp = randomBetween(-90, -70);
+    const maxClamp = randomBetween(70, 90);
+    const headingWithDirectionAndJitter = clampNumber(
+      currentHeading + randomBetween(-90, 90),
+      minClamp,
+      maxClamp
+    );
+
+    // test new position
+    return new Promise((resolve) => {
+      const prospectiveNewPosition = nextPositionAlongHeading(
+        currentPosition,
+        currentSpeed,
+        headingWithDirectionAndJitter
+      );
+
+      if (
+        isShapeInPath(
+          context,
+          this.containerPath,
+          ecoliProperties.boundaryLeft,
+          ecoliProperties.boundaryTop,
+          prospectiveNewPosition,
+          this.size
+        ) ||
+        isAtBoundary(
+          prospectiveNewPosition,
+          0,
+          canvasProperties.width,
+          canvasProperties.height,
+          0
+        )
+      ) {
+        const newPosition =
+          prospectiveNewPosition.x >= canvasProperties.width
+            ? { x: 0, y: prospectiveNewPosition.y }
+            : currentPosition;
+
+        return resolve(
+          this.getNewPositionOutsideBoundary(
+            context,
+            headingWithDirectionAndJitter,
+            currentSpeed,
+            newPosition
+          )
+        );
+      } else {
+        return resolve(prospectiveNewPosition);
+      }
+    });
+  }
+
   draw(CTX) {
-    getNewAttractantLocationOutsideBoundary(
+    this.getNewPositionOutsideBoundary(
       CTX,
       this.heading,
       this.speed,
       this.position,
-      this.size,
-      this.containerPath,
-      ecoliProperties.boundaryLeft,
-      ecoliProperties.boundaryTop
+      this.size
     ).then(({ x, y, heading }) => {
       CTX.fillStyle = this.color;
       CTX.fillRect(this.position.x, this.position.y, this.size, this.size);
