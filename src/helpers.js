@@ -31,6 +31,16 @@ export const generateCanvas = ({ width, height, attachNode }) => {
   return context;
 };
 
+export const animate = (drawFunc) => {
+  let startTime = Date.now();
+
+  const drawFuncContainer = () => {
+    drawFunc(Date.now() - startTime);
+    window.requestAnimationFrame(drawFuncContainer);
+  };
+
+  window.requestAnimationFrame(drawFuncContainer);
+};
 export const generateSlider = ({ label, value, max, min, attachNode }) => {
   const element = document.createElement("input");
   element.value = value;

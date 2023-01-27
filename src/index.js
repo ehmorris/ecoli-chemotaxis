@@ -10,6 +10,7 @@ import {
   isColliding,
   generateArrayOfObjects,
   isShapeInPath,
+  animate,
 } from "./helpers.js";
 import { spawnEntityGraph } from "./smallgraph.js";
 import { spawnTopDown } from "./topdown.js";
@@ -17,28 +18,80 @@ import {
   canvasProperties,
   ecoliProperties,
   cheYProperties,
-  numCheY,
   receptorProperties,
   motorProperties,
   attractantSliderProperties,
   attractantProperties,
 } from "./data.js";
 
-let entities;
-const ecoliEntity = new Ecoli();
-let numAttractant = attractantSliderProperties.defaultAmount;
-let attractantSpawnPosition = null;
-let numReceptor = ecoliProperties.numReceptor;
-let numMotor = ecoliProperties.numMotor;
-let phosphorylatedCheYCount = 0;
-let activeMotorCount = 0;
 const CTX = generateCanvas({
   width: canvasProperties.width,
   height: canvasProperties.height,
   attachNode: ".canvasContainer",
 });
 
-const drawFrame = () => {
+let numAttractant = attractantSliderProperties.defaultAmount;
+let attractantSpawnPosition = null;
+let phosphorylatedCheYCount = 0;
+let activeMotorCount = 0;
+let entities = {
+  receptor: generateArrayOfObjects(ecoliProperties.numReceptor, Receptor),
+  motor: generateArrayOfObjects(ecoliProperties.numMotor, Motor),
+  attractant: generateArrayOfObjects(numAttractant, Attractant),
+  chey: generateArrayOfObjects(ecoliProperties.numCheY, CheY),
+};
+const ecoliEntity = new Ecoli();
+
+const appendAttractant = () => {
+  const unionArrays = (arr1, arr2) => [...new Set([...arr1, ...arr2])];
+  const numNewAttractant = numAttractant - entities.attractant.length;
+
+  if (numNewAttractant >= 0) {
+    entities.attractant = unionArrays(
+      entities.attractant,
+      new Array(numNewAttractant)
+        .fill()
+        .map((_) => new Attractant(attractantSpawnPosition))
+    );
+  } else {
+    entities.attractant.splice(numNewAttractant);
+  }
+};
+
+const attractantVolumeSlider = generateSlider({
+  label: "Attractant",
+  value: numAttractant,
+  max: attractantSliderProperties.maxAttractantAmount,
+  min: 1,
+  attachNode: ".sliderContainer",
+});
+
+attractantVolumeSlider.addEventListener("input", ({ target: { value } }) => {
+  numAttractant = parseInt(value, 10);
+  appendAttractant();
+});
+
+CTX.canvas.addEventListener("click", ({ layerX: x, layerY: y }) => {
+  numAttractant = numAttractant + 30;
+
+  if (
+    !isShapeInPath(
+      CTX,
+      new Path2D(ecoliProperties.boundaryPath),
+      ecoliProperties.boundaryLeft,
+      ecoliProperties.boundaryTop,
+      { x, y },
+      attractantProperties.defaultSize
+    )
+  ) {
+    attractantSpawnPosition = { x, y };
+  }
+
+  attractantVolumeSlider.value = numAttractant;
+  appendAttractant();
+});
+
+animate(() => {
   CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 
   // Draw background
@@ -135,7 +188,8 @@ const drawFrame = () => {
 
   // Update for phosphorylated timeseries
   phosphorylatedCheYCount =
-    numCheY - entities.chey.filter((c) => !c.phosphorylated).length;
+    ecoliProperties.numCheY -
+    entities.chey.filter((c) => !c.phosphorylated).length;
 
   // Update for tumble/run viz
   activeMotorCount = entities.motor.filter((m) => m.tumbling).length;
@@ -148,76 +202,11 @@ const drawFrame = () => {
       CTX.restore();
     })
   );
-
-  window.requestAnimationFrame(drawFrame);
-};
-
-const appendEntities = () => {
-  const unionArrays = (arr1, arr2) => [...new Set([...arr1, ...arr2])];
-  const numNewReceptors = numReceptor - entities.receptor.length;
-  const numNewMotors = numMotor - entities.motor.length;
-  const numNewAttractant = numAttractant - entities.attractant.length;
-  const numNewCheY = numCheY - entities.chey.length;
-
-  if (numNewReceptors >= 0) {
-    entities.receptor = unionArrays(
-      entities.receptor,
-      generateArrayOfObjects(numNewReceptors, Receptor)
-    );
-  } else {
-    entities.receptor.splice(numNewReceptors);
-  }
-
-  if (numNewMotors >= 0) {
-    entities.motor = unionArrays(
-      entities.motor,
-      generateArrayOfObjects(numNewMotors, Motor)
-    );
-  } else {
-    entities.motor.splice(numNewMotors);
-  }
-
-  if (numNewAttractant >= 0) {
-    entities.attractant = unionArrays(
-      entities.attractant,
-      new Array(numNewAttractant)
-        .fill()
-        .map((_) => new Attractant(attractantSpawnPosition))
-    );
-  } else {
-    entities.attractant.splice(numNewAttractant);
-  }
-
-  if (numNewCheY >= 0) {
-    entities.chey = unionArrays(
-      entities.chey,
-      generateArrayOfObjects(numNewCheY, CheY)
-    );
-  } else {
-    entities.chey.splice(numNewCheY);
-  }
-};
-
-const generateEntities = () => {
-  entities = {
-    receptor: generateArrayOfObjects(numReceptor, Receptor),
-    motor: generateArrayOfObjects(numMotor, Motor),
-    attractant: generateArrayOfObjects(numAttractant, Attractant),
-    chey: generateArrayOfObjects(numCheY, CheY),
-  };
-};
-
-const attractantVolumeSlider = generateSlider({
-  label: "Attractant",
-  value: numAttractant,
-  max: attractantSliderProperties.maxAttractantAmount,
-  min: 1,
-  attachNode: ".sliderContainer",
 });
 
 spawnEntityGraph({
   getNumerator: () => phosphorylatedCheYCount,
-  getDenominator: () => numCheY,
+  getDenominator: () => ecoliProperties.numCheY,
   topLabel: "Total cheY",
   bottomLabel: "Phosphory...",
   showPercent: true,
@@ -227,34 +216,5 @@ spawnEntityGraph({
 
 spawnTopDown({
   getNumerator: () => activeMotorCount,
-  getDenominator: () => numMotor,
+  getDenominator: () => ecoliProperties.numMotor,
 });
-
-attractantVolumeSlider.addEventListener("input", ({ target: { value } }) => {
-  numAttractant = parseInt(value, 10);
-  appendEntities();
-});
-
-CTX.canvas.addEventListener("click", ({ layerX: x, layerY: y }) => {
-  numAttractant = numAttractant + 30;
-
-  if (
-    !isShapeInPath(
-      CTX,
-      new Path2D(ecoliProperties.boundaryPath),
-      ecoliProperties.boundaryLeft,
-      ecoliProperties.boundaryTop,
-      { x, y },
-      attractantProperties.defaultSize
-    )
-  ) {
-    attractantSpawnPosition = { x, y };
-  }
-
-  attractantVolumeSlider.value = numAttractant;
-  appendEntities();
-});
-
-// Kick off simulation
-generateEntities();
-window.requestAnimationFrame(drawFrame);

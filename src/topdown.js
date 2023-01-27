@@ -1,4 +1,5 @@
 import { graphProperties } from "./data.js";
+import { animate } from "./helpers.js";
 
 export const spawnTopDown = ({ getNumerator, getDenominator }) => {
   const generateImageTag = (srcurl) => {
@@ -15,15 +16,11 @@ export const spawnTopDown = ({ getNumerator, getDenominator }) => {
 
   const imageTag = generateImageTag(runGifURL);
 
-  const drawFrame = () => {
+  animate(() => {
     const percentFill = getNumerator() / getDenominator();
     const newSrc = percentFill > 0.5 ? tumbleGifURL : runGifURL;
     if (newSrc !== imageTag.src) {
       imageTag.src = newSrc;
     }
-
-    window.requestAnimationFrame(drawFrame);
-  };
-
-  window.requestAnimationFrame(drawFrame);
+  });
 };

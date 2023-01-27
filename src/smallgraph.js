@@ -1,4 +1,4 @@
-import { generateCanvas } from "./helpers.js";
+import { generateCanvas, animate } from "./helpers.js";
 import { graphProperties } from "./data.js";
 
 export const spawnEntityGraph = ({
@@ -8,13 +8,13 @@ export const spawnEntityGraph = ({
   bottomLabel,
   showPercent,
   backgroundColor,
-  fillColor
+  fillColor,
 }) => {
   let barLog = [];
   const CTX = generateCanvas({
     width: graphProperties.width,
     height: graphProperties.height,
-    attachNode: ".graphContainer"
+    attachNode: ".graphContainer",
   });
 
   const addValueToBarLog = (value) => {
@@ -39,7 +39,7 @@ export const spawnEntityGraph = ({
     CTX.fill();
   };
 
-  const drawFrame = () => {
+  animate(() => {
     CTX.fillStyle = backgroundColor;
     CTX.fillRect(0, 0, graphProperties.width, graphProperties.height);
 
@@ -54,9 +54,5 @@ export const spawnEntityGraph = ({
     CTX.font = "10px sans-serif";
     CTX.fillText(topLabel, 3, 12);
     CTX.fillText(bottomLabelWithOptions, 3, graphProperties.height - 5);
-
-    window.requestAnimationFrame(drawFrame);
-  };
-
-  window.requestAnimationFrame(drawFrame);
+  });
 };
