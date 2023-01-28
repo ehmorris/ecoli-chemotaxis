@@ -41,7 +41,14 @@ export const animate = (drawFunc) => {
 
   window.requestAnimationFrame(drawFuncContainer);
 };
-export const generateSlider = ({ label, value, max, min, attachNode }) => {
+export const generateSlider = ({
+  label,
+  value,
+  max,
+  min,
+  attachNode,
+  onInput,
+}) => {
   const element = document.createElement("input");
   element.value = value;
   element.max = max;
@@ -58,6 +65,8 @@ export const generateSlider = ({ label, value, max, min, attachNode }) => {
   parent.append(elementLabel, element);
 
   document.querySelector(attachNode).appendChild(parent);
+
+  element.addEventListener("input", ({ target: { value } }) => onInput(value));
 
   return element;
 };

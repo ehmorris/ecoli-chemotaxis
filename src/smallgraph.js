@@ -1,7 +1,7 @@
 import { generateCanvas, animate } from "./helpers.js";
 import { graphProperties } from "./data.js";
 
-export const spawnEntityGraph = ({
+export const generateEntityTimeseries = ({
   getNumerator,
   getDenominator,
   topLabel,

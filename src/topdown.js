@@ -1,7 +1,7 @@
 import { graphProperties } from "./data.js";
 import { animate } from "./helpers.js";
 
-export const spawnTopDown = ({ getNumerator, getDenominator }) => {
+export const generateTopDownViz = ({ getNumerator, getDenominator }) => {
   const generateImageTag = (srcurl) => {
     const element = document.createElement("img");
     element.width = graphProperties.width;

@@ -12,8 +12,8 @@ import {
   isShapeInPath,
   animate,
 } from "./helpers.js";
-import { spawnEntityGraph } from "./smallgraph.js";
-import { spawnTopDown } from "./topdown.js";
+import { generateEntityTimeseries } from "./smallgraph.js";
+import { generateTopDownViz } from "./topdown.js";
 import {
   canvasProperties,
   ecoliProperties,
@@ -67,11 +67,10 @@ const attractantVolumeSlider = generateSlider({
   max: attractantSliderProperties.maxAttractantAmount,
   min: 1,
   attachNode: ".sliderContainer",
-});
-
-attractantVolumeSlider.addEventListener("input", ({ target: { value } }) => {
-  state.set("numAttractant", parseInt(value, 10));
-  updateAttractant();
+  onInput: (value) => {
+    state.set("numAttractant", parseInt(value, 10));
+    updateAttractant();
+  },
 });
 
 CTX.canvas.addEventListener("click", ({ layerX: x, layerY: y }) => {
@@ -202,12 +201,12 @@ animate(() => {
   );
 
   // Draw scene
-  Object.entries(entities).forEach(([key, entityType]) =>
+  Object.entries(entities).forEach(([_, entityType]) =>
     entityType.forEach((entity) => entity.draw(CTX))
   );
 });
 
-spawnEntityGraph({
+generateEntityTimeseries({
   getNumerator: () => state.get("phosphorylatedCheYCount"),
   getDenominator: () => ecoliProperties.numCheY,
   topLabel: "Total cheY",
@@ -217,7 +216,7 @@ spawnEntityGraph({
   fillColor: cheYProperties.phosphorylatedColor,
 });
 
-spawnTopDown({
+generateTopDownViz({
   getNumerator: () => state.get("activeMotorCount"),
   getDenominator: () => ecoliProperties.numMotor,
 });
