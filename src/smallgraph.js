@@ -3,7 +3,7 @@ import { graphProperties } from "./data.js";
 
 export const generateEntityTimeseries = ({
   getNumerator,
-  getDenominator,
+  denominator,
   topLabel,
   bottomLabel,
   showPercent,
@@ -43,7 +43,7 @@ export const generateEntityTimeseries = ({
     CTX.fillStyle = backgroundColor;
     CTX.fillRect(0, 0, graphProperties.width, graphProperties.height);
 
-    const percentFill = getNumerator() / getDenominator();
+    const percentFill = getNumerator() / denominator;
     addValueToBarLog(percentFill);
     drawGraphPolygon(barLog);
     const bottomLabelWithOptions = showPercent
