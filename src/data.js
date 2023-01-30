@@ -117,5 +117,4 @@ export const attractantProperties = {
   boundaryRight: canvasProperties.width - attractantSize,
   boundaryBottom: canvasProperties.height - attractantSize,
   boundaryLeft: 0,
-  defaultPosition: { x: 40, y: 40 },
 };

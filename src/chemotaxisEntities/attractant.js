@@ -14,17 +14,11 @@ import {
 
 export class Attractant {
   constructor(passedPosition) {
-    if (passedPosition) {
-      this.position = passedPosition;
-    } else {
-      this.position = attractantProperties.defaultPosition;
-    }
-
-    this.id = generateID();
     this.containerPath = new Path2D(ecoliProperties.boundaryPath);
+    this.size = attractantProperties.defaultSize;
+    this.id = generateID();
     this.type = "attractant";
     this.color = attractantProperties.defaultColor;
-    this.size = attractantProperties.defaultSize;
     this.heading = randomBetween(0, 359);
     this.speed = randomBetween(
       attractantProperties.speedMin,
@@ -33,17 +27,28 @@ export class Attractant {
     this.age = 0;
     this.stuckAt = 0;
     this.isStuck = false;
+
+    if (passedPosition) {
+      this.position = passedPosition;
+    } else {
+      this.position = {
+        x: randomBetween(0, canvasProperties.width),
+        y: randomBetween(0, canvasProperties.height),
+      };
+    }
   }
 
   stick() {
-    // need some kind of constraint so attractant doesn't immediately re-stick
     this.speed = 0;
     this.stuckAt = this.age;
     this.isStuck = true;
   }
 
   unstick() {
-    this.position = attractantProperties.defaultPosition;
+    this.position = {
+      x: randomBetween(0, canvasProperties.width),
+      y: randomBetween(0, canvasProperties.height),
+    };
     this.speed = randomBetween(
       attractantProperties.speedMin,
       attractantProperties.speedMax
@@ -51,13 +56,7 @@ export class Attractant {
     this.isStuck = false;
   }
 
-  getNewPositionOutsideBoundary(
-    context,
-    currentHeading,
-    currentSpeed,
-    currentPosition
-  ) {
-    // add jitter to movement
+  getNewPosition(context, currentHeading, currentSpeed, currentPosition) {
     const minClamp = randomBetween(-90, -70);
     const maxClamp = randomBetween(70, 90);
     const headingWithDirectionAndJitter = clampNumber(
@@ -66,7 +65,6 @@ export class Attractant {
       maxClamp
     );
 
-    // test new position
     return new Promise((resolve) => {
       const prospectiveNewPosition = nextPositionAlongHeading(
         currentPosition,
@@ -75,14 +73,6 @@ export class Attractant {
       );
 
       if (
-        isShapeInPath(
-          context,
-          this.containerPath,
-          ecoliProperties.boundaryLeft,
-          ecoliProperties.boundaryTop,
-          prospectiveNewPosition,
-          this.size
-        ) ||
         isAtBoundary(
           prospectiveNewPosition,
           0,
@@ -97,7 +87,7 @@ export class Attractant {
             : currentPosition;
 
         return resolve(
-          this.getNewPositionOutsideBoundary(
+          this.getNewPosition(
             context,
             headingWithDirectionAndJitter,
             currentSpeed,
@@ -111,7 +101,7 @@ export class Attractant {
   }
 
   draw(CTX) {
-    this.getNewPositionOutsideBoundary(
+    this.getNewPosition(
       CTX,
       this.heading,
       this.speed,

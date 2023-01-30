@@ -35,12 +35,10 @@ const state = new Map()
   .set("phosphorylatedCheYCount", 0)
   .set("activeMotorCount", 0);
 
-let entities = {
-  receptor: generateArrayOfObjects(ecoliProperties.numReceptor, Receptor),
-  motor: generateArrayOfObjects(ecoliProperties.numMotor, Motor),
-  attractant: generateArrayOfObjects(state.get("numAttractant"), Attractant),
-  chey: generateArrayOfObjects(ecoliProperties.numCheY, CheY),
-};
+const receptors = generateArrayOfObjects(ecoliProperties.numReceptor, Receptor);
+const motors = generateArrayOfObjects(ecoliProperties.numMotor, Motor);
+const chey = generateArrayOfObjects(ecoliProperties.numCheY, CheY);
+let attractant = generateArrayOfObjects(state.get("numAttractant"), Attractant);
 
 const attractantVolumeSlider = generateSlider({
   label: "Attractant",
@@ -50,15 +48,14 @@ const attractantVolumeSlider = generateSlider({
   attachNode: ".sliderContainer",
   onInput: (value) => {
     state.set("numAttractant", parseInt(value, 10));
-    const numNewAttractant =
-      state.get("numAttractant") - entities.attractant.length;
+    const numNewAttractant = state.get("numAttractant") - attractant.length;
 
     if (numNewAttractant >= 0) {
-      entities.attractant = entities.attractant.concat(
+      attractant = attractant.concat(
         generateArrayOfObjects(numNewAttractant, Attractant)
       );
     } else {
-      entities.attractant.splice(numNewAttractant);
+      attractant.splice(numNewAttractant);
     }
   },
 });
@@ -74,11 +71,11 @@ CTX.canvas.addEventListener("click", ({ layerX: x, layerY: y }) => {
       attractantProperties.defaultSize
     )
   ) {
-    const newAttractant = 30;
-    state.set("numAttractant", state.get("numAttractant") + newAttractant);
+    const numNewAttractant = 30;
+    state.set("numAttractant", state.get("numAttractant") + numNewAttractant);
     attractantVolumeSlider.value = state.get("numAttractant");
-    entities.attractant = entities.attractant.concat(
-      new Array(newAttractant).fill().map((_) => new Attractant({ x, y }))
+    attractant = attractant.concat(
+      new Array(numNewAttractant).fill().map((_) => new Attractant({ x, y }))
     );
   }
 });
@@ -86,12 +83,9 @@ CTX.canvas.addEventListener("click", ({ layerX: x, layerY: y }) => {
 animate(() => {
   CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 
-  // Draw background
-  drawEcoli(CTX);
-
   // Find all intersecting entities
-  const acceptsStickyEntities = entities.receptor.concat(entities.motor);
-  const entitiesThatStick = entities.chey.concat(entities.attractant);
+  const acceptsStickyEntities = receptors.concat(motors);
+  const entitiesThatStick = chey.concat(attractant);
   const collidingEntitityPairs = [];
   const collidingEntitiesFlat = [];
   for (const acceptsSticky of acceptsStickyEntities) {
@@ -181,20 +175,20 @@ animate(() => {
   // Update for phosphorylated timeseries
   state.set(
     "phosphorylatedCheYCount",
-    ecoliProperties.numCheY -
-      entities.chey.filter((c) => !c.phosphorylated).length
+    ecoliProperties.numCheY - chey.filter((c) => !c.phosphorylated).length
   );
 
   // Update for tumble/run viz
-  state.set(
-    "activeMotorCount",
-    entities.motor.filter((m) => m.tumbling).length
-  );
+  state.set("activeMotorCount", motors.filter((m) => m.tumbling).length);
 
   // Draw scene
-  Object.entries(entities).forEach(([_, entityType]) =>
-    entityType.forEach((entity) => entity.draw(CTX))
-  );
+  attractant.forEach((a) => a.draw(CTX));
+  Promise.all(attractant).then(() => {
+    drawEcoli(CTX);
+    receptors.forEach((r) => r.draw(CTX));
+    motors.forEach((m) => m.draw(CTX));
+    chey.forEach((c) => c.draw(CTX));
+  });
 });
 
 generateEntityTimeseries({
