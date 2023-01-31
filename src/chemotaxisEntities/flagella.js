@@ -60,6 +60,8 @@ export const flagella = () => {
     CTX.save();
     CTX.lineWidth = 10;
     CTX.lineCap = "round";
+    CTX.translate(212, 768);
+    CTX.rotate((-100 * Math.PI) / 180);
     const transitionDuration = 400;
 
     if (state.get("transitionPhase") === 1) {
