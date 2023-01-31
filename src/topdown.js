@@ -1,5 +1,5 @@
 import { graphProperties } from "./data.js";
-import { animate } from "./helpers.js";
+import { animate } from "./animation.js";
 
 export const generateTopDownViz = ({ getNumerator, getDenominator }) => {
   const generateImageTag = (srcurl) => {

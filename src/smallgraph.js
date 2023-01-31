@@ -1,5 +1,6 @@
-import { generateCanvas, animate } from "./helpers.js";
+import { generateCanvas } from "./helpers.js";
 import { graphProperties } from "./data.js";
+import { animate } from "./animation.js";
 
 export const generateEntityTimeseries = ({
   getNumerator,

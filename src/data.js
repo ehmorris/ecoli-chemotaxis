@@ -1,6 +1,6 @@
 export const canvasProperties = {
   width: 800,
-  height: 280,
+  height: 800,
 };
 
 export const graphProperties = {

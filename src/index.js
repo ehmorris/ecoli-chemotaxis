@@ -3,6 +3,7 @@ import { CheY } from "./chemotaxisEntities/chey.js";
 import { Attractant } from "./chemotaxisEntities/attractant.js";
 import { Motor } from "./chemotaxisEntities/motor.js";
 import { Receptor } from "./chemotaxisEntities/receptor.js";
+import { flagella } from "./chemotaxisEntities/flagella.js";
 import {
   generateCanvas,
   generateSlider,
@@ -10,8 +11,8 @@ import {
   isColliding,
   generateArrayOfObjects,
   isShapeInPath,
-  animate,
 } from "./helpers.js";
+import { animate } from "./animation.js";
 import { generateEntityTimeseries } from "./smallgraph.js";
 import { generateTopDownViz } from "./topdown.js";
 import {
@@ -38,6 +39,7 @@ const state = new Map()
 const receptors = generateArrayOfObjects(ecoliProperties.numReceptor, Receptor);
 const motors = generateArrayOfObjects(ecoliProperties.numMotor, Motor);
 const chey = generateArrayOfObjects(ecoliProperties.numCheY, CheY);
+const flagellaInstance = flagella();
 let attractant = generateArrayOfObjects(state.get("numAttractant"), Attractant);
 
 const attractantVolumeSlider = generateSlider({
@@ -80,7 +82,7 @@ CTX.canvas.addEventListener("click", ({ layerX: x, layerY: y }) => {
   }
 });
 
-animate(() => {
+animate((millisecondsElapsed, resetElapsedTime) => {
   CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 
   // Find all intersecting entities
@@ -181,9 +183,14 @@ animate(() => {
   // Update for tumble/run viz
   state.set("activeMotorCount", motors.filter((m) => m.tumbling).length);
 
+  state.get("activeMotorCount") / ecoliProperties.numMotor > 0.5
+    ? flagellaInstance.tumble()
+    : flagellaInstance.run();
+
   // Draw scene
   attractant.forEach((a) => a.draw(CTX));
   Promise.all(attractant).then(() => {
+    flagellaInstance.draw(CTX, millisecondsElapsed, resetElapsedTime);
     drawEcoli(CTX);
     receptors.forEach((r) => r.draw(CTX));
     motors.forEach((m) => m.draw(CTX));
