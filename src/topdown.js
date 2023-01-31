@@ -11,8 +11,8 @@ export const generateTopDownViz = ({ getNumerator, getDenominator }) => {
     return element;
   };
 
-  const runGifURL = `${window.location.href}/src/images/Run.gif`;
-  const tumbleGifURL = `${window.location.href}/src/images/Tumble.gif`;
+  const runGifURL = `${window.location.href}src/images/Run.gif`;
+  const tumbleGifURL = `${window.location.href}src/images/Tumble.gif`;
 
   const imageTag = generateImageTag(runGifURL);
 
