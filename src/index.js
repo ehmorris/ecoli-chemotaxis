@@ -46,46 +46,6 @@ let attractant = generateArrayOfX(state.get("numAttractant"), () =>
   makeAttractant(CTX)
 );
 
-const attractantVolumeSlider = generateSlider({
-  label: "Attractant",
-  value: state.get("numAttractant"),
-  max: attractantSliderProperties.maxAttractantAmount,
-  min: 1,
-  attachNode: ".sliderContainer",
-  onInput: (value) => {
-    state.set("numAttractant", parseInt(value, 10));
-    const numNewAttractant = state.get("numAttractant") - attractant.length;
-
-    if (numNewAttractant >= 0) {
-      attractant = attractant.concat(
-        generateArrayOfX(numNewAttractant, () => makeAttractant(CTX))
-      );
-    } else {
-      attractant.splice(numNewAttractant);
-    }
-  },
-});
-
-CTX.canvas.addEventListener("click", ({ layerX: x, layerY: y }) => {
-  if (
-    !isShapeInPath(
-      CTX,
-      new Path2D(ecoliProperties.boundaryPath),
-      ecoliProperties.boundaryLeft,
-      ecoliProperties.boundaryTop,
-      { x, y },
-      attractantProperties.defaultSize
-    )
-  ) {
-    const numNewAttractant = 30;
-    state.set("numAttractant", state.get("numAttractant") + numNewAttractant);
-    attractantVolumeSlider.value = state.get("numAttractant");
-    attractant = attractant.concat(
-      generateArrayOfX(numNewAttractant, () => makeAttractant(CTX, { x, y }))
-    );
-  }
-});
-
 animate((millisecondsElapsed, resetElapsedTime) => {
   CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 
@@ -225,4 +185,44 @@ generateEntityTimeseries({
 generateTopDownViz({
   getNumerator: () => state.get("activeMotorCount"),
   denominator: ecoliProperties.numMotor,
+});
+
+const attractantVolumeSlider = generateSlider({
+  label: "Attractant",
+  value: state.get("numAttractant"),
+  max: attractantSliderProperties.maxAttractantAmount,
+  min: 1,
+  attachNode: ".sliderContainer",
+  onInput: (value) => {
+    state.set("numAttractant", parseInt(value, 10));
+    const numNewAttractant = state.get("numAttractant") - attractant.length;
+
+    if (numNewAttractant >= 0) {
+      attractant = attractant.concat(
+        generateArrayOfX(numNewAttractant, () => makeAttractant(CTX))
+      );
+    } else {
+      attractant.splice(numNewAttractant);
+    }
+  },
+});
+
+CTX.canvas.addEventListener("click", ({ layerX: x, layerY: y }) => {
+  if (
+    !isShapeInPath(
+      CTX,
+      new Path2D(ecoliProperties.boundaryPath),
+      ecoliProperties.boundaryLeft,
+      ecoliProperties.boundaryTop,
+      { x, y },
+      attractantProperties.defaultSize
+    )
+  ) {
+    const numNewAttractant = 30;
+    state.set("numAttractant", state.get("numAttractant") + numNewAttractant);
+    attractantVolumeSlider.value = state.get("numAttractant");
+    attractant = attractant.concat(
+      generateArrayOfX(numNewAttractant, () => makeAttractant(CTX, { x, y }))
+    );
+  }
 });

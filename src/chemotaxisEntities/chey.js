@@ -7,7 +7,7 @@ import {
 import { cheYProperties, ecoliProperties } from "../data.js";
 
 export const makeCheY = (CTX) => {
-  // internal props
+  // Internal props
   const containerPath = new Path2D(ecoliProperties.boundaryPath);
   let heading = randomBetween(0, 359);
   let color = cheYProperties.defaultColor;
@@ -17,7 +17,7 @@ export const makeCheY = (CTX) => {
   let rotation = 0;
   let speed = randomBetween(cheYProperties.speedMin, cheYProperties.speedMax);
 
-  // exposed props
+  // Exposed props
   const props = new Map()
     .set("position", {
       x: ecoliProperties.boundaryLeft + ecoliProperties.width / 2,
@@ -68,14 +68,12 @@ export const makeCheY = (CTX) => {
       ecoliProperties.boundaryLeft,
       ecoliProperties.boundaryTop
     ).then((nextPosition) => {
-      // fill in dot shape
       const shapeCenter = {
         x: nextPosition.x + props.get("size") / 2,
         y: nextPosition.y + props.get("size") / 2,
       };
       const rotationAmount = (Math.PI / 180) * rotation;
 
-      // draw dot shape
       CTX.fillStyle = color;
       CTX.save();
       CTX.translate(shapeCenter.x, shapeCenter.y);
@@ -96,7 +94,7 @@ export const makeCheY = (CTX) => {
           unstick();
         }
       } else {
-        // only change these props when unstuck
+        // Only change these props when unstuck
         props.set("position", { x: nextPosition.x, y: nextPosition.y });
         heading = nextPosition.heading;
         rotation += 2;
@@ -106,13 +104,13 @@ export const makeCheY = (CTX) => {
     });
   };
 
-  // init with random phosphorylation
+  // Init with random phosphorylation
   randomBool(0.75) ? phosphorylate() : dephosphorylate();
 
   return { phosphorylate, dephosphorylate, stick, unstick, draw, props };
 };
 
-// recurse until new location inside boundary is found
+// Recurse until new location inside boundary is found
 const getNewRandomLocationInBoundary = (
   context,
   heading,
@@ -123,10 +121,10 @@ const getNewRandomLocationInBoundary = (
   boundaryPathXOffset,
   boundaryPathYOffset
 ) => {
-  // add jitter to movement
+  // Add jitter to movement
   const headingWithJitter = heading + randomBetween(-20, 20);
 
-  // test new location
+  // Test new location
   return new Promise((resolve) => {
     const prospectiveNewLocation = nextPositionAlongHeading(
       currentLocation,

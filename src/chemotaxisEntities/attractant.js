@@ -11,7 +11,7 @@ import {
 } from "../data.js";
 
 export const makeAttractant = (CTX, passedPosition) => {
-  // internal props
+  // Internal props
   const containerPath = new Path2D(ecoliProperties.boundaryPath);
   let color = attractantProperties.defaultColor;
   let heading = randomBetween(0, 359);
@@ -22,7 +22,7 @@ export const makeAttractant = (CTX, passedPosition) => {
   let age = 0;
   let stuckAt = 0;
 
-  // exposed props
+  // Exposed props
   const props = new Map()
     .set("size", attractantProperties.defaultSize)
     .set("type", "attractant")
@@ -78,7 +78,7 @@ export const makeAttractant = (CTX, passedPosition) => {
       ) {
         unstick();
       } else {
-        // only change these props when unstuck
+        // Only change these props when unstuck
         props.set("position", { x: nextPosition.x, y: nextPosition.y });
         heading = nextPosition.heading;
       }

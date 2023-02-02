@@ -71,7 +71,7 @@ export const isAtBoundary = (
   );
 };
 
-// test all corners of a square against a boundary
+// Test all corners of a square against a boundary
 export const isShapeInPath = (
   context,
   path,
