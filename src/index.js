@@ -14,7 +14,7 @@ import {
 } from "./helpers.js";
 import { animate } from "./animation.js";
 import { generateEntityTimeseries } from "./smallgraph.js";
-import { generateTopDownViz } from "./topdown.js";
+import { generateTopDownViz } from "./topdownviz.js";
 import {
   canvasProperties,
   ecoliProperties,
