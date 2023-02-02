@@ -41,7 +41,6 @@ export const makeCheY = (CTX) => {
     props.set("isStuck", true);
     stuckTo = newStuckTo;
     speed = 0;
-
     stuckAt = age;
     color = cheYProperties.stuckColor;
   };
@@ -54,7 +53,6 @@ export const makeCheY = (CTX) => {
     }
 
     props.set("isStuck", false);
-
     stuckTo = null;
     speed = randomBetween(cheYProperties.speedMin, cheYProperties.speedMax);
   };
@@ -86,11 +84,14 @@ export const makeCheY = (CTX) => {
       CTX.fill(new Path2D(cheYProperties.shapePath));
       CTX.restore();
 
-      if (props.get("isStuck") && stuckTo.type === "motor") {
+      if (props.get("isStuck") && stuckTo.props.get("type") === "motor") {
         if (age > stuckAt + cheYProperties.motorStickDuration) {
           unstick();
         }
-      } else if (props.get("isStuck") && stuckTo.type === "receptor") {
+      } else if (
+        props.get("isStuck") &&
+        stuckTo.props.get("type") === "receptor"
+      ) {
         if (age > stuckAt + cheYProperties.receptorStickDuration) {
           unstick();
         }

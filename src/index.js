@@ -167,11 +167,11 @@ animate((millisecondsElapsed, resetElapsedTime) => {
 
   // Toggle motor state based on how much cheY is on it
   collidingEntitiesFlat
-    .filter(({ type }) => type === "motor")
+    .filter(({ props }) => props.get("type") === "motor")
     .forEach((motor) => {
       const cheYOnThisMotor = getEntityIntersection(
         collidingEntitiesFlat.filter(
-          (e) => e.props.get("type") === "chey" && e.props.get("isStuck")
+          ({ props }) => props.get("type") === "chey" && props.get("isStuck")
         ),
         [motor]
       );
@@ -184,7 +184,8 @@ animate((millisecondsElapsed, resetElapsedTime) => {
   // Update for phosphorylated timeseries
   state.set(
     "phosphorylatedCheYCount",
-    ecoliProperties.numCheY - chey.filter((c) => !c.phosphorylated).length
+    ecoliProperties.numCheY -
+      chey.filter((c) => !c.props.get("phosphorylated")).length
   );
 
   // Update for tumble/run viz
