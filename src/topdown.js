@@ -1,7 +1,7 @@
 import { graphProperties } from "./data.js";
 import { animate } from "./animation.js";
 
-export const generateTopDownViz = ({ getNumerator, getDenominator }) => {
+export const generateTopDownViz = ({ getNumerator, denominator }) => {
   const generateImageTag = (srcurl) => {
     const element = document.createElement("img");
     element.width = graphProperties.width;
@@ -17,7 +17,7 @@ export const generateTopDownViz = ({ getNumerator, getDenominator }) => {
   const imageTag = generateImageTag(runGifURL);
 
   animate(() => {
-    const percentFill = getNumerator() / getDenominator();
+    const percentFill = getNumerator() / denominator;
     const newSrc = percentFill > 0.5 ? tumbleGifURL : runGifURL;
     if (newSrc !== imageTag.src) {
       imageTag.src = newSrc;

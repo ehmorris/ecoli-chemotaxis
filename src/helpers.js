@@ -52,7 +52,7 @@ export const generateSlider = ({
   return element;
 };
 
-export const generateArrayOfN = (num, fill) => {
+export const generateArrayOfX = (num, fill) => {
   return new Array(num).fill().map(() => fill());
 };
 

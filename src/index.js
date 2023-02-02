@@ -9,7 +9,7 @@ import {
   generateSlider,
   getEntityIntersection,
   isColliding,
-  generateArrayOfN,
+  generateArrayOfX,
   isShapeInPath,
 } from "./helpers.js";
 import { animate } from "./animation.js";
@@ -36,13 +36,13 @@ const state = new Map()
   .set("phosphorylatedCheYCount", 0)
   .set("activeMotorCount", 0);
 
-const receptors = generateArrayOfN(ecoliProperties.numReceptor, () =>
+const receptors = generateArrayOfX(ecoliProperties.numReceptor, () =>
   makeReceptor(CTX)
 );
-const motors = generateArrayOfN(ecoliProperties.numMotor, () => makeMotor(CTX));
-const chey = generateArrayOfN(ecoliProperties.numCheY, () => makeCheY(CTX));
+const motors = generateArrayOfX(ecoliProperties.numMotor, () => makeMotor(CTX));
+const chey = generateArrayOfX(ecoliProperties.numCheY, () => makeCheY(CTX));
 const flagella = makeFlagella(CTX);
-let attractant = generateArrayOfN(state.get("numAttractant"), () =>
+let attractant = generateArrayOfX(state.get("numAttractant"), () =>
   makeAttractant(CTX)
 );
 
@@ -58,7 +58,7 @@ const attractantVolumeSlider = generateSlider({
 
     if (numNewAttractant >= 0) {
       attractant = attractant.concat(
-        generateArrayOfN(numNewAttractant, () => makeAttractant(CTX))
+        generateArrayOfX(numNewAttractant, () => makeAttractant(CTX))
       );
     } else {
       attractant.splice(numNewAttractant);
@@ -81,7 +81,7 @@ CTX.canvas.addEventListener("click", ({ layerX: x, layerY: y }) => {
     state.set("numAttractant", state.get("numAttractant") + numNewAttractant);
     attractantVolumeSlider.value = state.get("numAttractant");
     attractant = attractant.concat(
-      generateArrayOfN(numNewAttractant, () => makeAttractant(CTX, { x, y }))
+      generateArrayOfX(numNewAttractant, () => makeAttractant(CTX, { x, y }))
     );
   }
 });
@@ -194,11 +194,14 @@ animate((millisecondsElapsed, resetElapsedTime) => {
     motors.filter((m) => m.props.get("tumbling")).length
   );
 
+  // Toggle flagella animation based on majority motor state
   state.get("activeMotorCount") / ecoliProperties.numMotor > 0.5
     ? flagella.tumble()
     : flagella.run();
 
   // Draw scene
+  // Wait for attractant positions to resolve before drawing subsequent layers.
+  // This ensures the ecoli is drawn on top of the attractant.
   attractant.forEach((a) => a.draw());
   Promise.all(attractant).then(() => {
     flagella.draw(millisecondsElapsed, resetElapsedTime);
@@ -221,5 +224,5 @@ generateEntityTimeseries({
 
 generateTopDownViz({
   getNumerator: () => state.get("activeMotorCount"),
-  getDenominator: () => ecoliProperties.numMotor,
+  denominator: ecoliProperties.numMotor,
 });
