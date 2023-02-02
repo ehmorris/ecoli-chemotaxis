@@ -1,18 +1,9 @@
-import { canvasProperties } from "./data.js";
-
 export const randomBetween = (min, max) => Math.random() * (max - min) + min;
 
 export const randomBool = (probability = 0.5) => Math.random() >= probability;
 
-export const randomFromArray = (array) =>
-  array[Math.floor(Math.random() * array.length)];
-
-export const degToRad = (deg) => deg * (Math.PI / 180);
-
 export const clampNumber = (number, min, max) =>
   Math.max(min, Math.min(number, max));
-
-export const generateID = () => Math.random().toString(16).slice(2);
 
 export const generateCanvas = ({ width, height, attachNode }) => {
   const element = document.createElement("canvas");
@@ -61,8 +52,8 @@ export const generateSlider = ({
   return element;
 };
 
-export const generateArrayOfObjects = (num, object) => {
-  return new Array(num).fill().map((_) => new object());
+export const generateArrayOfN = (num, fill) => {
+  return new Array(num).fill().map(() => fill());
 };
 
 export const isAtBoundary = (
@@ -114,57 +105,6 @@ export const isShapeInPath = (
   );
 };
 
-// recurse until new location inside boundary is found
-export const getNewRandomLocationInBoundary = (
-  context,
-  heading,
-  currentSpeed,
-  currentLocation,
-  currentSize,
-  boundaryPath,
-  boundaryPathXOffset,
-  boundaryPathYOffset
-) => {
-  // add jitter to movement
-  const headingWithJitter = heading + randomBetween(-20, 20);
-
-  // test new location
-  return new Promise((resolve) => {
-    const prospectiveNewLocation = nextPositionAlongHeading(
-      currentLocation,
-      currentSpeed,
-      headingWithJitter
-    );
-
-    if (
-      !isShapeInPath(
-        context,
-        boundaryPath,
-        boundaryPathXOffset,
-        boundaryPathYOffset,
-        prospectiveNewLocation,
-        currentSize
-      )
-    ) {
-      const newHeading = randomBetween(1, 360);
-      return resolve(
-        getNewRandomLocationInBoundary(
-          context,
-          newHeading,
-          currentSpeed,
-          currentLocation,
-          currentSize,
-          boundaryPath,
-          boundaryPathXOffset,
-          boundaryPathYOffset
-        )
-      );
-    } else {
-      return resolve(prospectiveNewLocation);
-    }
-  });
-};
-
 // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 export const isColliding = (pos1, size1, pos2, size2) => {
   return (
@@ -179,10 +119,10 @@ export const getEntityIntersection = (entityArr1, entityArr2) =>
   entityArr1.filter((entity1) =>
     entityArr2.some((entity2) =>
       isColliding(
-        entity2.position,
-        entity2.size,
-        entity1.position,
-        entity1.size
+        entity2.props.get("position"),
+        entity2.props.get("size"),
+        entity1.props.get("position"),
+        entity1.props.get("size")
       )
     )
   );

@@ -30,7 +30,7 @@ const transitionPathPair = (pathPair, progress, easing) => {
   };
 };
 
-export const flagella = () => {
+export const makeFlagella = (CTX) => {
   const state = new Map()
     .set("activeSet", runPathPairs)
     .set("transitionPhase", 0)
@@ -56,7 +56,7 @@ export const flagella = () => {
     }
   };
 
-  const draw = (CTX, millisecondsElapsed, resetElapsedTime) => {
+  const draw = (millisecondsElapsed, resetElapsedTime) => {
     CTX.save();
     CTX.lineWidth = 10;
     CTX.lineCap = "round";

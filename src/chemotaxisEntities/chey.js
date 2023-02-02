@@ -1,113 +1,163 @@
 import {
   randomBetween,
-  generateID,
   randomBool,
-  getNewRandomLocationInBoundary,
+  nextPositionAlongHeading,
+  isShapeInPath,
 } from "../helpers.js";
 import { cheYProperties, ecoliProperties } from "../data.js";
 
-export class CheY {
-  constructor() {
-    this.id = generateID();
-    this.containerPath = new Path2D(ecoliProperties.boundaryPath);
-    this.position = {
+export const makeCheY = (CTX) => {
+  // internal props
+  const containerPath = new Path2D(ecoliProperties.boundaryPath);
+  let heading = randomBetween(0, 359);
+  let color = cheYProperties.defaultColor;
+  let age = 0;
+  let stuckAt = 0;
+  let stuckTo = null;
+  let rotation = 0;
+  let speed = randomBetween(cheYProperties.speedMin, cheYProperties.speedMax);
+
+  // exposed props
+  const props = new Map()
+    .set("position", {
       x: ecoliProperties.boundaryLeft + ecoliProperties.width / 2,
       y: ecoliProperties.boundaryTop + ecoliProperties.height / 2,
-    };
-    this.heading = randomBetween(0, 359);
-    this.type = "chey";
-    this.color = cheYProperties.defaultColor;
-    this.size = cheYProperties.defaultSize;
-    this.age = 0;
-    this.stuckAt = 0;
-    this.isStuck = false;
-    this.stuckTo = null;
-    this.rotation = 0;
-    this.speed = randomBetween(
-      cheYProperties.speedMin,
-      cheYProperties.speedMax
-    );
+    })
+    .set("type", "chey")
+    .set("size", cheYProperties.defaultSize)
+    .set("isStuck", false);
 
-    randomBool(0.75) ? this.phosphorylate() : this.dephosphorylate();
-  }
+  const phosphorylate = () => {
+    props.set("phosphorylated", true);
+    color = cheYProperties.phosphorylatedColor;
+  };
 
-  phosphorylate() {
-    this.phosphorylated = true;
-    this.color = cheYProperties.phosphorylatedColor;
-  }
+  const dephosphorylate = () => {
+    props.set("phosphorylated", false);
+    color = cheYProperties.defaultColor;
+  };
 
-  dephosphorylate() {
-    this.phosphorylated = false;
-    this.color = cheYProperties.defaultColor;
-  }
+  const stick = (newStuckTo) => {
+    props.set("isStuck", true);
+    stuckTo = newStuckTo;
+    speed = 0;
 
-  stick(stuckTo) {
-    this.speed = 0;
-    this.color = cheYProperties.stuckColor;
-    this.stuckAt = this.age;
-    this.isStuck = true;
-    this.stuckTo = stuckTo;
-  }
+    stuckAt = age;
+    color = cheYProperties.stuckColor;
+  };
 
-  unstick() {
-    if (this.phosphorylated) {
-      this.color = cheYProperties.phosphorylatedColor;
+  const unstick = () => {
+    if (props.get("phosphorylated")) {
+      color = cheYProperties.phosphorylatedColor;
     } else {
-      this.color = cheYProperties.defaultColor;
+      color = cheYProperties.defaultColor;
     }
 
-    this.speed = randomBetween(
-      cheYProperties.speedMin,
-      cheYProperties.speedMax
-    );
+    props.set("isStuck", false);
 
-    this.isStuck = false;
-    this.stuckTo = null;
-  }
+    stuckTo = null;
+    speed = randomBetween(cheYProperties.speedMin, cheYProperties.speedMax);
+  };
 
-  draw(CTX) {
+  const draw = () => {
     getNewRandomLocationInBoundary(
       CTX,
-      this.heading,
-      this.speed,
-      this.position,
-      this.size,
-      this.containerPath,
+      heading,
+      speed,
+      props.get("position"),
+      props.get("size"),
+      containerPath,
       ecoliProperties.boundaryLeft,
       ecoliProperties.boundaryTop
-    ).then(({ x, y, heading }) => {
+    ).then((nextPosition) => {
       // fill in dot shape
       const shapeCenter = {
-        x: x + this.size / 2,
-        y: y + this.size / 2,
+        x: nextPosition.x + props.get("size") / 2,
+        y: nextPosition.y + props.get("size") / 2,
       };
-      const rotationAmount = (Math.PI / 180) * this.rotation;
+      const rotationAmount = (Math.PI / 180) * rotation;
 
       // draw dot shape
-      CTX.fillStyle = this.color;
+      CTX.fillStyle = color;
       CTX.save();
       CTX.translate(shapeCenter.x, shapeCenter.y);
       CTX.rotate(rotationAmount);
-      CTX.translate(-this.size / 2, -this.size / 2);
+      CTX.translate(-props.get("size") / 2, -props.get("size") / 2);
       CTX.fill(new Path2D(cheYProperties.shapePath));
       CTX.restore();
 
-      if (this.isStuck && this.stuckTo.type === "motor") {
-        if (this.age > this.stuckAt + cheYProperties.motorStickDuration) {
-          this.unstick();
+      if (props.get("isStuck") && stuckTo.type === "motor") {
+        if (age > stuckAt + cheYProperties.motorStickDuration) {
+          unstick();
         }
-      } else if (this.isStuck && this.stuckTo.type === "receptor") {
-        if (this.age > this.stuckAt + cheYProperties.receptorStickDuration) {
-          this.unstick();
+      } else if (props.get("isStuck") && stuckTo.type === "receptor") {
+        if (age > stuckAt + cheYProperties.receptorStickDuration) {
+          unstick();
         }
       } else {
         // only change these props when unstuck
-        this.rotation = this.rotation + 2;
-        this.position = { x, y };
-        this.heading = heading;
+        props.set("position", { x: nextPosition.x, y: nextPosition.y });
+        heading = nextPosition.heading;
+        rotation += 2;
       }
 
-      this.age = this.age + 1;
+      age += 1;
     });
-  }
-}
+  };
+
+  // init with random phosphorylation
+  randomBool(0.75) ? phosphorylate() : dephosphorylate();
+
+  return { phosphorylate, dephosphorylate, stick, unstick, draw, props };
+};
+
+// recurse until new location inside boundary is found
+const getNewRandomLocationInBoundary = (
+  context,
+  heading,
+  currentSpeed,
+  currentLocation,
+  currentSize,
+  boundaryPath,
+  boundaryPathXOffset,
+  boundaryPathYOffset
+) => {
+  // add jitter to movement
+  const headingWithJitter = heading + randomBetween(-20, 20);
+
+  // test new location
+  return new Promise((resolve) => {
+    const prospectiveNewLocation = nextPositionAlongHeading(
+      currentLocation,
+      currentSpeed,
+      headingWithJitter
+    );
+
+    if (
+      !isShapeInPath(
+        context,
+        boundaryPath,
+        boundaryPathXOffset,
+        boundaryPathYOffset,
+        prospectiveNewLocation,
+        currentSize
+      )
+    ) {
+      const newHeading = randomBetween(1, 360);
+      return resolve(
+        getNewRandomLocationInBoundary(
+          context,
+          newHeading,
+          currentSpeed,
+          currentLocation,
+          currentSize,
+          boundaryPath,
+          boundaryPathXOffset,
+          boundaryPathYOffset
+        )
+      );
+    } else {
+      return resolve(prospectiveNewLocation);
+    }
+  });
+};

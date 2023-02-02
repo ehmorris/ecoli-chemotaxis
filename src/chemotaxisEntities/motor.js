@@ -1,41 +1,38 @@
-import { generateID } from "../helpers.js";
 import { motorProperties } from "../data.js";
 
-export class Motor {
-  constructor() {
-    this.id = generateID();
-    this.position = motorProperties.positionsAndRotations.pop();
-    this.type = "motor";
-    this.color = motorProperties.defaultColor;
-    this.size = motorProperties.defaultSize;
-    this.tumbling = false;
-  }
+export const makeMotor = (CTX) => {
+  const props = new Map()
+    .set("position", motorProperties.positionsAndRotations.pop())
+    .set("type", "motor")
+    .set("color", motorProperties.defaultColor)
+    .set("size", motorProperties.defaultSize)
+    .set("tumbling", false);
 
-  tumble() {
-    this.color = motorProperties.tumbleColor;
-    this.tumbling = true;
-  }
+  const tumble = () => {
+    props.set("color", motorProperties.tumbleColor).set("tumbling", true);
+  };
 
-  run() {
-    this.color = motorProperties.defaultColor;
-    this.tumbling = false;
-  }
+  const run = () => {
+    props.set("color", motorProperties.defaultColor).set("tumbling", false);
+  };
 
-  draw(CTX) {
+  const draw = () => {
     const shapeCenter = {
-      x: this.position.x + this.size / 2,
-      y: this.position.y + this.size / 2,
+      x: props.get("position").x + props.get("size") / 2,
+      y: props.get("position").y + props.get("size") / 2,
     };
-    const rotationAmount = (Math.PI / 180) * this.position.r;
+    const rotationAmount = (Math.PI / 180) * props.get("position").r;
 
     CTX.save();
-    CTX.fillStyle = this.color;
+    CTX.fillStyle = props.get("color");
     CTX.strokeStyle = "#010103";
     CTX.translate(shapeCenter.x, shapeCenter.y);
     CTX.rotate(rotationAmount);
-    CTX.translate(-this.size / 2, -this.size / 2);
+    CTX.translate(-props.get("size") / 2, -props.get("size") / 2);
     CTX.fill(new Path2D(motorProperties.shapePath));
     CTX.stroke(new Path2D(motorProperties.shapePath));
     CTX.restore();
-  }
-}
+  };
+
+  return { draw, tumble, run, props };
+};
