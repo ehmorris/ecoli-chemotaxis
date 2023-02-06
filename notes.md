@@ -1,12 +1,17 @@
+# Notes 1/3/23
+
+- [ ] Try rendering a background texture with other cells and a furry exterior. Try a less curvy ecoli body shape. See Figma.
+
 # Notes 12/23/22
 
-- [ ] Make flagella look like they're moving in 3D space (rather than up and down on a plane as they do now) 
-- [ ] Make run flagella look coiled together https://www.youtube.com/watch?v=25FtMdIFtXM
-- [ ] Some flagella can be different opacity to imply depth https://www.figma.com/file/2RcSVfM0iCMwMsBaLmPINC/E.-Coli-Project?node-id=311%3A20&t=Lj8p1mVwXxgar80y-1
+- [ ] Make flagella look like they're moving in 3D space (rather than up and down on a plane as they do now)
+- [x] Make run flagella look coiled together https://www.youtube.com/watch?v=25FtMdIFtXM
+- [x] Some flagella can be different opacity to imply depth https://www.figma.com/file/2RcSVfM0iCMwMsBaLmPINC/E.-Coli-Project?node-id=311%3A20&t=Lj8p1mVwXxgar80y-1
 - [ ] Draw shapes for receptors
 - [ ] Make distinction between run and tumble gif more obvious - shorten GIFs to clearest states
 - [ ] Make GIF ecoli point left like the canvas
 - [ ] Port graph things back in from lunar lander
+- [x] Move attractant from left to right
 
 # Notes 11/16/22
 

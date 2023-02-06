@@ -11,7 +11,7 @@ export const generateEntityTimeseries = ({
   backgroundColor,
   fillColor,
 }) => {
-  let barLog = [];
+  let barLog = new Array(graphProperties.maxDataPoints).fill();
   const CTX = generateCanvas({
     width: graphProperties.width,
     height: graphProperties.height,
@@ -31,7 +31,7 @@ export const generateEntityTimeseries = ({
     CTX.moveTo(0, graphProperties.height);
     arrayOfNums.forEach((barHeightPercent, index) => {
       CTX.lineTo(
-        (graphProperties.width / arrayOfNums.length) * index,
+        (graphProperties.width / (arrayOfNums.length - 1)) * index,
         graphProperties.height - graphProperties.height * barHeightPercent
       );
     });
