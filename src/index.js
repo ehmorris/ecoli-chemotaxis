@@ -3,7 +3,6 @@ import { makeCheY } from "./chemotaxisEntities/chey.js";
 import { makeAttractant } from "./chemotaxisEntities/attractant.js";
 import { makeMotor } from "./chemotaxisEntities/motor.js";
 import { makeReceptor } from "./chemotaxisEntities/receptor.js";
-import { makeFlagella } from "./chemotaxisEntities/flagella.js";
 import {
   generateCanvas,
   generateSlider,
@@ -41,7 +40,6 @@ const receptors = generateArrayOfX(ecoliProperties.numReceptor, () =>
 );
 const motors = generateArrayOfX(ecoliProperties.numMotor, () => makeMotor(CTX));
 const chey = generateArrayOfX(ecoliProperties.numCheY, () => makeCheY(CTX));
-const flagella = makeFlagella(CTX);
 let attractant = generateArrayOfX(state.get("numAttractant"), () =>
   makeAttractant(CTX)
 );
@@ -154,20 +152,14 @@ animate((millisecondsElapsed, resetElapsedTime) => {
     motors.filter((m) => m.props.get("tumbling")).length
   );
 
-  // Toggle flagella animation based on majority motor state
-  state.get("activeMotorCount") / ecoliProperties.numMotor > 0.5
-    ? flagella.tumble()
-    : flagella.run();
-
   // Draw scene
   // Wait for attractant positions to resolve before drawing subsequent layers.
   // This ensures the ecoli is drawn on top of the attractant.
   attractant.forEach((a) => a.draw());
   Promise.all(attractant).then(() => {
-    flagella.draw(millisecondsElapsed, resetElapsedTime);
     drawEcoli(CTX);
     receptors.forEach((r) => r.draw());
-    motors.forEach((m) => m.draw());
+    motors.forEach((m) => m.draw(millisecondsElapsed, resetElapsedTime));
     chey.forEach((c) => c.draw());
   });
 });
