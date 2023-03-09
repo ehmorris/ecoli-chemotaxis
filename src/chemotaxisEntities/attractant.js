@@ -4,17 +4,25 @@ import {
   nextPositionAlongHeading,
   clampNumber,
 } from "../helpers.js";
-import { attractantProperties, canvasProperties } from "../data.js";
+import {
+  attractantProperties,
+  ecoliProperties,
+  canvasProperties,
+} from "../data.js";
 
 export const makeAttractant = (CTX, passedPosition) => {
-  let _heading = randomBetween(0, 359);
-  let _speed = randomBetween(
+  // Internal props
+  const containerPath = new Path2D(ecoliProperties.boundaryPath);
+  let color = attractantProperties.defaultColor;
+  let heading = randomBetween(0, 359);
+  let speed = randomBetween(
     attractantProperties.speedMin,
     attractantProperties.speedMax
   );
-  let _age = 0;
-  let _stuckAt = 0;
+  let age = 0;
+  let stuckAt = 0;
 
+  // Exposed props
   const props = new Map()
     .set("size", attractantProperties.defaultSize)
     .set("type", "attractant")
@@ -31,8 +39,8 @@ export const makeAttractant = (CTX, passedPosition) => {
 
   const stick = () => {
     props.set("isStuck", true);
-    _speed = 0;
-    _stuckAt = _age;
+    speed = 0;
+    stuckAt = age;
   };
 
   const unstick = () => {
@@ -42,7 +50,7 @@ export const makeAttractant = (CTX, passedPosition) => {
         y: randomBetween(0, canvasProperties.height),
       })
       .set("isStuck", false);
-    _speed = randomBetween(
+    speed = randomBetween(
       attractantProperties.speedMin,
       attractantProperties.speedMax
     );
@@ -51,12 +59,12 @@ export const makeAttractant = (CTX, passedPosition) => {
   const draw = () => {
     getNewPosition(
       CTX,
-      _heading,
-      _speed,
+      heading,
+      speed,
       props.get("position"),
       props.get("size")
     ).then((nextPosition) => {
-      CTX.fillStyle = attractantProperties.defaultColor;
+      CTX.fillStyle = color;
       CTX.fillRect(
         props.get("position").x,
         props.get("position").y,
@@ -66,16 +74,16 @@ export const makeAttractant = (CTX, passedPosition) => {
 
       if (
         props.get("isStuck") &&
-        _age > _stuckAt + attractantProperties.stickDuration
+        age > stuckAt + attractantProperties.stickDuration
       ) {
         unstick();
       } else {
         // Only change these props when unstuck
         props.set("position", { x: nextPosition.x, y: nextPosition.y });
-        _heading = nextPosition.heading;
+        heading = nextPosition.heading;
       }
 
-      _age += 1;
+      age += 1;
     });
   };
 
