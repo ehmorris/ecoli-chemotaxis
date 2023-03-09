@@ -1,5 +1,6 @@
 # Notes 1/3/23
 
+- [ ] Change attractant. This illustration is about the internal dynamics. Instead of attractant rendering in a moving field, just render them onto the receptors. They glob on from out of nowhere. This focuses the illustration.
 - [ ] Try rendering a background texture with other cells and a furry exterior. Try a less curvy ecoli body shape. See Figma.
 
 # Notes 12/23/22
