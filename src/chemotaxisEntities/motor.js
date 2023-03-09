@@ -26,7 +26,7 @@ export const makeMotor = (CTX) => {
     _flagella.run();
   };
 
-  const draw = (millisecondsElapsed, resetElapsedTime) => {
+  const _drawMotor = () => {
     const shapeCenter = {
       x: props.get("position").x + props.get("size") / 2,
       y: props.get("position").y + props.get("size") / 2,
@@ -41,8 +41,16 @@ export const makeMotor = (CTX) => {
     CTX.translate(-props.get("size") / 2, -props.get("size") / 2);
     CTX.fill(new Path2D(motorProperties.shapePath));
     CTX.stroke(new Path2D(motorProperties.shapePath));
+    CTX.restore();
+  };
+
+  const draw = (millisecondsElapsed, resetElapsedTime) => {
+    CTX.save();
+    CTX.translate(props.get("position").x, props.get("position").y);
     _flagella.draw(millisecondsElapsed, resetElapsedTime);
     CTX.restore();
+
+    _drawMotor();
   };
 
   return { draw, tumble, run, props };
