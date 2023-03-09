@@ -104,9 +104,6 @@ export const makeCheY = (CTX) => {
     });
   };
 
-  // Init with random phosphorylation
-  randomBool(0.75) ? phosphorylate() : dephosphorylate();
-
   return { phosphorylate, dephosphorylate, stick, unstick, draw, props };
 };
 

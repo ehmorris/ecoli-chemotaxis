@@ -10,7 +10,7 @@ export const graphProperties = {
 };
 
 export const attractantSliderProperties = {
-  defaultAmount: 800,
+  defaultAmount: 10,
   maxAttractantAmount: 2000,
 };
 
@@ -20,12 +20,12 @@ export const ecoliProperties = {
   width: ecoliWidth,
   height: ecoliHeight,
   boundaryTop: canvasProperties.height / 2 - ecoliHeight / 2,
-  boundaryRight: canvasProperties.width / 2 + ecoliWidth / 2,
+  boundaryRight: canvasProperties.width / 3 + ecoliWidth / 2,
   boundaryBottom: canvasProperties.height / 2 + ecoliHeight / 2,
-  boundaryLeft: canvasProperties.width / 2 - ecoliWidth / 2,
+  boundaryLeft: canvasProperties.width / 3 - ecoliWidth / 2,
   numMotor: 4,
   numReceptor: 3,
-  numCheY: 200,
+  numCheY: 250,
   boundaryPath:
     "M0 80.954C0 51.64 21.5 14.865 53 7.5 87.452-.555 118.061 1 153.226 1 198.529 1 260.839 5.124 312 9.5c38.609 3.302 68 40.941 68 75.494 0 39.247-32.985 78.645-78.5 74.506-44.469-4.043-89.804-7.763-129.887-7.763-33.017 0-55.544.952-87.113 4.263C37.391 160.941 0 125.911 0 80.954z",
 };
@@ -38,8 +38,8 @@ export const cheYProperties = {
   defaultSize: cheYSize,
   phosphorylatedSize: cheYSize,
   movementJitter: 40,
-  speedMin: 0.4,
-  speedMax: 2.2,
+  speedMin: 0.8,
+  speedMax: 3.2,
   receptorStickDuration: 120,
   motorStickDuration: 300,
   shapePath:
@@ -74,7 +74,7 @@ export const motorProperties = {
   defaultColor: "#7EA21E",
   tumbleColor: "#8DC6A6",
   defaultSize: motorSize,
-  cheYRequiredToTumble: 1,
+  cheYRequiredToTumble: 2,
   boundaryTop: ecoliProperties.boundaryTop,
   boundaryRight: ecoliProperties.boundaryRight - motorSize / 2,
   boundaryBottom: ecoliProperties.boundaryBottom - motorSize,
@@ -110,8 +110,8 @@ export const attractantProperties = {
   defaultColor: "#C37393",
   defaultSize: attractantSize,
   movementJitter: 6,
-  speedMin: 0.6,
-  speedMax: 1,
+  speedMin: -0.4,
+  speedMax: 0.4,
   stickDuration: 200,
   boundaryTop: 0,
   boundaryRight: canvasProperties.width - attractantSize,
