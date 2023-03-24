@@ -1,6 +1,5 @@
 import { drawEcoli } from "./chemotaxisEntities/ecoli.js";
 import { makeCheY } from "./chemotaxisEntities/chey.js";
-import { makeAttractant } from "./chemotaxisEntities/attractant.js";
 import { makeMotor } from "./chemotaxisEntities/motor.js";
 import { makeReceptor } from "./chemotaxisEntities/receptor.js";
 import { makeFlagella } from "./chemotaxisEntities/flagella.js";
@@ -22,7 +21,6 @@ import {
   receptorProperties,
   motorProperties,
   attractantSliderProperties,
-  attractantProperties,
 } from "./data.js";
 
 const CTX = generateCanvas({
@@ -32,26 +30,23 @@ const CTX = generateCanvas({
 });
 
 const state = new Map()
-  .set("numAttractant", attractantSliderProperties.defaultAmount)
+  .set("numAttractantPerReceptor", attractantSliderProperties.defaultAmount)
   .set("phosphorylatedCheYCount", 0)
   .set("activeMotorCount", 0);
 
 const receptors = generateArrayOfX(ecoliProperties.numReceptor, () =>
-  makeReceptor(CTX)
+  makeReceptor(CTX, state)
 );
 const motors = generateArrayOfX(ecoliProperties.numMotor, () => makeMotor(CTX));
 const chey = generateArrayOfX(ecoliProperties.numCheY, () => makeCheY(CTX));
 const flagella = makeFlagella(CTX);
-let attractant = generateArrayOfX(state.get("numAttractant"), () =>
-  makeAttractant(CTX)
-);
 
 animate((millisecondsElapsed, resetElapsedTime) => {
   CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 
   // Find all intersecting entities
   const acceptsStickyEntities = receptors.concat(motors);
-  const entitiesThatStick = chey.concat(attractant);
+  const entitiesThatStick = chey;
   const collidingEntitityPairs = [];
   const collidingEntitiesFlat = [];
   for (const acceptsSticky of acceptsStickyEntities) {
@@ -76,15 +71,6 @@ animate((millisecondsElapsed, resetElapsedTime) => {
 
   // Trigger collision behavior in colliding entities
   collidingEntitityPairs.forEach(({ entity, collidingWith }) => {
-    // Stick attractant onto any colliding receptor
-    if (
-      entity.props.get("type") === "attractant" &&
-      !entity.props.get("isStuck") &&
-      collidingWith.props.get("type") === "receptor"
-    ) {
-      entity.stick();
-    }
-
     // Stick non-phosphorylated cheY to colliding receptors
     if (
       entity.props.get("type") === "chey" &&
@@ -111,15 +97,7 @@ animate((millisecondsElapsed, resetElapsedTime) => {
   collidingEntitiesFlat
     .filter(({ props }) => props.get("type") === "receptor")
     .forEach((receptor) => {
-      const attractantOnThisReceptor = getEntityIntersection(
-        collidingEntitiesFlat.filter(
-          ({ props }) =>
-            props.get("type") === "attractant" && props.get("isStuck")
-        ),
-        [receptor]
-      );
-
-      attractantOnThisReceptor.length >=
+      state.get("numAttractantPerReceptor") >=
       receptorProperties.attractantRequiredToDeactivate
         ? receptor.deactivate()
         : receptor.activate();
@@ -159,17 +137,11 @@ animate((millisecondsElapsed, resetElapsedTime) => {
     ? flagella.tumble()
     : flagella.run();
 
-  // Draw scene
-  // Wait for attractant positions to resolve before drawing subsequent layers.
-  // This ensures the ecoli is drawn on top of the attractant.
-  attractant.forEach((a) => a.draw());
-  Promise.all(attractant).then(() => {
-    flagella.draw(millisecondsElapsed, resetElapsedTime);
-    drawEcoli(CTX);
-    receptors.forEach((r) => r.draw());
-    motors.forEach((m) => m.draw());
-    chey.forEach((c) => c.draw());
-  });
+  flagella.draw(millisecondsElapsed, resetElapsedTime);
+  drawEcoli(CTX);
+  receptors.forEach((r) => r.draw());
+  motors.forEach((m) => m.draw());
+  chey.forEach((c) => c.draw());
 });
 
 generateEntityTimeseries({
@@ -187,42 +159,12 @@ generateTopDownViz({
   denominator: ecoliProperties.numMotor,
 });
 
-const attractantVolumeSlider = generateSlider({
+generateSlider({
   label: "Attractant",
-  value: state.get("numAttractant"),
+  value: state.get("numAttractantPerReceptor"),
   max: attractantSliderProperties.maxAttractantAmount,
   min: 1,
   attachNode: ".sliderContainer",
-  onInput: (value) => {
-    state.set("numAttractant", parseInt(value, 10));
-    const numNewAttractant = state.get("numAttractant") - attractant.length;
-
-    if (numNewAttractant >= 0) {
-      attractant = attractant.concat(
-        generateArrayOfX(numNewAttractant, () => makeAttractant(CTX))
-      );
-    } else {
-      attractant.splice(numNewAttractant);
-    }
-  },
-});
-
-CTX.canvas.addEventListener("click", ({ layerX: x, layerY: y }) => {
-  if (
-    !isShapeInPath(
-      CTX,
-      new Path2D(ecoliProperties.boundaryPath),
-      ecoliProperties.boundaryLeft,
-      ecoliProperties.boundaryTop,
-      { x, y },
-      attractantProperties.defaultSize
-    )
-  ) {
-    const numNewAttractant = 30;
-    state.set("numAttractant", state.get("numAttractant") + numNewAttractant);
-    attractantVolumeSlider.value = state.get("numAttractant");
-    attractant = attractant.concat(
-      generateArrayOfX(numNewAttractant, () => makeAttractant(CTX, { x, y }))
-    );
-  }
+  onInput: (value) =>
+    state.set("numAttractantPerReceptor", parseInt(value, 10)),
 });
