@@ -1,3 +1,17 @@
+# Notes 3/23/23
+
+- [ ] Add methylation: receptors become less sensitive to attractant the more it has
+  - As you move slider up, attractant required to deactive receptor should go up
+  - But this decays over time, so after N seconds, the amount required to deactivate goes down
+  - Attractant also being removed by receptor object (eaten, expired)
+- [ ] Make slider reactive to amount of attractant when it's decreased by automation
+
+- [ ] Make cheY dephosphoralte after N seconds
+
+- [ ] Find sweet spot for cheY speed and number, think about amking their motion inclined towards the motors when phosphoralated
+
+- [ ] Colors for activation/deactivation should look like more obvious highlights
+
 # Notes 1/3/23
 
 - [x] Change attractant. This illustration is about the internal dynamics. Instead of attractant rendering in a moving field, just render them onto the receptors. They glob on from out of nowhere. This focuses the illustration.

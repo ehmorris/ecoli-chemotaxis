@@ -18,7 +18,6 @@ import {
   canvasProperties,
   ecoliProperties,
   cheYProperties,
-  receptorProperties,
   motorProperties,
   attractantSliderProperties,
 } from "./data.js";
@@ -31,6 +30,8 @@ const CTX = generateCanvas({
 
 const state = new Map()
   .set("numAttractantPerReceptor", attractantSliderProperties.defaultAmount)
+  .set("timeAttractantLastIncreased", Date.now())
+  .set("attractantRequiredToDeactivate", 2)
   .set("phosphorylatedCheYCount", 0)
   .set("activeMotorCount", 0);
 
@@ -94,11 +95,17 @@ animate((millisecondsElapsed, resetElapsedTime) => {
   });
 
   // Toggle receptor state based on how much attractant is on it
+  if (Date.now() - state.get("timeAttractantLastIncreased") > 1_000) {
+    state.set(
+      "attractantRequiredToDeactivate",
+      state.get("numAttractantPerReceptor")
+    );
+  }
   collidingEntitiesFlat
     .filter(({ props }) => props.get("type") === "receptor")
     .forEach((receptor) => {
       state.get("numAttractantPerReceptor") >=
-      receptorProperties.attractantRequiredToDeactivate
+      state.get("attractantRequiredToDeactivate")
         ? receptor.deactivate()
         : receptor.activate();
     });
@@ -165,6 +172,12 @@ generateSlider({
   max: attractantSliderProperties.maxAttractantAmount,
   min: 1,
   attachNode: ".sliderContainer",
-  onInput: (value) =>
-    state.set("numAttractantPerReceptor", parseInt(value, 10)),
+  onInput: (value) => {
+    const newValue = parseInt(value, 10);
+    state.set("numAttractantPerReceptor", newValue);
+
+    if (newValue > state.get("numAttractantPerReceptor")) {
+      state.set("timeAttractantLastIncreased", Date.now());
+    }
+  },
 });
