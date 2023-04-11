@@ -16,6 +16,7 @@ export const makeCheY = (CTX) => {
   let stuckTo = null;
   let rotation = 0;
   let speed = randomBetween(cheYProperties.speedMin, cheYProperties.speedMax);
+  let timePhosphorylated = null;
 
   // Exposed props
   const props = new Map()
@@ -48,6 +49,7 @@ export const makeCheY = (CTX) => {
   const unstick = () => {
     if (props.get("phosphorylated")) {
       color = cheYProperties.phosphorylatedColor;
+      timePhosphorylated = Date.now();
     } else {
       color = cheYProperties.defaultColor;
     }
@@ -73,6 +75,15 @@ export const makeCheY = (CTX) => {
         y: nextPosition.y + props.get("size") / 2,
       };
       const rotationAmount = (Math.PI / 180) * rotation;
+
+      if (
+        props.get("phosphorylated") &&
+        timePhosphorylated &&
+        Date.now() - timePhosphorylated >
+          cheYProperties.maxPhosphorylatedDuration
+      ) {
+        dephosphorylate();
+      }
 
       CTX.fillStyle = color;
       CTX.save();
