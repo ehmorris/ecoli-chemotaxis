@@ -170,7 +170,7 @@ generateSlider({
   label: "Attractant",
   value: state.get("numAttractantPerReceptor"),
   max: attractantSliderProperties.maxAttractantAmount,
-  min: 1,
+  min: 0,
   attachNode: ".sliderContainer",
   onInput: (value) => {
     const newValue = parseInt(value, 10);
