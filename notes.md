@@ -1,7 +1,7 @@
 # Notes 3/23/23
 
 - [ ] Add methylation: receptors become less sensitive to attractant the more it has
-  - As you move slider up, attractant required to deactive receptor should go up
+  - As you move slider up, attractant required to deactivate receptor should go up
   - But this decays over time, so after N seconds, the amount required to deactivate goes down
   - Attractant also being removed by receptor object (eaten, expired)
 - [ ] Make slider reactive to amount of attractant when it's decreased by automation

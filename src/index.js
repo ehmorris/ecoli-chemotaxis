@@ -30,7 +30,6 @@ const CTX = generateCanvas({
 
 const state = new Map()
   .set("numAttractantPerReceptor", attractantSliderProperties.defaultAmount)
-  .set("timeAttractantLastIncreased", Date.now())
   .set("attractantRequiredToDeactivate", 2)
   .set("phosphorylatedCheYCount", 0)
   .set("activeMotorCount", 0);
@@ -95,12 +94,6 @@ animate((millisecondsElapsed, resetElapsedTime) => {
   });
 
   // Toggle receptor state based on how much attractant is on it
-  if (Date.now() - state.get("timeAttractantLastIncreased") > 1_000) {
-    state.set(
-      "attractantRequiredToDeactivate",
-      state.get("numAttractantPerReceptor")
-    );
-  }
   collidingEntitiesFlat
     .filter(({ props }) => props.get("type") === "receptor")
     .forEach((receptor) => {
@@ -144,6 +137,17 @@ animate((millisecondsElapsed, resetElapsedTime) => {
     ? flagella.tumble()
     : flagella.run();
 
+  // Decay attractant required to deactivate over time
+  state.set(
+    "attractantRequiredToDeactivate",
+    Math.max(state.get("attractantRequiredToDeactivate") + 0.01, 0)
+  );
+  document.querySelector(
+    "#debug1"
+  ).textContent = `attractantRequiredToDeactivate: ${state.get(
+    "attractantRequiredToDeactivate"
+  )}`;
+
   flagella.draw(millisecondsElapsed, resetElapsedTime);
   drawEcoli(CTX);
   receptors.forEach((r) => r.draw());
@@ -175,9 +179,6 @@ generateSlider({
   onInput: (value) => {
     const newValue = parseInt(value, 10);
     state.set("numAttractantPerReceptor", newValue);
-
-    if (newValue > state.get("numAttractantPerReceptor")) {
-      state.set("timeAttractantLastIncreased", Date.now());
-    }
+    state.set("attractantRequiredToDeactivate", newValue - 1);
   },
 });
