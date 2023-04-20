@@ -7,7 +7,7 @@ export const generateTopDownViz = ({ getNumerator, denominator }) => {
     element.width = graphProperties.width;
     element.height = graphProperties.height;
     element.src = srcurl;
-    document.querySelector(".graphContainer").appendChild(element);
+    document.querySelector(".heroGif").appendChild(element);
     return element;
   };
 

@@ -9,15 +9,12 @@ import {
   getEntityIntersection,
   isColliding,
   generateArrayOfX,
-  isShapeInPath,
 } from "./helpers.js";
 import { animate } from "./animation.js";
-import { generateEntityTimeseries } from "./smallgraph.js";
 import { generateTopDownViz } from "./topdownviz.js";
 import {
   canvasProperties,
   ecoliProperties,
-  cheYProperties,
   motorProperties,
   attractantSliderProperties,
 } from "./data.js";
@@ -25,13 +22,12 @@ import {
 const CTX = generateCanvas({
   width: canvasProperties.width,
   height: canvasProperties.height,
-  attachNode: ".canvasContainer",
+  attachNode: ".heroCanvasContainer",
 });
 
 const state = new Map()
   .set("numAttractantPerReceptor", attractantSliderProperties.defaultAmount)
   .set("attractantRequiredToDeactivate", 2)
-  .set("phosphorylatedCheYCount", 0)
   .set("activeMotorCount", 0);
 
 const receptors = generateArrayOfX(ecoliProperties.numReceptor, () =>
@@ -119,13 +115,6 @@ animate((millisecondsElapsed, resetElapsedTime) => {
         : motor.run();
     });
 
-  // Update for phosphorylated timeseries
-  state.set(
-    "phosphorylatedCheYCount",
-    ecoliProperties.numCheY -
-      chey.filter((c) => !c.props.get("phosphorylated")).length
-  );
-
   // Update for tumble/run viz
   state.set(
     "activeMotorCount",
@@ -153,16 +142,6 @@ animate((millisecondsElapsed, resetElapsedTime) => {
   receptors.forEach((r) => r.draw());
   motors.forEach((m) => m.draw());
   chey.forEach((c) => c.draw());
-});
-
-generateEntityTimeseries({
-  getNumerator: () => state.get("phosphorylatedCheYCount"),
-  denominator: ecoliProperties.numCheY,
-  topLabel: "Total cheY",
-  bottomLabel: "Phosphory...",
-  showPercent: true,
-  backgroundColor: cheYProperties.defaultColor,
-  fillColor: cheYProperties.phosphorylatedColor,
 });
 
 generateTopDownViz({
