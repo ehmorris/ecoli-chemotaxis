@@ -22,28 +22,16 @@ export const generateCanvas = ({ width, height, attachNode }) => {
   return context;
 };
 
-export const generateSlider = ({
-  label,
-  value,
-  max,
-  min,
-  attachNode,
-  onInput,
-}) => {
+export const generateSlider = ({ value, max, min, attachNode, onInput }) => {
   const element = document.createElement("input");
   element.value = value;
   element.max = max;
   element.min = min;
   element.type = "range";
-  element.classList.add("input");
-
-  const elementLabel = document.createElement("label");
-  elementLabel.classList.add("label");
-  elementLabel.append(label);
+  element.classList.add("slider");
 
   const parent = document.createElement("div");
-  parent.classList.add("slider");
-  parent.append(elementLabel, element);
+  parent.append(element);
 
   document.querySelector(attachNode).appendChild(parent);
 

@@ -150,7 +150,6 @@ generateTopDownViz({
 });
 
 generateSlider({
-  label: "Attractant",
   value: state.get("numAttractantPerReceptor"),
   max: attractantSliderProperties.maxAttractantAmount,
   min: 0,
