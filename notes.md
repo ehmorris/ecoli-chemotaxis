@@ -3,6 +3,8 @@
 - Red line pip should be decaying to the left and so should the black circle (attractant eaten)
   - What are the rates? Whatever feels good
 - Fix cheY dephosphralation
+- Colors for activation/deactivation should look like more obvious highlights
+  - Activate things when hovering over key words in text
 
 # Notes 3/23/23
 
