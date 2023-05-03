@@ -1,12 +1,18 @@
+# Notes 5/3/23
+
+- Red line pip should be decaying to the left and so should the black circle (attractant eaten)
+  - What are the rates? Whatever feels good
+- Fix cheY dephosphralation
+
 # Notes 3/23/23
 
-- [ ] Add methylation: receptors become less sensitive to attractant the more it has
+- [x] Add methylation: receptors become less sensitive to attractant the more it has
   - As you move slider up, attractant required to deactivate receptor should go up
   - But this decays over time, so after N seconds, the amount required to deactivate goes down
   - Attractant also being removed by receptor object (eaten, expired)
 - [ ] Make slider reactive to amount of attractant when it's decreased by automation
 
-- [ ] Make cheY dephosphoralte after N seconds
+- [x] Make cheY dephosphoralte after N seconds
 
 - [ ] Find sweet spot for cheY speed and number, think about amking their motion inclined towards the motors when phosphoralated
 

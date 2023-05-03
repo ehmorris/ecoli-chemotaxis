@@ -1,5 +1,9 @@
-import { attractantProperties, receptorProperties } from "../data.js";
-import { randomBetween, generateArrayOfX, randomBool } from "../helpers.js";
+import {
+  attractantProperties,
+  receptorProperties,
+  attractantSliderProperties,
+} from "../data.js";
+import { randomBetween, generateArrayOfX } from "../helpers.js";
 
 export const makeReceptor = (CTX, state) => {
   const props = new Map()
@@ -8,6 +12,9 @@ export const makeReceptor = (CTX, state) => {
     .set("color", receptorProperties.activeColor)
     .set("size", receptorProperties.defaultSize)
     .set("active", true);
+
+  const sliderPipReference = document.querySelector("#sliderPip");
+  let numAttractantRequiredForDeactivation = 0;
 
   const activate = () => {
     props.set("active", true).set("color", receptorProperties.activeColor);
@@ -91,7 +98,34 @@ export const makeReceptor = (CTX, state) => {
     }
   };
 
+  const updateActiveState = () => {
+    if (
+      state.get("numAttractantPerReceptor") * 1.2 >
+      numAttractantRequiredForDeactivation
+    ) {
+      numAttractantRequiredForDeactivation += 0.2;
+    }
+
+    // Decrease methlyation threshold always
+    numAttractantRequiredForDeactivation = Math.max(
+      1,
+      numAttractantRequiredForDeactivation - 0.1
+    );
+
+    sliderPipReference.style.left = `${
+      (numAttractantRequiredForDeactivation /
+        attractantSliderProperties.maxAttractantAmount) *
+      100
+    }%`;
+
+    state.get("numAttractantPerReceptor") < numAttractantRequiredForDeactivation
+      ? activate()
+      : deactivate();
+  };
+
   const draw = () => {
+    updateActiveState();
+
     CTX.save();
     CTX.fillStyle = props.get("color");
     CTX.fillRect(
@@ -114,5 +148,5 @@ export const makeReceptor = (CTX, state) => {
     CTX.restore();
   };
 
-  return { activate, deactivate, draw, props };
+  return { draw, props };
 };

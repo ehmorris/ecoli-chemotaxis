@@ -82,7 +82,8 @@ export const makeCheY = (CTX) => {
         Date.now() - timePhosphorylated >
           cheYProperties.maxPhosphorylatedDuration
       ) {
-        dephosphorylate();
+        // dephosphorylate();
+        // unstick();
       }
 
       CTX.fillStyle = color;

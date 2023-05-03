@@ -59,17 +59,28 @@
         right: 0;
       }
 
-      .sliderContainer {
-        display: flex;
-        flex-direction: column;
-        grid-gap: 8px;
+      .sliderAndPip {
+        position: relative;
         width: 800px;
         margin: auto;
+      }
+
+      .sliderPip {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: red;
+      }
+
+      .sliderContainer {
+        width: 800px;
       }
 
       input[type="range"].slider {
         width: 100%;
         margin: -1px 0;
+        display: block;
         background-color: transparent;
         -webkit-appearance: none;
       }
@@ -178,7 +189,10 @@
       <div class="heroCanvasContainer"></div>
       <div class="heroGif"></div>
     </div>
-    <div class="sliderContainer"></div>
+    <div class="sliderAndPip">
+      <div class="sliderContainer"></div>
+      <div class="sliderPip" id="sliderPip"></div>
+    </div>
 
     <h1>
       The baffling intelligence of a single cell: the story of E. coli

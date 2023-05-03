@@ -27,7 +27,6 @@ const CTX = generateCanvas({
 
 const state = new Map()
   .set("numAttractantPerReceptor", attractantSliderProperties.defaultAmount)
-  .set("attractantRequiredToDeactivate", 2)
   .set("activeMotorCount", 0);
 
 const receptors = generateArrayOfX(ecoliProperties.numReceptor, () =>
@@ -89,16 +88,6 @@ animate((millisecondsElapsed, resetElapsedTime) => {
     }
   });
 
-  // Toggle receptor state based on how much attractant is on it
-  collidingEntitiesFlat
-    .filter(({ props }) => props.get("type") === "receptor")
-    .forEach((receptor) => {
-      state.get("numAttractantPerReceptor") >=
-      state.get("attractantRequiredToDeactivate")
-        ? receptor.deactivate()
-        : receptor.activate();
-    });
-
   // Toggle motor state based on how much cheY is on it
   collidingEntitiesFlat
     .filter(({ props }) => props.get("type") === "motor")
@@ -126,17 +115,6 @@ animate((millisecondsElapsed, resetElapsedTime) => {
     ? flagella.tumble()
     : flagella.run();
 
-  // Decay attractant required to deactivate over time
-  state.set(
-    "attractantRequiredToDeactivate",
-    Math.max(state.get("attractantRequiredToDeactivate") + 0.01, 0)
-  );
-  document.querySelector(
-    "#debug1"
-  ).textContent = `attractantRequiredToDeactivate: ${state.get(
-    "attractantRequiredToDeactivate"
-  )}`;
-
   flagella.draw(millisecondsElapsed, resetElapsedTime);
   drawEcoli(CTX);
   receptors.forEach((r) => r.draw());
@@ -157,6 +135,5 @@ generateSlider({
   onInput: (value) => {
     const newValue = parseInt(value, 10);
     state.set("numAttractantPerReceptor", newValue);
-    state.set("attractantRequiredToDeactivate", newValue - 1);
   },
 });
