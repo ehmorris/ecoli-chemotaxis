@@ -31,11 +31,14 @@ export const makeCheY = (CTX) => {
   const phosphorylate = () => {
     props.set("phosphorylated", true);
     color = cheYProperties.phosphorylatedColor;
+    timePhosphorylated = Date.now();
+    console.log("phosphorylate");
   };
 
   const dephosphorylate = () => {
     props.set("phosphorylated", false);
     color = cheYProperties.defaultColor;
+    console.log("dephosphorylate");
   };
 
   const stick = (newStuckTo) => {
@@ -49,7 +52,7 @@ export const makeCheY = (CTX) => {
   const unstick = () => {
     if (props.get("phosphorylated")) {
       color = cheYProperties.phosphorylatedColor;
-      timePhosphorylated = Date.now();
+      console.log("unstick");
     } else {
       color = cheYProperties.defaultColor;
     }
@@ -78,12 +81,13 @@ export const makeCheY = (CTX) => {
 
       if (
         props.get("phosphorylated") &&
+        !props.get("isStuck") &&
         timePhosphorylated &&
         Date.now() - timePhosphorylated >
           cheYProperties.maxPhosphorylatedDuration
       ) {
-        // dephosphorylate();
-        // unstick();
+        dephosphorylate();
+        console.log("phosphorylation timeout");
       }
 
       CTX.fillStyle = color;
