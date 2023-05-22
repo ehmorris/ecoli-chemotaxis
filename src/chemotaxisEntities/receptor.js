@@ -99,17 +99,23 @@ export const makeReceptor = (CTX, state) => {
   };
 
   const updateActiveState = () => {
+    const difference =
+      Math.abs(
+        state.get("numAttractantPerReceptor") -
+          numAttractantRequiredForDeactivation
+      ) / 20;
+
     if (
-      state.get("numAttractantPerReceptor") * 1.2 >
+      state.get("numAttractantPerReceptor") * 1.1 >
       numAttractantRequiredForDeactivation
     ) {
-      numAttractantRequiredForDeactivation += 0.2;
+      numAttractantRequiredForDeactivation += difference;
     }
 
     // Decrease methlyation threshold always
     numAttractantRequiredForDeactivation = Math.max(
       1,
-      numAttractantRequiredForDeactivation - 0.1
+      numAttractantRequiredForDeactivation - difference * 0.7
     );
 
     sliderPipReference.style.left = `${
