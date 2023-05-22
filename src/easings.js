@@ -21,3 +21,5 @@ export const easeInOutCubic = (progress) =>
 
 export const easeInOutSine = (progress) =>
   -(Math.cos(Math.PI * progress) - 1) / 2;
+
+export const easeInExpo = (x) => (x === 0 ? 0 : Math.pow(2, 10 * x - 10));

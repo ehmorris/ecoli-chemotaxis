@@ -18,6 +18,8 @@ import {
   motorProperties,
   attractantSliderProperties,
 } from "./data.js";
+import { transition, progress } from "./animation.js";
+import { easeInExpo } from "./easings.js";
 
 const CTX = generateCanvas({
   width: canvasProperties.width,
@@ -110,6 +112,9 @@ animate((millisecondsElapsed, resetElapsedTime) => {
     motors.filter((m) => m.props.get("tumbling")).length
   );
 
+  // Decrease num attractant constantly
+  eatAttractant();
+
   // Toggle flagella animation based on majority motor state
   state.get("activeMotorCount") > ecoliProperties.numMotor - 1
     ? flagella.tumble()
@@ -127,7 +132,9 @@ generateTopDownViz({
   denominator: ecoliProperties.numMotor,
 });
 
-generateSlider({
+let sliderLastChanged = Date.now();
+
+const slider = generateSlider({
   value: state.get("numAttractantPerReceptor"),
   max: attractantSliderProperties.maxAttractantAmount,
   min: 0,
@@ -135,5 +142,18 @@ generateSlider({
   onInput: (value) => {
     const newValue = parseInt(value, 10);
     state.set("numAttractantPerReceptor", newValue);
+    sliderLastChanged = Date.now();
   },
 });
+
+function eatAttractant() {
+  const newNum = transition(
+    state.get("numAttractantPerReceptor"),
+    attractantSliderProperties.defaultAmount,
+    progress(sliderLastChanged, sliderLastChanged + 5_000, Date.now()),
+    easeInExpo
+  );
+
+  state.set("numAttractantPerReceptor", newNum);
+  slider.value = state.get("numAttractantPerReceptor");
+}

@@ -41,7 +41,7 @@ export const generateSlider = ({ value, max, min, attachNode, onInput }) => {
 };
 
 export const generateArrayOfX = (num, fill) => {
-  return new Array(num).fill().map(() => fill());
+  return new Array(Math.round(num)).fill().map(() => fill());
 };
 
 export const isAtBoundary = (
