@@ -9,6 +9,7 @@ import {
   getEntityIntersection,
   isColliding,
   generateArrayOfX,
+  clampNumber,
 } from "./helpers.js";
 import { animate } from "./animation.js";
 import { generateTopDownViz } from "./topdownviz.js";
@@ -147,11 +148,15 @@ const slider = generateSlider({
 });
 
 function eatAttractant() {
-  const newNum = transition(
-    state.get("numAttractantPerReceptor"),
+  const newNum = clampNumber(
+    transition(
+      state.get("numAttractantPerReceptor"),
+      attractantSliderProperties.defaultAmount,
+      progress(sliderLastChanged, sliderLastChanged + 5_000, Date.now()),
+      easeInExpo
+    ),
     attractantSliderProperties.defaultAmount,
-    progress(sliderLastChanged, sliderLastChanged + 5_000, Date.now()),
-    easeInExpo
+    attractantSliderProperties.maxAttractantAmount
   );
 
   state.set("numAttractantPerReceptor", newNum);
