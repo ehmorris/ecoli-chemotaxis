@@ -152,7 +152,7 @@ function eatAttractant() {
     transition(
       state.get("numAttractantPerReceptor"),
       attractantSliderProperties.defaultAmount,
-      progress(sliderLastChanged, sliderLastChanged + 5_000, Date.now()),
+      progress(sliderLastChanged, sliderLastChanged + 15_000, Date.now()),
       easeInExpo
     ),
     attractantSliderProperties.defaultAmount,

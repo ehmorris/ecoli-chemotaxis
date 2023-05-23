@@ -103,7 +103,7 @@ export const makeReceptor = (CTX, state) => {
       Math.abs(
         state.get("numAttractantPerReceptor") -
           numAttractantRequiredForDeactivation
-      ) / 20;
+      ) / 80;
 
     if (
       state.get("numAttractantPerReceptor") * 1.1 >
