@@ -29,21 +29,5 @@ export const drawEcoli = (CTX) => {
   CTX.fillStyle = gradient;
   CTX.fill(new Path2D(ecoliProperties.boundaryPath));
 
-  const insetProportion = 0.05;
-  const cornerRadius = 80;
-  CTX.lineWidth = 15;
-  CTX.strokeStyle = "#C3D2EC";
-  CTX.globalAlpha = 0.5;
-  CTX.beginPath();
-  CTX.roundRect(
-    ecoliProperties.width * insetProportion,
-    ecoliProperties.height * insetProportion,
-    ecoliProperties.width - ecoliProperties.width * insetProportion * 2,
-    ecoliProperties.height - ecoliProperties.height * insetProportion * 2,
-    cornerRadius
-  );
-  CTX.filter = "blur(30px)";
-  CTX.stroke();
-
   CTX.restore();
 };

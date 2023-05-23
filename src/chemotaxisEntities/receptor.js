@@ -132,12 +132,16 @@ export const makeReceptor = (CTX, state) => {
 
     CTX.save();
     CTX.fillStyle = props.get("color");
-    CTX.fillRect(
-      props.get("position").x,
-      props.get("position").y,
+    CTX.beginPath();
+    CTX.arc(
+      props.get("position").x + props.get("size") / 2,
+      props.get("position").y + props.get("size") / 2,
       props.get("size"),
-      props.get("size")
+      0,
+      2 * Math.PI
     );
+    CTX.closePath();
+    CTX.fill();
 
     updateAttractantPositions();
     CTX.fillStyle = attractantProperties.defaultColor;
