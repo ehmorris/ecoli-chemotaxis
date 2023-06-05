@@ -5,7 +5,8 @@
 // progress(5, 30, 17.5) -> .5
 // progress(30, 5, 17.5) -> .5
 // progress(5, 30, 30)   -> 1
-const progress = (start, end, current) => (current - start) / (end - start);
+export const progress = (start, end, current) =>
+  (current - start) / (end - start);
 
 const loopingProgress = (start, end, current) =>
   progress(start, end, current) % 1;

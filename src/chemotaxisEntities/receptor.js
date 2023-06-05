@@ -99,18 +99,22 @@ export const makeReceptor = (CTX, state) => {
   };
 
   const updateActiveState = () => {
+    // Methlyation threshold chases numAttractant with a delay
+    const differenceDivisor = 80;
+    const difference =
+      Math.abs(
+        state.get("numAttractantPerReceptor") -
+          numAttractantRequiredForDeactivation
+      ) / differenceDivisor;
     if (
-      state.get("numAttractantPerReceptor") * 1.2 >
+      state.get("numAttractantPerReceptor") * 1.1 >
       numAttractantRequiredForDeactivation
     ) {
-      numAttractantRequiredForDeactivation += 0.2;
+      numAttractantRequiredForDeactivation += difference;
     }
-
-    // Decrease methlyation threshold always
-    numAttractantRequiredForDeactivation = Math.max(
-      1,
-      numAttractantRequiredForDeactivation - 0.1
-    );
+    if (numAttractantRequiredForDeactivation > 1) {
+      numAttractantRequiredForDeactivation -= difference * 0.7;
+    }
 
     sliderPipReference.style.left = `${
       (numAttractantRequiredForDeactivation /
@@ -128,12 +132,16 @@ export const makeReceptor = (CTX, state) => {
 
     CTX.save();
     CTX.fillStyle = props.get("color");
-    CTX.fillRect(
-      props.get("position").x,
-      props.get("position").y,
+    CTX.beginPath();
+    CTX.arc(
+      props.get("position").x + props.get("size") / 2,
+      props.get("position").y + props.get("size") / 2,
       props.get("size"),
-      props.get("size")
+      0,
+      2 * Math.PI
     );
+    CTX.closePath();
+    CTX.fill();
 
     updateAttractantPositions();
     CTX.fillStyle = attractantProperties.defaultColor;
