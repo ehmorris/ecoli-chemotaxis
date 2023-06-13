@@ -19,25 +19,7 @@ export const generateCanvas = ({ width, height, attachNode }) => {
 
   document.querySelector(attachNode).appendChild(element);
 
-  return context;
-};
-
-export const generateSlider = ({ value, max, min, attachNode, onInput }) => {
-  const element = document.createElement("input");
-  element.value = value;
-  element.max = max;
-  element.min = min;
-  element.type = "range";
-  element.classList.add("slider");
-
-  const parent = document.createElement("div");
-  parent.append(element);
-
-  document.querySelector(attachNode).appendChild(parent);
-
-  element.addEventListener("input", ({ target: { value } }) => onInput(value));
-
-  return element;
+  return [context, element];
 };
 
 export const generateArrayOfX = (num, fill) => {

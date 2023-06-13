@@ -13,7 +13,7 @@ export const makeReceptor = (CTX, state) => {
     .set("size", receptorProperties.defaultSize)
     .set("active", true);
 
-  const sliderPipReference = document.querySelector("#sliderPip");
+  const rootElement = document.documentElement;
   let numAttractantRequiredForDeactivation = 0;
 
   const activate = () => {
@@ -116,11 +116,14 @@ export const makeReceptor = (CTX, state) => {
       numAttractantRequiredForDeactivation -= difference * 0.7;
     }
 
-    sliderPipReference.style.left = `${
-      (numAttractantRequiredForDeactivation /
-        attractantSliderProperties.maxAttractantAmount) *
-      100
-    }%`;
+    rootElement.style.setProperty(
+      "--slider-pip-left-value",
+      `${
+        (numAttractantRequiredForDeactivation /
+          attractantSliderProperties.maxAttractantAmount) *
+        100
+      }%`
+    );
 
     state.get("numAttractantPerReceptor") < numAttractantRequiredForDeactivation
       ? activate()

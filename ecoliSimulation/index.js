@@ -5,13 +5,13 @@ import { makeReceptor } from "./chemotaxisEntities/receptor.js";
 import { makeFlagella } from "./chemotaxisEntities/flagella.js";
 import {
   generateCanvas,
-  generateSlider,
   getEntityIntersection,
   isColliding,
   generateArrayOfX,
   clampNumber,
 } from "./helpers.js";
 import { animate } from "./animation.js";
+import { generateSlider } from "../sliderAndPip/generate.js";
 import { generateTopDownViz } from "./topdownviz.js";
 import {
   canvasProperties,
@@ -22,7 +22,7 @@ import {
 import { transition, progress } from "./animation.js";
 import { easeInExpo } from "./easings.js";
 
-const CTX = generateCanvas({
+const [CTX] = generateCanvas({
   width: canvasProperties.width,
   height: canvasProperties.height,
   attachNode: ".heroCanvasContainer",
@@ -139,7 +139,7 @@ const slider = generateSlider({
   value: state.get("numAttractantPerReceptor"),
   max: attractantSliderProperties.maxAttractantAmount,
   min: 0,
-  attachNode: ".sliderContainer",
+  attachNode: ".sliderAndPip",
   onInput: (value) => {
     const newValue = parseInt(value, 10);
     state.set("numAttractantPerReceptor", newValue);
@@ -160,5 +160,5 @@ function eatAttractant() {
   );
 
   state.set("numAttractantPerReceptor", newNum);
-  slider.value = state.get("numAttractantPerReceptor");
+  slider.setValue(state.get("numAttractantPerReceptor"));
 }
