@@ -141,8 +141,7 @@ const slider = makeSlider({
   min: 0,
   attachNode: ".sliderAndPip",
   onInput: (value) => {
-    const newValue = parseInt(value, 10);
-    state.set("numAttractantPerReceptor", newValue);
+    state.set("numAttractantPerReceptor", value);
     sliderLastChanged = Date.now();
   },
 });

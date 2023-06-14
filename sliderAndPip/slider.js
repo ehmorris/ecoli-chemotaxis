@@ -37,7 +37,7 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
     const relativeMousePosition = screenX - leftViewportOffset;
     const positionInValue = transition(min, max, relativeMousePosition / width);
     setValue(positionInValue);
-    onInput(positionInValue);
+    onInput(Math.round(positionInValue));
   };
 
   function moveControlOnMove(event) {
@@ -61,7 +61,6 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
     CTX.fillRect(0, 0, width, height);
 
     // Pip
-    // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
     // Image is 6040x128
     const leftValue = parseFloat(
       rootElement.style.getPropertyValue("--slider-pip-left-value")
@@ -78,9 +77,18 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
       pipWidth,
       height
     );
+    CTX.font = "800 8px/1 -apple-system, BlinkMacSystemFont, sans-serif";
+    CTX.fillStyle = "rgba(255, 255, 255, .8)";
+    CTX.fillText("HUNGER", pipWidth - 124, height / 2 + 3);
 
     // Control
     CTX.drawImage(cursorImage, controlPositionInPixels - 26, 6, 52, 52);
+
+    if (pipWidth > controlPositionInPixels + 100) {
+      CTX.fillText("FOOD", controlPositionInPixels - 60, height / 2 + 3);
+    } else {
+      CTX.fillText("FOOD", controlPositionInPixels + 34, height / 2 + 3);
+    }
   });
 
   return { setValue };
