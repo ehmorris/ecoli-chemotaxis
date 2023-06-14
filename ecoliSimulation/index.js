@@ -11,7 +11,7 @@ import {
   clampNumber,
 } from "./helpers.js";
 import { animate } from "./animation.js";
-import { generateSlider } from "../sliderAndPip/generate.js";
+import { makeSlider } from "../sliderAndPip/slider.js";
 import { generateTopDownViz } from "./topdownviz.js";
 import {
   canvasProperties,
@@ -135,7 +135,7 @@ generateTopDownViz({
 
 let sliderLastChanged = Date.now();
 
-const slider = generateSlider({
+const slider = makeSlider({
   value: state.get("numAttractantPerReceptor"),
   max: attractantSliderProperties.maxAttractantAmount,
   min: 0,

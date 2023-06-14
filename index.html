@@ -7,8 +7,6 @@
     />
     <meta charset="utf-8" />
     <title>E. coli</title>
-    <link rel="preload" href="./ecoliSimulation/" as="image" />
-    <link rel="preload" href="./ecoliSimulation/images/Tumble.gif" as="image" />
     <style>
       :root {
         --slider-pip-left-value: 0%;
@@ -19,8 +17,6 @@
       }
 
       canvas {
-        background: url("./ecoliSimulation/images/Background.png") #010010;
-        background-size: 100% 100%;
         display: block;
         overflow: hidden;
         border-radius: 24px;
@@ -58,18 +54,28 @@
         margin: 1em auto 0;
         width: calc(100vw - 32px);
       }
+      .heroContainer canvas {
+        background: url("./ecoliSimulation/images/Background.png") #010010;
+        background-size: 100% 100%;
+      }
 
       .heroGif {
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 16px;
+        right: 16px;
+        border-radius: 14px;
+        overflow: hidden;
       }
 
       .sliderAndPip {
         position: relative;
         width: calc(100vw - 32px);
         height: 64px;
-        margin: auto;
+        margin: 8px auto 0;
+      }
+
+      .sliderAndPip canvas {
+        cursor: pointer;
       }
 
       #debug1,

@@ -11,8 +11,8 @@ export const generateTopDownViz = ({ getNumerator, denominator }) => {
     return element;
   };
 
-  const runGifURL = `${window.location.href}src/images/Run.gif`;
-  const tumbleGifURL = `${window.location.href}src/images/Tumble.gif`;
+  const runGifURL = `${window.location.href}ecoliSimulation/images/Run.gif`;
+  const tumbleGifURL = `${window.location.href}ecoliSimulation/images/Tumble.gif`;
 
   const imageTag = generateImageTag(runGifURL);
 
