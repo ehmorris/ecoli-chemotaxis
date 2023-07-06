@@ -16,20 +16,20 @@ export const attractantSliderProperties = {
   maxAttractantAmount: 500,
 };
 
-const ecoliWidth = 380;
-const ecoliHeight = 159;
+const ecoliWidth = 508;
+const ecoliHeight = 274;
 export const ecoliProperties = {
   width: ecoliWidth,
   height: ecoliHeight,
   boundaryTop: canvasProperties.height / 2 - ecoliHeight / 2,
   boundaryRight: canvasProperties.width / 3 + ecoliWidth / 2,
   boundaryBottom: canvasProperties.height / 2 + ecoliHeight / 2,
-  boundaryLeft: canvasProperties.width / 3 - ecoliWidth / 2,
+  boundaryLeft: canvasProperties.width / 2.5 - ecoliWidth / 2,
   numMotor: 4,
   numReceptor: 8,
   numCheY: 200,
   boundaryPath:
-    "M0 80.954C0 51.64 21.5 14.865 53 7.5 87.452-.555 118.061 1 153.226 1 198.529 1 260.839 5.124 312 9.5c38.609 3.302 68 40.941 68 75.494 0 39.247-32.985 78.645-78.5 74.506-44.469-4.043-89.804-7.763-129.887-7.763-33.017 0-55.544.952-87.113 4.263C37.391 160.941 0 125.911 0 80.954z",
+    "M305.5 34.9995C208 4.71556 30.4998 -38.5 3.49985 69.9996C-18.9549 160.234 80.5 214.5 192.5 244.5C373.814 293.066 489.717 281.19 505 214.5C527 118.5 415.5 69.166 305.5 34.9995Z",
 };
 
 const cheYSize = 10;
