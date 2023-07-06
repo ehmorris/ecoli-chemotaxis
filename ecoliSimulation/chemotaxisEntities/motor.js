@@ -25,12 +25,10 @@ export const makeMotor = (CTX) => {
 
     CTX.save();
     CTX.fillStyle = props.get("color");
-    CTX.strokeStyle = "#010103";
     CTX.translate(shapeCenter.x, shapeCenter.y);
     CTX.rotate(rotationAmount);
     CTX.translate(-props.get("size") / 2, -props.get("size") / 2);
     CTX.fill(new Path2D(motorProperties.shapePath));
-    CTX.stroke(new Path2D(motorProperties.shapePath));
     CTX.restore();
   };
 

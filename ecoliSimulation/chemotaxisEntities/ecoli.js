@@ -9,7 +9,7 @@ export const drawEcoli = (CTX) => {
   CTX.save();
   CTX.translate(ecoliProperties.boundaryLeft, ecoliProperties.boundaryTop);
 
-  CTX.fillStyle = "rgba(255, 255, 255, .15)";
+  CTX.fillStyle = "rgba(255, 255, 255, .05)";
   CTX.fill(new Path2D(ecoliProperties.boundaryPath));
 
   CTX.drawImage(

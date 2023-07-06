@@ -3,6 +3,7 @@ import {
   transition,
   transitionPath,
 } from "../animation.js";
+import { canvasProperties } from "../data.js";
 import { easeInOutSine } from "../easings.js";
 
 const transitionPathPair = (pathPair, progress, easing) => {
@@ -60,8 +61,9 @@ export const makeFlagella = (CTX) => {
     CTX.save();
     CTX.lineWidth = 10;
     CTX.lineCap = "round";
-    CTX.translate(80, 767);
+    CTX.translate(canvasProperties.width / 3.5, canvasProperties.width / 1.65);
     CTX.rotate((-100 * Math.PI) / 180);
+
     const transitionDuration = 400;
 
     if (state.get("transitionPhase") === 1) {
@@ -120,9 +122,14 @@ export const makeFlagella = (CTX) => {
       );
 
       CTX.save();
-      CTX.strokeStyle = `hsl(90, 18%, ${
+      CTX.strokeStyle = `hsl(206, 36%, ${
         state.get("activeSet")[flagellaIndex].lightness
       }%)`;
+
+      if (state.get("activeSet")[flagellaIndex].blur) {
+        // CTX.filter = `blur(${state.get("activeSet")[flagellaIndex].blur}px)`;
+      }
+
       CTX.translate(pathAtPoint.position.x, pathAtPoint.position.y);
       CTX.stroke(new Path2D(pathAtPoint.path));
       CTX.restore();
@@ -151,7 +158,8 @@ const runPathPairs = [
       },
     },
     animationDuration: 1_000,
-    lightness: 20,
+    lightness: 16,
+    blur: 8,
   },
   {
     // In Figma: Background 2
@@ -170,7 +178,8 @@ const runPathPairs = [
       },
     },
     animationDuration: 1_500,
-    lightness: 23,
+    lightness: 20,
+    blur: 4,
   },
   {
     // In Figma: Flagella 2
@@ -189,7 +198,7 @@ const runPathPairs = [
       },
     },
     animationDuration: 1_800,
-    lightness: 49,
+    lightness: 40,
   },
   {
     // In Figma: Flagella 4
@@ -208,7 +217,8 @@ const runPathPairs = [
       },
     },
     animationDuration: 1_200,
-    lightness: 38,
+    lightness: 32,
+    blur: 2,
   },
   {
     // In Figma: Flagella 3
@@ -227,7 +237,8 @@ const runPathPairs = [
       },
     },
     animationDuration: 1_400,
-    lightness: 40,
+    lightness: 34,
+    blur: 1,
   },
   {
     // In Figma: Flagella 1
@@ -246,7 +257,7 @@ const runPathPairs = [
       },
     },
     animationDuration: 2_000,
-    lightness: 55,
+    lightness: 48,
   },
 ];
 
@@ -268,7 +279,8 @@ const tumblePathPairs = [
       },
     },
     animationDuration: 800,
-    lightness: 20,
+    lightness: 16,
+    blur: 8,
   },
   {
     // In Figma: Background 2
@@ -287,7 +299,8 @@ const tumblePathPairs = [
       },
     },
     animationDuration: 1_100,
-    lightness: 23,
+    lightness: 20,
+    blur: 4,
   },
   {
     // In Figma: Flagella 2
@@ -306,7 +319,7 @@ const tumblePathPairs = [
       },
     },
     animationDuration: 900,
-    lightness: 49,
+    lightness: 40,
   },
   {
     // In Figma: Flagella 4
@@ -325,7 +338,8 @@ const tumblePathPairs = [
       },
     },
     animationDuration: 700,
-    lightness: 38,
+    lightness: 32,
+    blur: 2,
   },
   {
     // In Figma: Flagella 3
@@ -344,7 +358,8 @@ const tumblePathPairs = [
       },
     },
     animationDuration: 1_000,
-    lightness: 40,
+    lightness: 34,
+    blur: 1,
   },
   {
     // In Figma: Flagella 1
@@ -363,6 +378,6 @@ const tumblePathPairs = [
       },
     },
     animationDuration: 1_200,
-    lightness: 55,
+    lightness: 48,
   },
 ];
