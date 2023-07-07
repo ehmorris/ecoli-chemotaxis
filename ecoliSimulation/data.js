@@ -60,36 +60,36 @@ export const receptorProperties = {
   boundaryLeft: ecoliProperties.boundaryLeft - receptorSize / 2,
   positions: [
     {
-      x: ecoliProperties.boundaryLeft + 10,
-      y: ecoliProperties.boundaryTop + 62,
-    },
-    {
-      x: ecoliProperties.boundaryLeft + 30,
-      y: ecoliProperties.boundaryTop + 80,
-    },
-    {
-      x: ecoliProperties.boundaryLeft + 140,
-      y: ecoliProperties.boundaryTop + 5,
-    },
-    {
-      x: ecoliProperties.boundaryLeft + 80,
-      y: ecoliProperties.boundaryTop + 20,
-    },
-    {
-      x: ecoliProperties.boundaryLeft + 25,
-      y: ecoliProperties.boundaryTop + 120,
-    },
-    {
-      x: ecoliProperties.boundaryLeft + 80,
-      y: ecoliProperties.boundaryTop + 150,
-    },
-    {
-      x: ecoliProperties.boundaryLeft + 15,
-      y: ecoliProperties.boundaryTop + 42,
+      x: ecoliProperties.boundaryLeft + 90,
+      y: ecoliProperties.boundaryTop + 82,
     },
     {
       x: ecoliProperties.boundaryLeft + 40,
+      y: ecoliProperties.boundaryTop + 100,
+    },
+    {
+      x: ecoliProperties.boundaryLeft + 150,
       y: ecoliProperties.boundaryTop + 20,
+    },
+    {
+      x: ecoliProperties.boundaryLeft + 90,
+      y: ecoliProperties.boundaryTop + 40,
+    },
+    {
+      x: ecoliProperties.boundaryLeft + 40,
+      y: ecoliProperties.boundaryTop + 140,
+    },
+    {
+      x: ecoliProperties.boundaryLeft + 90,
+      y: ecoliProperties.boundaryTop + 170,
+    },
+    {
+      x: ecoliProperties.boundaryLeft + 30,
+      y: ecoliProperties.boundaryTop + 62,
+    },
+    {
+      x: ecoliProperties.boundaryLeft + 50,
+      y: ecoliProperties.boundaryTop + 40,
     },
   ],
 };
@@ -106,24 +106,24 @@ export const motorProperties = {
   boundaryLeft: ecoliProperties.boundaryRight - motorSize / 2,
   positionsAndRotations: [
     {
-      x: ecoliProperties.boundaryRight - 30,
-      y: ecoliProperties.boundaryTop + 20,
+      x: ecoliProperties.boundaryRight + 40,
+      y: ecoliProperties.boundaryTop + 118,
       r: -32,
     },
     {
-      x: ecoliProperties.boundaryRight - 10,
-      y: ecoliProperties.boundaryTop + 80,
-      r: 2,
+      x: ecoliProperties.boundaryRight + 52,
+      y: ecoliProperties.boundaryTop + 180,
+      r: 6,
     },
     {
-      x: ecoliProperties.boundaryRight - 30,
-      y: ecoliProperties.boundaryTop + 130,
+      x: ecoliProperties.boundaryRight + 32,
+      y: ecoliProperties.boundaryTop + 228,
       r: 40,
     },
     {
-      x: ecoliProperties.boundaryRight - 142,
-      y: ecoliProperties.boundaryBottom - 16,
-      r: 94,
+      x: ecoliProperties.boundaryRight - 84,
+      y: ecoliProperties.boundaryBottom - 40,
+      r: 88,
     },
   ],
   shapePath:

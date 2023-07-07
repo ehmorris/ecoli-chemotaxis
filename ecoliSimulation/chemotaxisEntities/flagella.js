@@ -61,8 +61,24 @@ export const makeFlagella = (CTX) => {
     CTX.save();
     CTX.lineWidth = 10;
     CTX.lineCap = "round";
-    CTX.translate(canvasProperties.width / 3.5, canvasProperties.width / 1.65);
+
+    // Each flagella has its own x/y and w/h. We have to offset them and rotate
+    // them together so that they align with the E. Coli at any simulation w/h
+    //
+    // Flagella bounding box:
+    // x: 43.5
+    // y: 315.06
+    // w: 504.14
+    // h: 1058.44
+    //
+    // 1. Offset flagella to top left
+    CTX.translate(-548, -315);
+    // 2. Center in screen
+    CTX.translate(canvasProperties.width / 2, canvasProperties.height / 2);
+    // 3. Rotate
     CTX.rotate((-100 * Math.PI) / 180);
+    // 4. Align with E. Coli
+    CTX.translate(-950, 80);
 
     const transitionDuration = 400;
 
