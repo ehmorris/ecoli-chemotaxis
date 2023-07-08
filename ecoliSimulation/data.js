@@ -22,7 +22,7 @@ export const ecoliProperties = {
   width: ecoliWidth,
   height: ecoliHeight,
   boundaryTop: canvasProperties.height / 2 - ecoliHeight / 2,
-  boundaryRight: canvasProperties.width / 3 + ecoliWidth / 2,
+  boundaryRight: canvasProperties.width / 2.5 + ecoliWidth / 2,
   boundaryBottom: canvasProperties.height / 2 + ecoliHeight / 2,
   boundaryLeft: canvasProperties.width / 2.5 - ecoliWidth / 2,
   numMotor: 4,
@@ -106,22 +106,22 @@ export const motorProperties = {
   boundaryLeft: ecoliProperties.boundaryRight - motorSize / 2,
   positionsAndRotations: [
     {
-      x: ecoliProperties.boundaryRight + 40,
+      x: ecoliProperties.boundaryRight - 25,
       y: ecoliProperties.boundaryTop + 118,
       r: -32,
     },
     {
-      x: ecoliProperties.boundaryRight + 52,
+      x: ecoliProperties.boundaryRight - 15,
       y: ecoliProperties.boundaryTop + 180,
       r: 6,
     },
     {
-      x: ecoliProperties.boundaryRight + 32,
+      x: ecoliProperties.boundaryRight - 25,
       y: ecoliProperties.boundaryTop + 228,
       r: 40,
     },
     {
-      x: ecoliProperties.boundaryRight - 84,
+      x: ecoliProperties.boundaryRight - 134,
       y: ecoliProperties.boundaryBottom - 40,
       r: 88,
     },
