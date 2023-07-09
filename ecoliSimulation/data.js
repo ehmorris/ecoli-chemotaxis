@@ -106,24 +106,24 @@ export const motorProperties = {
   boundaryLeft: ecoliProperties.boundaryRight - motorSize / 2,
   positionsAndRotations: [
     {
-      x: ecoliProperties.boundaryRight - 25,
-      y: ecoliProperties.boundaryTop + 118,
+      x: ecoliProperties.boundaryRight - 62,
+      y: ecoliProperties.boundaryTop + 120,
       r: -32,
     },
     {
-      x: ecoliProperties.boundaryRight - 15,
-      y: ecoliProperties.boundaryTop + 180,
-      r: 6,
+      x: ecoliProperties.boundaryRight - 48,
+      y: ecoliProperties.boundaryTop + 184,
+      r: 12,
     },
     {
-      x: ecoliProperties.boundaryRight - 25,
-      y: ecoliProperties.boundaryTop + 228,
+      x: ecoliProperties.boundaryRight - 78,
+      y: ecoliProperties.boundaryTop + 232,
       r: 40,
     },
     {
-      x: ecoliProperties.boundaryRight - 134,
+      x: ecoliProperties.boundaryRight - 189,
       y: ecoliProperties.boundaryBottom - 40,
-      r: 88,
+      r: 98,
     },
   ],
   shapePath:
