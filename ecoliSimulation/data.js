@@ -2,7 +2,7 @@ const width = window.innerWidth - 32;
 
 export const canvasProperties = {
   width,
-  height: width * 0.4,
+  height: Math.min(Math.max(width * 0.4, 400), 680),
 };
 
 export const graphProperties = {
