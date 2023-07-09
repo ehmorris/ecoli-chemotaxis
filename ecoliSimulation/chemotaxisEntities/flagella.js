@@ -3,7 +3,7 @@ import {
   transition,
   transitionPath,
 } from "../animation.js";
-import { canvasProperties } from "../data.js";
+import { canvasProperties, ecoliProperties } from "../data.js";
 import { easeInOutSine } from "../easings.js";
 
 const transitionPathPair = (pathPair, progress, easing) => {
@@ -71,14 +71,17 @@ export const makeFlagella = (CTX) => {
     // w: 504.14
     // h: 1058.44
     //
-    // 1. Offset flagella to top left
-    CTX.translate(-548, -315);
-    // 2. Center in screen
-    CTX.translate(canvasProperties.width / 2, canvasProperties.height / 2);
-    // 3. Rotate
+    // 1. Move flagella to align with E. Coli
+    CTX.translate(ecoliProperties.boundaryRight, ecoliProperties.boundaryTop);
+    CTX.translate(360, 310);
+
+    // 2. Rotate to align with back of E. Coli (flagella are exported in a
+    //    different rotation from Figma)
     CTX.rotate((-100 * Math.PI) / 180);
-    // 4. Align with E. Coli
-    CTX.translate(-950, 80);
+
+    // 3. Offset to the top and left to center the rotation axis
+    CTX.translate(-43.5, -315.06);
+    CTX.translate(-252.07, -529.22);
 
     const transitionDuration = 400;
 
