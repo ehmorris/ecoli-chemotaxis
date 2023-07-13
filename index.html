@@ -19,7 +19,6 @@
       canvas {
         display: block;
         overflow: hidden;
-        border-radius: 24px;
         position: relative;
       }
 
@@ -57,6 +56,7 @@
       .heroContainer canvas {
         background: url("./ecoliSimulation/images/Background.png") #010010;
         background-size: 100% 100%;
+        clip-path: url(#heroClipMask);
       }
 
       .heroGif {
@@ -76,6 +76,7 @@
 
       .sliderAndPip canvas {
         cursor: pointer;
+        clip-path: url(#sliderClipMask);
       }
 
       #debug1,

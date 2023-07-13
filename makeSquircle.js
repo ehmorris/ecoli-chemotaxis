@@ -1,38 +1,47 @@
-// Radius is always 24px
-const make24pxSquircle = (width, height) => {
-  return `M0 26.8063C0 17.4232 0 12.7317 1.54327 9.1478C2.90077 5.99535 5.06687 3.43232 7.73111 1.82607C10.7599 0 14.7249 0 22.6549 0H${
-    width - 22.655
-  }C${width - 14.725} 0 ${width - 10.76} 0 ${width - 7.731} 1.82607C${
-    width - 5.067
-  } 3.43232 ${width - 2.901} 5.99535 ${
-    width - 1.543
-  } 9.1478C${width} 12.7317 ${width} 17.4232 ${width} 26.8063V${
-    height - 26.806
-  }C${width} ${height - 17.423} ${width} ${height - 12.732} ${width - 1.543} ${
-    height - 9.148
-  }C${width - 2.901} ${height - 5.995} ${width - 5.067} ${height - 3.432} ${
-    width - 7.731
-  } ${height - 1.826}C${width - 10.76} ${height} ${width - 14.725} ${height} ${
-    width - 22.655
-  } ${height}H22.6549C14.7249 ${height} 10.7599 ${height} 7.73111 ${
-    height - 1.826
-  }C5.06687 ${height - 3.432} 2.90077 ${height - 5.995} 1.54327 ${
-    height - 9.148
-  }C0 ${height - 12.732} 0 ${height - 17.423} 0 ${height - 26.806}V26.8063Z`;
+// Extracted from Figma with corner radius set to 24px and smooth corners set
+// to 60%, then used https://yqnn.github.io/svg-path-editor/ to convert path
+// to relative
+const make24pxCornerRadiusSquirclePath = (width, height) => {
+  return `m 0 38.4
+c 0 -13.4413 0 -20.1619 2.6158 -25.2958
+c 2.301 -4.5159 5.9725 -8.1874 10.4884 -10.4884
+c 5.1339 -2.6158 11.8545 -2.6158 25.2958 -2.6158
+h ${width - 76.8}
+c 13.441 0 20.162 0 25.296 2.6158
+c 4.516 2.301 8.187 5.9725 10.488 10.4884
+c 2.616 5.1339 2.616 11.8545 2.616 25.2958
+v ${height - 76.8}
+c 0 13.4413 0 20.1619 -2.616 25.2958
+c -2.301 4.5159 -5.972 8.1874 -10.488 10.4884
+c -5.134 2.6158 -11.855 2.6158 -25.296 2.6158
+h ${-width + 76.8}
+c -13.4413 0 -20.1619 0 -25.2958 -2.6158
+c -4.5159 -2.301 -8.1874 -5.9725 -10.4884 -10.4884
+c -2.6158 -5.1339 -2.6158 -11.8545 -2.6158 -25.2958
+v ${-height + 76.8}
+z`;
 };
 
-export const makeSquircleSVG = (width, height, color) => {
+export const makeSquircleSVGClipMask = (id, width, height) => {
   const svgEl = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svgEl.setAttribute("width", width);
-  svgEl.setAttribute("height", height);
-  svgEl.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  svgEl.setAttribute("width", 0);
+  svgEl.setAttribute("height", 0);
   svgEl.setAttribute("fill", "none");
 
-  const pathEl = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  pathEl.setAttribute("fill", color);
-  pathEl.setAttribute("d", make24pxSquircle(width, height));
+  const defsEl = document.createElementNS("http://www.w3.org/2000/svg", "defs");
 
-  svgEl.append(pathEl);
+  const clipPathEl = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "clipPath"
+  );
+  clipPathEl.setAttribute("id", id);
+
+  const pathEl = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  pathEl.setAttribute("d", make24pxCornerRadiusSquirclePath(width, height));
+
+  clipPathEl.append(pathEl);
+  defsEl.append(clipPathEl);
+  svgEl.append(defsEl);
 
   return svgEl;
 };

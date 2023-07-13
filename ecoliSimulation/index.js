@@ -21,12 +21,21 @@ import {
 } from "./data.js";
 import { transition, progress } from "./animation.js";
 import { easeInExpo } from "./easings.js";
+import { makeSquircleSVGClipMask } from "../makeSquircle.js";
 
 const [CTX] = generateCanvas({
   width: canvasProperties.width,
   height: canvasProperties.height,
   attachNode: ".heroCanvasContainer",
 });
+
+document.body.appendChild(
+  makeSquircleSVGClipMask(
+    "heroClipMask",
+    canvasProperties.width,
+    canvasProperties.height
+  )
+);
 
 const state = new Map()
   .set("numAttractantPerReceptor", attractantSliderProperties.defaultAmount)

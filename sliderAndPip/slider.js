@@ -1,5 +1,6 @@
 import { animate, progress, transition } from "../ecoliSimulation/animation.js";
 import { generateCanvas, clampNumber } from "../ecoliSimulation/helpers.js";
+import { makeSquircleSVGClipMask } from "../makeSquircle.js";
 
 // TODO:
 // * Move common files like helpers and animation to top level
@@ -24,6 +25,10 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
     height,
     attachNode,
   });
+
+  document.body.appendChild(
+    makeSquircleSVGClipMask("sliderClipMask", width, height)
+  );
 
   const setValue = (value) => {
     controlPositionInPixels = clampNumber(
