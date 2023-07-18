@@ -19,8 +19,8 @@ import {
   motorProperties,
   attractantSliderProperties,
 } from "./data.js";
-import { transition, progress } from "./animation.js";
-import { easeInExpo } from "./easings.js";
+import { transition, progress, mirroredLoopingProgress } from "./animation.js";
+import { easeInExpo, easeInOutQuad, easeInOutSine } from "./easings.js";
 import { makeSquircleSVGClipMask } from "../makeSquircle.js";
 
 const [CTX] = generateCanvas({
@@ -130,11 +130,24 @@ animate((millisecondsElapsed, resetElapsedTime) => {
     ? flagella.tumble()
     : flagella.run();
 
+  CTX.save();
+  const floatingProgress = mirroredLoopingProgress(
+    0,
+    1000,
+    millisecondsElapsed()
+  );
+  CTX.translate(
+    transition(-3, 2, floatingProgress, easeInOutQuad),
+    transition(1, -1, floatingProgress, easeInOutSine)
+  );
+
   flagella.draw(millisecondsElapsed, resetElapsedTime);
   drawEcoli(CTX);
   receptors.forEach((r) => r.draw());
   motors.forEach((m) => m.draw());
   chey.forEach((c) => c.draw());
+
+  CTX.restore();
 });
 
 generateTopDownViz({

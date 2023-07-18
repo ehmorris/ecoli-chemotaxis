@@ -3,7 +3,7 @@ import {
   transition,
   transitionPath,
 } from "../animation.js";
-import { canvasProperties, ecoliProperties } from "../data.js";
+import { ecoliProperties } from "../data.js";
 import { easeInOutSine } from "../easings.js";
 
 const transitionPathPair = (pathPair, progress, easing) => {
