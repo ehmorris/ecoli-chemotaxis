@@ -39,8 +39,8 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
     );
   };
 
-  const moveControl = ({ screenX, movementX }) => {
-    const relativeMousePosition = screenX - leftViewportOffset;
+  const moveControl = ({ pageX, movementX }) => {
+    const relativeMousePosition = pageX - leftViewportOffset;
     const positionInValue = transition(min, max, relativeMousePosition / width);
     rotation = movementX;
     setValue(positionInValue);
