@@ -131,14 +131,19 @@ animate((millisecondsElapsed, resetElapsedTime) => {
     : flagella.run();
 
   CTX.save();
-  const floatingProgress = mirroredLoopingProgress(
-    0,
-    1000,
-    millisecondsElapsed()
-  );
+
   CTX.translate(
-    transition(-3, 2, floatingProgress, easeInOutQuad),
-    transition(1, -1, floatingProgress, easeInOutSine)
+    transition(
+      -7,
+      3,
+      mirroredLoopingProgress(0, 2000, millisecondsElapsed(), easeInOutSine)
+    ),
+    transition(
+      -3,
+      6,
+      mirroredLoopingProgress(0, 3145, millisecondsElapsed()),
+      easeInOutSine
+    )
   );
 
   flagella.draw(millisecondsElapsed, resetElapsedTime);
