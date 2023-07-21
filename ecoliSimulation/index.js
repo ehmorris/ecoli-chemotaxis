@@ -48,112 +48,120 @@ const motors = generateArrayOfX(ecoliProperties.numMotor, () => makeMotor(CTX));
 const chey = generateArrayOfX(ecoliProperties.numCheY, () => makeCheY(CTX));
 const flagella = makeFlagella(CTX);
 
-animate((millisecondsElapsed, resetElapsedTime) => {
-  CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
+animate(
+  (millisecondsElapsed, resetElapsedTime, requestAnimationFrameTimestamp) => {
+    CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 
-  // Find all intersecting entities
-  const acceptsStickyEntities = receptors.concat(motors);
-  const entitiesThatStick = chey;
-  const collidingEntitityPairs = [];
-  const collidingEntitiesFlat = [];
-  for (const acceptsSticky of acceptsStickyEntities) {
-    for (const sticky of entitiesThatStick) {
-      if (
-        isColliding(
-          acceptsSticky.props.get("position"),
-          acceptsSticky.props.get("size"),
-          sticky.props.get("position"),
-          sticky.props.get("size")
-        )
-      ) {
-        collidingEntitityPairs.push({
-          entity: sticky,
-          collidingWith: acceptsSticky,
-        });
-        collidingEntitiesFlat.push(sticky);
-        collidingEntitiesFlat.push(acceptsSticky);
+    // Find all intersecting entities
+    const acceptsStickyEntities = receptors.concat(motors);
+    const entitiesThatStick = chey;
+    const collidingEntitityPairs = [];
+    const collidingEntitiesFlat = [];
+    for (const acceptsSticky of acceptsStickyEntities) {
+      for (const sticky of entitiesThatStick) {
+        if (
+          isColliding(
+            acceptsSticky.props.get("position"),
+            acceptsSticky.props.get("size"),
+            sticky.props.get("position"),
+            sticky.props.get("size")
+          )
+        ) {
+          collidingEntitityPairs.push({
+            entity: sticky,
+            collidingWith: acceptsSticky,
+          });
+          collidingEntitiesFlat.push(sticky);
+          collidingEntitiesFlat.push(acceptsSticky);
+        }
       }
     }
-  }
 
-  // Trigger collision behavior in colliding entities
-  collidingEntitityPairs.forEach(({ entity, collidingWith }) => {
-    // Stick non-phosphorylated cheY to colliding receptors
-    if (
-      entity.props.get("type") === "chey" &&
-      !entity.props.get("phosphorylated") &&
-      collidingWith.props.get("type") === "receptor" &&
-      collidingWith.props.get("active")
-    ) {
-      entity.phosphorylate();
-      entity.stick(collidingWith);
-    }
+    // Trigger collision behavior in colliding entities
+    collidingEntitityPairs.forEach(({ entity, collidingWith }) => {
+      // Stick non-phosphorylated cheY to colliding receptors
+      if (
+        entity.props.get("type") === "chey" &&
+        !entity.props.get("phosphorylated") &&
+        collidingWith.props.get("type") === "receptor" &&
+        collidingWith.props.get("active")
+      ) {
+        entity.phosphorylate();
+        entity.stick(collidingWith);
+      }
 
-    // Stick phosphorylated cheY to colliding motors
-    if (
-      entity.props.get("type") === "chey" &&
-      entity.props.get("phosphorylated") &&
-      collidingWith.props.get("type") === "motor"
-    ) {
-      entity.dephosphorylate();
-      entity.stick(collidingWith);
-    }
-  });
-
-  // Toggle motor state based on how much cheY is on it
-  collidingEntitiesFlat
-    .filter(({ props }) => props.get("type") === "motor")
-    .forEach((motor) => {
-      const cheYOnThisMotor = getEntityIntersection(
-        collidingEntitiesFlat.filter(
-          ({ props }) => props.get("type") === "chey" && props.get("isStuck")
-        ),
-        [motor]
-      );
-
-      cheYOnThisMotor.length >= motorProperties.cheYRequiredToTumble
-        ? motor.tumble()
-        : motor.run();
+      // Stick phosphorylated cheY to colliding motors
+      if (
+        entity.props.get("type") === "chey" &&
+        entity.props.get("phosphorylated") &&
+        collidingWith.props.get("type") === "motor"
+      ) {
+        entity.dephosphorylate();
+        entity.stick(collidingWith);
+      }
     });
 
-  // Update for tumble/run viz
-  state.set(
-    "activeMotorCount",
-    motors.filter((m) => m.props.get("tumbling")).length
-  );
+    // Toggle motor state based on how much cheY is on it
+    collidingEntitiesFlat
+      .filter(({ props }) => props.get("type") === "motor")
+      .forEach((motor) => {
+        const cheYOnThisMotor = getEntityIntersection(
+          collidingEntitiesFlat.filter(
+            ({ props }) => props.get("type") === "chey" && props.get("isStuck")
+          ),
+          [motor]
+        );
 
-  // Decrease num attractant constantly
-  eatAttractant();
+        cheYOnThisMotor.length >= motorProperties.cheYRequiredToTumble
+          ? motor.tumble()
+          : motor.run();
+      });
 
-  // Toggle flagella animation based on majority motor state
-  state.get("activeMotorCount") > ecoliProperties.numMotor - 1
-    ? flagella.tumble()
-    : flagella.run();
+    // Update for tumble/run viz
+    state.set(
+      "activeMotorCount",
+      motors.filter((m) => m.props.get("tumbling")).length
+    );
 
-  CTX.save();
+    // Decrease num attractant constantly
+    eatAttractant();
 
-  CTX.translate(
-    transition(
-      -7,
-      3,
-      mirroredLoopingProgress(0, 2000, millisecondsElapsed(), easeInOutSine)
-    ),
-    transition(
-      -3,
-      6,
-      mirroredLoopingProgress(0, 3145, millisecondsElapsed()),
-      easeInOutSine
-    )
-  );
+    // Toggle flagella animation based on majority motor state
+    state.get("activeMotorCount") > ecoliProperties.numMotor - 1
+      ? flagella.tumble()
+      : flagella.run();
 
-  flagella.draw(millisecondsElapsed, resetElapsedTime);
-  drawEcoli(CTX);
-  receptors.forEach((r) => r.draw());
-  motors.forEach((m) => m.draw());
-  chey.forEach((c) => c.draw());
+    CTX.save();
 
-  CTX.restore();
-});
+    // Ambient motion for entire E. Coli
+    CTX.translate(
+      transition(
+        -7,
+        3,
+        mirroredLoopingProgress(
+          0,
+          2000,
+          requestAnimationFrameTimestamp,
+          easeInOutSine
+        )
+      ),
+      transition(
+        -3,
+        6,
+        mirroredLoopingProgress(0, 3145, requestAnimationFrameTimestamp),
+        easeInOutSine
+      )
+    );
+
+    flagella.draw(millisecondsElapsed, resetElapsedTime);
+    drawEcoli(CTX);
+    receptors.forEach((r) => r.draw());
+    motors.forEach((m) => m.draw());
+    chey.forEach((c) => c.draw());
+
+    CTX.restore();
+  }
+);
 
 generateTopDownViz({
   getNumerator: () => state.get("activeMotorCount"),

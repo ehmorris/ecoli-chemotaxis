@@ -70,8 +70,8 @@ export const animate = (drawFunc) => {
   const getTimeElapsed = () => Date.now() - startTime;
   const resetStartTime = () => (startTime = Date.now());
 
-  const drawFuncContainer = () => {
-    drawFunc(getTimeElapsed, resetStartTime);
+  const drawFuncContainer = (timestamp) => {
+    drawFunc(getTimeElapsed, resetStartTime, timestamp);
     window.requestAnimationFrame(drawFuncContainer);
   };
 
