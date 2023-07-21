@@ -81,13 +81,14 @@ export const makeReceptor = (CTX, state) => {
   };
 
   let attractantPositions = generateArrayOfX(
-    state.get("numAttractantPerReceptor"),
+    Math.round(state.get("numAttractantPerReceptor")),
     generateAttractantPosition
   );
 
   const updateAttractantPositions = () => {
     const numNewAttractant =
-      state.get("numAttractantPerReceptor") - attractantPositions.length;
+      Math.round(state.get("numAttractantPerReceptor")) -
+      attractantPositions.length;
 
     if (numNewAttractant >= 0) {
       attractantPositions = attractantPositions.concat(

@@ -13,7 +13,7 @@ export const graphProperties = {
 
 export const attractantSliderProperties = {
   defaultAmount: 0,
-  maxAttractantAmount: 500,
+  maxAttractantAmount: 20,
 };
 
 const ecoliWidth = 508;

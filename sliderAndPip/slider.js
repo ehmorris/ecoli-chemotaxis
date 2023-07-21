@@ -44,7 +44,7 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
     const positionInValue = transition(min, max, relativeMousePosition / width);
     rotation = movementX;
     setValue(positionInValue);
-    onInput(Math.round(positionInValue));
+    onInput(positionInValue);
   };
 
   function moveControlOnMove(event) {
@@ -89,7 +89,7 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
 
     CTX.font = "800 8px/1 -apple-system, BlinkMacSystemFont, sans-serif";
     CTX.fillStyle = "rgba(255, 255, 255, .8)";
-    CTX.fillText("HUNGER", pipWidth - 124, height / 2 + 3);
+    // CTX.fillText("HUNGER", pipWidth - 124, height / 2 + 3);
 
     // Control
     CTX.save();
@@ -99,9 +99,9 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
     CTX.restore();
 
     if (pipWidth > controlPositionInPixels + 100) {
-      CTX.fillText("FOOD", controlPositionInPixels - 60, height / 2 + 3);
+      // CTX.fillText("FOOD", controlPositionInPixels - 60, height / 2 + 3);
     } else {
-      CTX.fillText("FOOD", controlPositionInPixels + 34, height / 2 + 3);
+      // CTX.fillText("FOOD", controlPositionInPixels + 34, height / 2 + 3);
     }
   });
 
