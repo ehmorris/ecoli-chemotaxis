@@ -131,35 +131,11 @@ animate(
       ? flagella.tumble()
       : flagella.run();
 
-    CTX.save();
-
-    // Ambient motion for entire E. Coli
-    CTX.translate(
-      transition(
-        -7,
-        3,
-        mirroredLoopingProgress(
-          0,
-          2000,
-          requestAnimationFrameTimestamp,
-          easeInOutSine
-        )
-      ),
-      transition(
-        -3,
-        6,
-        mirroredLoopingProgress(0, 3145, requestAnimationFrameTimestamp),
-        easeInOutSine
-      )
-    );
-
     flagella.draw(millisecondsElapsed, resetElapsedTime);
     drawEcoli(CTX);
     receptors.forEach((r) => r.draw());
     motors.forEach((m) => m.draw());
     chey.forEach((c) => c.draw());
-
-    CTX.restore();
   }
 );
 
