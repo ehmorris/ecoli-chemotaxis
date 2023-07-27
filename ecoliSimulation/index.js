@@ -144,6 +144,14 @@ generateTopDownViz({
   denominator: ecoliProperties.numMotor,
 });
 
+document.querySelector("#feedButton").addEventListener("click", () => {
+  state.set(
+    "numAttractantPerReceptor",
+    state.get("numAttractantPerReceptor") + 1
+  );
+  sliderLastChanged = Date.now();
+});
+
 let sliderLastChanged = Date.now();
 
 const slider = makeSlider({

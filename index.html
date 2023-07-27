@@ -67,6 +67,40 @@
         overflow: hidden;
       }
 
+      .feedButton {
+        width: 100px;
+        height: 70px;
+        position: absolute;
+        bottom: 16px;
+        right: 16px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(18px);
+        font-family: system-ui, -apple-system, sans-serif;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        color: rgba(255, 255, 255, 0.9);
+        user-select: none;
+        transition: transform, background 0.2s ease;
+      }
+
+      .feedButton:hover {
+        transform: translate(0, -1px) scale(1.01);
+        background: rgba(255, 255, 255, 0.5);
+        color: #fff;
+      }
+
+      .feedButton:active {
+        transform: translate(0, 1px) scale(0.99);
+        transition-duration: 0s;
+        background: rgba(255, 255, 255, 0.25);
+        color: rgba(255, 255, 255, 0.6);
+      }
+
       .sliderAndPip {
         position: relative;
         width: calc(100vw - 32px);
@@ -94,6 +128,7 @@
     <div class="heroContainer">
       <div class="heroCanvasContainer"></div>
       <div class="heroGif"></div>
+      <div class="feedButton" id="feedButton">FEED</div>
     </div>
     <div class="sliderAndPip"></div>
 
