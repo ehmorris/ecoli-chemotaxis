@@ -25,59 +25,16 @@ export const makeReceptor = (CTX, state) => {
   };
 
   const generateAttractantPosition = () => {
-    // Sides are 1-top, 2-right, 3-bottom, 4-left
-    const side = Math.round(randomBetween(1, 4));
-    let coords;
-
-    if (side === 1) {
-      coords = {
-        x: randomBetween(
-          props.get("position").x,
-          props.get("position").x +
-            props.get("size") -
-            attractantProperties.defaultSize
-        ),
-        y: props.get("position").y - attractantProperties.defaultSize,
-      };
-    }
-
-    if (side === 2) {
-      coords = {
-        x: props.get("position").x + props.get("size"),
-        y: randomBetween(
-          props.get("position").y,
-          props.get("position").y +
-            props.get("size") -
-            attractantProperties.defaultSize
-        ),
-      };
-    }
-
-    if (side === 3) {
-      coords = {
-        x: randomBetween(
-          props.get("position").x,
-          props.get("position").x +
-            props.get("size") -
-            attractantProperties.defaultSize
-        ),
-        y: props.get("position").y + props.get("size"),
-      };
-    }
-
-    if (side === 4) {
-      coords = {
-        x: props.get("position").x - attractantProperties.defaultSize,
-        y: randomBetween(
-          props.get("position").y,
-          props.get("position").y +
-            props.get("size") -
-            attractantProperties.defaultSize
-        ),
-      };
-    }
-
-    return coords;
+    return {
+      x: randomBetween(
+        props.get("position").x - attractantProperties.defaultSize,
+        props.get("position").x + props.get("size")
+      ),
+      y: randomBetween(
+        props.get("position").y - attractantProperties.defaultSize,
+        props.get("position").y + props.get("size")
+      ),
+    };
   };
 
   let attractantPositions = generateArrayOfX(
@@ -150,12 +107,16 @@ export const makeReceptor = (CTX, state) => {
     updateAttractantPositions();
     CTX.fillStyle = attractantProperties.defaultColor;
     attractantPositions.forEach(({ x, y }) => {
-      CTX.fillRect(
-        x,
-        y,
+      CTX.beginPath();
+      CTX.arc(
+        x + attractantProperties.defaultSize / 2,
+        y + attractantProperties.defaultSize / 2,
         attractantProperties.defaultSize,
-        attractantProperties.defaultSize
+        0,
+        2 * Math.PI
       );
+      CTX.closePath();
+      CTX.fill();
     });
     CTX.restore();
   };

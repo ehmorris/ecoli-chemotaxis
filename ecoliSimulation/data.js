@@ -131,6 +131,6 @@ export const motorProperties = {
 };
 
 export const attractantProperties = {
-  defaultColor: "#C37393",
-  defaultSize: 3,
+  defaultColor: "#9E56C0",
+  defaultSize: 2,
 };
