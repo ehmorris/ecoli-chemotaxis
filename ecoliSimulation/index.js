@@ -19,23 +19,20 @@ import {
   motorProperties,
   attractantSliderProperties,
 } from "./data.js";
-import { transition, progress, mirroredLoopingProgress } from "./animation.js";
-import { easeInExpo, easeInOutQuad, easeInOutSine } from "./easings.js";
-import { makeSquircleSVGClipMask } from "../makeSquircle.js";
+import { transition, progress } from "./animation.js";
+import { easeInExpo } from "./easings.js";
+import { make24pxCornerRadiusSquirclePath } from "../makeSquircle.js";
 
-const [CTX] = generateCanvas({
+const [CTX, heroCanvasElement] = generateCanvas({
   width: canvasProperties.width,
   height: canvasProperties.height,
   attachNode: ".heroCanvasContainer",
 });
 
-document.body.appendChild(
-  makeSquircleSVGClipMask(
-    "heroClipMask",
-    canvasProperties.width,
-    canvasProperties.height
-  )
-);
+heroCanvasElement.style.clipPath = `path('${make24pxCornerRadiusSquirclePath(
+  canvasProperties.width,
+  canvasProperties.height
+)}')`;
 
 const state = new Map()
   .set("numAttractantPerReceptor", attractantSliderProperties.defaultAmount)
