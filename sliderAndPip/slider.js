@@ -40,15 +40,15 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
     );
   };
 
-  const moveControl = ({ pageX, movementX }) => {
-    const relativeMousePosition = pageX - leftViewportOffset;
+  const moveControl = (e) => {
+    const relativeMousePosition = e.pageX - leftViewportOffset;
     const positionInValue = transition(min, max, relativeMousePosition / width);
-    rotation = movementX;
+    rotation = e.movementX ? e.movementX : 0;
     setValue(positionInValue);
     onInput(positionInValue);
   };
 
-  function moveControlOnMove(event) {
+  function moveControlOnMouseMove(event) {
     if (event.buttons === 1) {
       moveControl(event);
       event.preventDefault();
@@ -58,12 +58,21 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
   element.addEventListener("mousedown", (e) => {
     moveControl(e);
     rotation = 0;
-    document.addEventListener("mousemove", moveControlOnMove);
+    document.addEventListener("mousemove", moveControlOnMouseMove);
   });
 
   document.addEventListener("mouseup", () => {
     rotation = 0;
-    document.removeEventListener("mousemove", moveControlOnMove);
+    document.removeEventListener("mousemove", moveControlOnMouseMove);
+  });
+
+  element.addEventListener("touchstart", (e) => {
+    moveControl(e);
+    document.addEventListener("touchmove", moveControl);
+  });
+
+  document.addEventListener("touchend", () => {
+    document.removeEventListener("touchmove", moveControl);
   });
 
   animate(() => {
