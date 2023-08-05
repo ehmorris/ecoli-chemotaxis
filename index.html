@@ -96,6 +96,12 @@
       height: 100%;
     }
 
+    .normalCanvasContainer {
+      position: relative;
+      margin: 1em auto 0;
+      width: 100%;
+    }
+
     .heroContainer {
       position: relative;
       margin: 1em auto 0;
@@ -126,10 +132,7 @@
 
 <body>
   <h1> The baffling intelligence of a single cell: the story of E. coli chemotaxis </h1>
-  <div class="heroContainer">
-    <div class="heroCanvasContainer"></div>
-  </div>
-  <div class="sliderAndPip"></div>
+  <img src="articleImages/hero.png" />
   <article>
     <h2>By James Somers and Edwin Morris</h2>
     <p>I want to tell the story of a beautiful phenomenon in biology. In some sense it&rsquo;s the prototype of much of
@@ -157,12 +160,9 @@
       is known as a &ldquo;run&rdquo;&mdash;and otherwise it spins in a random direction (a &ldquo;tumble&rdquo;). By
       running when the getting is good and tumbling when it isn&rsquo;t, the <em>E. coli</em> takes a meandering path
       toward the attractant.</p>
-    <figure class="rightBar">
-      <img loading="lazy" alt="" src="articleImages/image5.png" />
-      <figcaption>Adapted from La Vecchia, <a
-          href="https://www.google.com/url?q=http://www.diva-portal.org/smash/get/diva2:430333/FULLTEXT01.pdf&amp;sa=D&amp;source=editors&amp;ust=1691027434679093&amp;usg=AOvVaw1QM34q00bv1Cye2NHj9SsE">&ldquo;Bacterial
-          chemotaxis in non-homogeneous shear flow&rdquo;</a></figcaption>
-    </figure>
+    <div class="normalCanvasContainer">
+      <div class="tumbleRunCanvasContainer"></div>
+    </div>
     <p>A little more detail now: there are half a dozen or so rotors on the <em>E. coli&rsquo;s</em> body, each
       controlling a long whip-like tail that flows behind it. When all the rotors are spinning in the same direction,
       the tails join together into a coil that torques the cell forward into a run. When even one rotor is spinning
@@ -174,9 +174,10 @@
       affinity for the rotors. The modified CheY-p, as it&rsquo;s known, binds to the rotor and, via a very cool
       mechanism that we&rsquo;ll get into later, reverses the flagellum&rsquo;s direction of spin.</p>
     <p>You can see this process in action in the interactive illustration. Try adding some attractant.</p>
-    <p>[that same <a
-        href="https://www.google.com/url?q=https://ehmorris.github.io/ecoli-chemotaxis/&amp;sa=D&amp;source=editors&amp;ust=1691027434679850&amp;usg=AOvVaw2pkV3FvCfSKpCWHOYJ9Xzj">interactive
-        illustration</a>] </p>
+    <div class="heroContainer">
+      <div class="heroCanvasContainer"></div>
+    </div>
+    <div class="sliderAndPip"></div>
     <p>The default behavior of the rotors is to spin clockwise, which makes the <em>E. coli</em> tumble. When attractant
       is detected, the CheY gets transformed&mdash;&ldquo;phosphorylated&rdquo;&mdash;into a new shape that binds to the
       rotors. You can see that the cell is extremely responsive to attractant: just a tiny bit causes a flurry of
@@ -869,6 +870,7 @@
     </p>
   </footer>
   <script type="module" src="ecoliSimulation/index.js"></script>
+  <script type="module" src="tumbleRun/tumblerun.js"></script>
 </body>
 
 </html>
