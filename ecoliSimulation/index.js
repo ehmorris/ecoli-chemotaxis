@@ -12,7 +12,6 @@ import {
 } from "./helpers.js";
 import { animate } from "./animation.js";
 import { makeSlider } from "../sliderAndPip/slider.js";
-import { generateTopDownViz } from "./topdownviz.js";
 import {
   canvasProperties,
   ecoliProperties,
@@ -135,19 +134,6 @@ animate(
     chey.forEach((c) => c.draw());
   }
 );
-
-generateTopDownViz({
-  getNumerator: () => state.get("activeMotorCount"),
-  denominator: ecoliProperties.numMotor,
-});
-
-document.querySelector("#feedButton").addEventListener("click", () => {
-  state.set(
-    "numAttractantPerReceptor",
-    state.get("numAttractantPerReceptor") + 1
-  );
-  sliderLastChanged = Date.now();
-});
 
 let sliderLastChanged = Date.now();
 
