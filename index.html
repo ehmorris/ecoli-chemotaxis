@@ -96,19 +96,19 @@
       height: 100%;
     }
 
-    .normalCanvasContainer {
+    .normalWidthContainer {
       position: relative;
       margin: 1em auto 0;
       width: 100%;
     }
 
-    .heroContainer {
+    .fullWidthContainer {
       position: relative;
       margin: 1em auto 0;
       width: calc(100vw - 32px);
     }
 
-    .heroContainer canvas {
+    .fullWidthContainer canvas {
       background: url("./ecoliSimulation/images/Background.png") #010010;
       background-size: 100% 100%;
     }
@@ -132,9 +132,18 @@
 
 <body>
   <h1> The baffling intelligence of a single cell: the story of E. coli chemotaxis </h1>
-  <img src="articleImages/hero.png" />
+  <img class="fullWidthContainer" id="heroImage" src="articleImages/hero.png" />
+  <script type="module">
+    import { make24pxCornerRadiusSquirclePath } from "../makeSquircle.js";
+    const width = window.innerWidth - 32;
+    document.querySelector('#heroImage').style.clipPath = `path('${make24pxCornerRadiusSquirclePath(
+      width,
+      width * .3902
+    )}')`;
+  </script>
   <article>
-    <h2>By James Somers and Edwin Morris</h2>
+    <h2>By <a rel="author" href="https://jsomers.net">James Somers</a> and <a rel="author"
+        href="https://ehmorris.com">Edwin Morris</a></h2>
     <p>I want to tell the story of a beautiful phenomenon in biology. In some sense it&rsquo;s the prototype of much of
       the activity of life. The phenomenon is the way in which an individual cell of <em>E. coli</em> forages for
       nutrients. This process, known as &ldquo;chemotaxis&rdquo;&mdash;the &ldquo;chemo-&rdquo; for chemical and the
@@ -160,8 +169,8 @@
       is known as a &ldquo;run&rdquo;&mdash;and otherwise it spins in a random direction (a &ldquo;tumble&rdquo;). By
       running when the getting is good and tumbling when it isn&rsquo;t, the <em>E. coli</em> takes a meandering path
       toward the attractant.</p>
-    <div class="normalCanvasContainer">
-      <div class="tumbleRunCanvasContainer"></div>
+    <div class="normalWidthContainer">
+      <div id="tumbleRunCanvasContainer"></div>
     </div>
     <p>A little more detail now: there are half a dozen or so rotors on the <em>E. coli&rsquo;s</em> body, each
       controlling a long whip-like tail that flows behind it. When all the rotors are spinning in the same direction,
@@ -174,8 +183,8 @@
       affinity for the rotors. The modified CheY-p, as it&rsquo;s known, binds to the rotor and, via a very cool
       mechanism that we&rsquo;ll get into later, reverses the flagellum&rsquo;s direction of spin.</p>
     <p>You can see this process in action in the interactive illustration. Try adding some attractant.</p>
-    <div class="heroContainer">
-      <div class="heroCanvasContainer"></div>
+    <div class="fullWidthContainer">
+      <div id="heroCanvasContainer"></div>
     </div>
     <div class="sliderAndPip"></div>
     <p>The default behavior of the rotors is to spin clockwise, which makes the <em>E. coli</em> tumble. When attractant

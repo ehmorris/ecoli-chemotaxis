@@ -25,7 +25,7 @@ import { make24pxCornerRadiusSquirclePath } from "../makeSquircle.js";
 const [CTX, heroCanvasElement] = generateCanvas({
   width: canvasProperties.width,
   height: canvasProperties.height,
-  attachNode: ".heroCanvasContainer",
+  attachNode: "#heroCanvasContainer",
 });
 
 heroCanvasElement.style.clipPath = `path('${make24pxCornerRadiusSquirclePath(
