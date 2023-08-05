@@ -20,6 +20,7 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
   let controlPositionInPixels =
     clampNumber(progress(min, max, value), 0, 100) / width;
   let rotation = 0;
+  let previousTouch;
 
   const [CTX, element] = generateCanvas({
     width,
@@ -40,23 +41,31 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
     );
   };
 
-  const moveControl = (e) => {
-    const relativeMousePosition = e.pageX - leftViewportOffset;
+  const moveControl = (newPosition, newRotation) => {
+    const relativeMousePosition = newPosition - leftViewportOffset;
     const positionInValue = transition(min, max, relativeMousePosition / width);
-    rotation = e.movementX ? e.movementX : 0;
+    rotation = newRotation;
     setValue(positionInValue);
     onInput(positionInValue);
   };
 
-  function moveControlOnMouseMove(event) {
-    if (event.buttons === 1) {
-      moveControl(event);
-      event.preventDefault();
+  function moveControlOnMouseMove(e) {
+    if (e.buttons === 1) {
+      moveControl(e.pageX, e.movementX);
+      e.preventDefault();
     }
   }
 
+  function moveControlonTouchMove(e) {
+    previousTouch
+      ? moveControl(e.pageX, e.pageX - previousTouch.pageX)
+      : moveControl(e.pageX, 0);
+    e.preventDefault();
+    previousTouch = e;
+  }
+
   element.addEventListener("mousedown", (e) => {
-    moveControl(e);
+    moveControl(e.pageX, e.movementX);
     rotation = 0;
     document.addEventListener("mousemove", moveControlOnMouseMove);
   });
@@ -67,12 +76,12 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
   });
 
   element.addEventListener("touchstart", (e) => {
-    moveControl(e);
-    document.addEventListener("touchmove", moveControl);
+    moveControl(e.pageX, 0);
+    document.addEventListener("touchmove", moveControlonTouchMove);
   });
 
   document.addEventListener("touchend", () => {
-    document.removeEventListener("touchmove", moveControl);
+    document.removeEventListener("touchmove", moveControlonTouchMove);
   });
 
   animate(() => {
