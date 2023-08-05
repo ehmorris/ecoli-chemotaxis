@@ -61,7 +61,7 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
       ? moveControl(e.pageX, e.pageX - previousTouch.pageX)
       : moveControl(e.pageX, 0);
     e.preventDefault();
-    previousTouch = e;
+    previousTouch = { ...e };
   }
 
   element.addEventListener("mousedown", (e) => {
@@ -77,7 +77,9 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
 
   element.addEventListener("touchstart", (e) => {
     moveControl(e.pageX, 0);
-    document.addEventListener("touchmove", moveControlonTouchMove);
+    document.addEventListener("touchmove", moveControlonTouchMove, {
+      passive: false,
+    });
   });
 
   document.addEventListener("touchend", () => {
