@@ -171,6 +171,11 @@
       toward the attractant.</p>
     <div class="normalWidthContainer">
       <div id="tumbleRunCanvasContainer"></div>
+      <figure>
+        <img loading="lazy" alt="" src="articleImages/random-walk.jpg" />
+        <figcaption>(Adapted from La Vecchia, <a href="http://www.diva-portal.org/smash/get/diva2:430333/FULLTEXT01.pdf">“Bacterial chemotaxis in non-homogeneous shear flow”</a>)
+        </figcaption>
+      </figure>
     </div>
     <p>A little more detail now: there are half a dozen or so rotors on the <em>E. coli&rsquo;s</em> body, each
       controlling a long whip-like tail that flows behind it. When all the rotors are spinning in the same direction,
@@ -288,10 +293,9 @@
       acid called aspartate. This sensor protein has little clefts in it that are shaped just so for molecules of
       aspartate to fit snugly into them. [Falke] In schematic form the aspartate receptor looks like this:</p>
     <figure>
-      <img loading="lazy" alt="" src="articleImages/image1.png" />
+      <img loading="lazy" alt="" src="articleImages/transmembrane.jpg" />
       <figcaption>Source: Falke, <a
-          href="https://www.google.com/url?q=https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2899694/&amp;sa=D&amp;source=editors&amp;ust=1691027434685513&amp;usg=AOvVaw074L-N5yK-vvXTnLuWgjtq">&ldquo;THE
-          TWO-COMPONENT SIGNALING PATHWAY OF BACTERIAL CHEMOTAXIS: A Molecular View of Signal Transduction by Receptors,
+          href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2899694/">&ldquo;The Two-Component Signaling Pathway of Bacterial Chemotaxis: A Molecular View of Signal Transduction by Receptors,
           Kinases, and Adaptation Enzymes&rdquo;</a>
       </figcaption>
     </figure>
@@ -322,11 +326,20 @@
       &ldquo;dips&rdquo; and &ldquo;tilts&rdquo;&mdash;in such a way to lock the thing that&rsquo;s supposed to be
       phosphorylating CheY, the CheA kinase, into an inactive state.</p>
     <figure>
-      <img loading="lazy" alt="" src="articleImages/image12.gif" />
-      <figcaption>Adapted from: <a
-          href="https://www.google.com/url?q=https://www.youtube.com/watch?v%3DMCobqYrE67w&amp;sa=D&amp;source=editors&amp;ust=1691027434687865&amp;usg=AOvVaw2oDxYf-BTq5azog22itNZD">CheA
-          conformation change, posted by Keith Cassidy</a>
-      </figcaption>
+      <script>
+        window.addEventListener("load", (event) => {
+          const slider = document.querySelector("#dip-slider");
+          slider.addEventListener("input", (event) => {
+            const imageSrc = `articleImages/dip/dip-${event.target.value}.png`;
+            document.querySelector("#dip-box img").setAttribute("src", imageSrc);
+          })
+        });
+      </script>
+      <div style="text-align: center"><input id="dip-slider" type="range" min="1" max="8" value="1"/></div>
+      <p id="dip-box">
+        <img loading="lazy" src="articleImages/dip/dip-1.png">
+      </p>
+      <figcaption>(Adapted from: <a href="https://www.youtube.com/watch?v=MCobqYrE67w"><u>CheA conformation change, posted by Keith Cassidy</u></a>)</figcaption>
     </figure>
     <p>When I think of a cell I imagine a Rube Goldberg&ndash;type contraption where an arm swings here, which drops a
       ball into a slide there, which rolls down and opens a trap door, which... eventually turns on or off some
@@ -511,11 +524,52 @@
     </p>
     <figure><img loading="lazy" alt="" src="articleImages/image6.png" /></figure>
     <p>
-      <span>You can see this more clearly below in this animated version of those figures. The animation starts by
-        showing the clockwise motion; dwells on the orientation change of the FliG</span><span>c
-      </span><span>&nbsp;proteins; then finally continues roating counterclockwise.</span>
+      <span>You can see this more clearly below in the interactive version of those figures. Click “Step” to drive the motor in one direction, and “Reverse” to flip the orientation of the FliGc proteins; Step again and you&rsquo;ll see it run in the opposite direction.</span>
     </p>
-    <figure><img loading="lazy" alt="" src="articleImages/image15.gif" /></figure>
+    <script>
+      reversed = false;
+      index = 0;
+  
+      window.addEventListener("load", function(event) {
+        const nextFrame = function() {
+          const imageSrc = `./articleImages/rotor/${reversed ? "reversed/" : ""}rotor-${index}.png`;
+          document.querySelector("#box img").setAttribute("src", imageSrc);
+        }
+    
+        const flipFrame = function() {
+          console.log("flip", "index", index);
+          const imageSrc = `./articleImages/rotor/${reversed ? "reversed/" : ""}rotor-${index}.png`;
+          document.querySelector("#box img").setAttribute("src", imageSrc);
+        }
+    
+        document.querySelector("#step").addEventListener("click", function(event) {
+          if (reversed) {
+            index -= 1;
+            if (index < 0) {
+              index = 33
+            }
+          } else {
+            index += 1;
+            if (index > 33) {
+              index = 0;
+            }
+          }
+          nextFrame()
+        });
+    
+        document.querySelector("#reverse").addEventListener("click", function(event) {
+          reversed = !reversed;
+          flipFrame()
+        })
+      });
+    </script>
+
+    <div style="text-align: center">
+    <input id="step" type="button" value="Step"/>
+    <input id="reverse" type="button" value="Reverse"/>
+
+      <div id="box"><img style="width: 300px; margin: 0 auto; margin-top: 20px; height: 300px;" src="./articleImages/rotor/rotor-0.png"></div>
+    </div>
     <p>It&rsquo;s a shame that the paper presenting this theory didn&rsquo;t include such an animation, because that by
       far is the most natural way to consume this information. It speaks to the fact that creating animations is really
       hard! (It took several hours even to produce this crude version.) Per Bret Victor&rsquo;s talk <span><a
