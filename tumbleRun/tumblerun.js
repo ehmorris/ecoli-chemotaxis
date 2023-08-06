@@ -3,6 +3,7 @@ import {
   randomBetween,
   nextPositionAlongHeading,
   isAtBoundary,
+  isColliding,
 } from "../ecoliSimulation/helpers.js";
 import { animate } from "../ecoliSimulation/animation.js";
 import { make24pxCornerRadiusSquirclePath } from "../makeSquircle.js";
@@ -25,35 +26,30 @@ let eColiPosition = { x: 50, y: 50 };
 let eColiHeading = randomBetween(0, 359);
 let speed = 2;
 let rotation = 0;
-let size = 5;
+let size = 7;
 let isRunning = true;
 let timeSinceLastRunBegan = 0;
 let timeSinceLastTumbleBegan = 0;
 
-animate((getTimeElapsed) => {
-  CTX.fillStyle = "#000117";
-  CTX.fillRect(0, 0, width, height);
+const attractant = [
+  { x: width / 8, y: height / 6, size: 180 },
+  { x: width - width / 3, y: height - height / 2, size: 120 },
+];
 
-  if (isRunning) {
-    eColiHeading += randomBetween(-3, 3);
+const drawAttractant = () => {
+  attractant.forEach(({ x, y, size }) => {
+    CTX.save();
+    CTX.translate(x, y);
+    CTX.fillStyle = "gray";
+    CTX.beginPath();
+    CTX.arc(size / 2, size / 2, size / 1.8, 0, 2 * Math.PI);
+    CTX.closePath();
+    CTX.fill();
+    CTX.restore();
+  });
+};
 
-    if (getTimeElapsed() - timeSinceLastRunBegan > 5_000) {
-      isRunning = false;
-      speed = 3;
-      timeSinceLastTumbleBegan = getTimeElapsed();
-    }
-  } else {
-    eColiHeading += randomBetween(-40, 40);
-
-    if (getTimeElapsed() - timeSinceLastTumbleBegan > 1000) {
-      isRunning = true;
-      speed = 2;
-      timeSinceLastRunBegan = getTimeElapsed();
-    }
-  }
-
-  eColiPosition = getNewLocation(eColiHeading, speed, eColiPosition, size);
-
+const drawEcoli = () => {
   const shapeCenter = {
     x: eColiPosition.x + size / 2,
     y: eColiPosition.y + size / 2,
@@ -70,6 +66,47 @@ animate((getTimeElapsed) => {
   CTX.closePath();
   CTX.fill();
   CTX.restore();
+};
+
+animate((getTimeElapsed) => {
+  CTX.fillStyle = "#000117";
+  CTX.fillRect(0, 0, width, height);
+
+  drawAttractant();
+
+  const wasOnAttractantLastPosition = attractant.some((a) =>
+    isColliding(eColiPosition, size, { x: a.x, y: a.y }, a.size)
+  );
+
+  eColiPosition = getNewLocation(eColiHeading, speed, eColiPosition, size);
+
+  const isOnAttractant = attractant.some((a) =>
+    isColliding(eColiPosition, size, { x: a.x, y: a.y }, a.size)
+  );
+
+  if (isRunning) {
+    eColiHeading += randomBetween(-2, 2);
+
+    if (
+      (getTimeElapsed() - timeSinceLastRunBegan > 4_000 ||
+        wasOnAttractantLastPosition) &&
+      !isOnAttractant
+    ) {
+      isRunning = false;
+      speed = 3;
+      timeSinceLastTumbleBegan = getTimeElapsed();
+    }
+  } else {
+    eColiHeading += randomBetween(-40, 40);
+
+    if (getTimeElapsed() - timeSinceLastTumbleBegan > 800 || isOnAttractant) {
+      isRunning = true;
+      speed = 2;
+      timeSinceLastRunBegan = getTimeElapsed();
+    }
+  }
+
+  drawEcoli();
 });
 
 const getNewLocation = (
