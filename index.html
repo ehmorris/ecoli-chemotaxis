@@ -173,7 +173,9 @@
       <div id="tumbleRunCanvasContainer"></div>
       <figure>
         <img loading="lazy" alt="" src="articleImages/random-walk.jpg" />
-        <figcaption>(Adapted from La Vecchia, <a href="http://www.diva-portal.org/smash/get/diva2:430333/FULLTEXT01.pdf">“Bacterial chemotaxis in non-homogeneous shear flow”</a>)
+        <figcaption>Adapted from La Vecchia, <a
+            href="http://www.diva-portal.org/smash/get/diva2:430333/FULLTEXT01.pdf">“Bacterial chemotaxis in
+            non-homogeneous shear flow”</a>
         </figcaption>
       </figure>
     </div>
@@ -294,8 +296,8 @@
       aspartate to fit snugly into them. [Falke] In schematic form the aspartate receptor looks like this:</p>
     <figure>
       <img loading="lazy" alt="" src="articleImages/transmembrane.jpg" />
-      <figcaption>Source: Falke, <a
-          href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2899694/">&ldquo;The Two-Component Signaling Pathway of Bacterial Chemotaxis: A Molecular View of Signal Transduction by Receptors,
+      <figcaption>Source: Falke, <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2899694/">&ldquo;The
+          Two-Component Signaling Pathway of Bacterial Chemotaxis: A Molecular View of Signal Transduction by Receptors,
           Kinases, and Adaptation Enzymes&rdquo;</a>
       </figcaption>
     </figure>
@@ -326,21 +328,20 @@
       &ldquo;dips&rdquo; and &ldquo;tilts&rdquo;&mdash;in such a way to lock the thing that&rsquo;s supposed to be
       phosphorylating CheY, the CheA kinase, into an inactive state.</p>
     <figure>
-      <script>
-        window.addEventListener("load", (event) => {
-          const slider = document.querySelector("#dip-slider");
-          slider.addEventListener("input", (event) => {
-            const imageSrc = `articleImages/dip/dip-${event.target.value}.png`;
-            document.querySelector("#dip-box img").setAttribute("src", imageSrc);
-          })
-        });
-      </script>
-      <div style="text-align: center"><input id="dip-slider" type="range" min="1" max="8" value="1"/></div>
+      <div style="text-align: center"><input id="dip-slider" type="range" min="1" max="8" value="1" /></div>
       <p id="dip-box">
         <img loading="lazy" src="articleImages/dip/dip-1.png">
       </p>
-      <figcaption>(Adapted from: <a href="https://www.youtube.com/watch?v=MCobqYrE67w"><u>CheA conformation change, posted by Keith Cassidy</u></a>)</figcaption>
+      <figcaption>(Adapted from: <a href="https://www.youtube.com/watch?v=MCobqYrE67w"><u>CheA conformation change,
+            posted by Keith Cassidy</u></a>)</figcaption>
     </figure>
+    <script>
+      const slider = document.querySelector("#dip-slider");
+      slider.addEventListener("input", (event) => {
+        const imageSrc = `articleImages/dip/dip-${event.target.value}.png`;
+        document.querySelector("#dip-box img").setAttribute("src", imageSrc);
+      });
+    </script>
     <p>When I think of a cell I imagine a Rube Goldberg&ndash;type contraption where an arm swings here, which drops a
       ball into a slide there, which rolls down and opens a trap door, which... eventually turns on or off some
       important cellular function. Indeed, <em>E. coli</em>&rsquo;s &ldquo;sense of smell&rdquo; rests ultimately in a
@@ -524,52 +525,48 @@
     </p>
     <figure><img loading="lazy" alt="" src="articleImages/image6.png" /></figure>
     <p>
-      <span>You can see this more clearly below in the interactive version of those figures. Click “Step” to drive the motor in one direction, and “Reverse” to flip the orientation of the FliGc proteins; Step again and you&rsquo;ll see it run in the opposite direction.</span>
+      <span>You can see this more clearly below in the interactive version of those figures. Click “Step” to drive the
+        motor in one direction, and “Reverse” to flip the orientation of the FliGc proteins; Step again and you&rsquo;ll
+        see it run in the opposite direction.</span>
     </p>
-    <script>
-      reversed = false;
-      index = 0;
-  
-      window.addEventListener("load", function(event) {
-        const nextFrame = function() {
-          const imageSrc = `./articleImages/rotor/${reversed ? "reversed/" : ""}rotor-${index}.png`;
-          document.querySelector("#box img").setAttribute("src", imageSrc);
-        }
-    
-        const flipFrame = function() {
-          console.log("flip", "index", index);
-          const imageSrc = `./articleImages/rotor/${reversed ? "reversed/" : ""}rotor-${index}.png`;
-          document.querySelector("#box img").setAttribute("src", imageSrc);
-        }
-    
-        document.querySelector("#step").addEventListener("click", function(event) {
-          if (reversed) {
-            index -= 1;
-            if (index < 0) {
-              index = 33
-            }
-          } else {
-            index += 1;
-            if (index > 33) {
-              index = 0;
-            }
-          }
-          nextFrame()
-        });
-    
-        document.querySelector("#reverse").addEventListener("click", function(event) {
-          reversed = !reversed;
-          flipFrame()
-        })
-      });
-    </script>
-
     <div style="text-align: center">
-    <input id="step" type="button" value="Step"/>
-    <input id="reverse" type="button" value="Reverse"/>
-
-      <div id="box"><img style="width: 300px; margin: 0 auto; margin-top: 20px; height: 300px;" src="./articleImages/rotor/rotor-0.png"></div>
+      <input id="step" type="button" value="Step" />
+      <input id="reverse" type="button" value="Reverse" />
+      <div id="box"><img style="width: 300px; margin: 0 auto; margin-top: 20px; height: 300px;"
+          src="./articleImages/rotor/rotor-0.png"></div>
     </div>
+    <script>
+      let reversed = false;
+      let index = 0;
+
+      const nextFrame = () => {
+        const imageSrc = `./articleImages/rotor/${reversed ? "reversed/" : ""}rotor-${index}.png`;
+        document.querySelector("#box img").setAttribute("src", imageSrc);
+      }
+
+      const flipFrame = () => {
+        console.log("flip", "index", index);
+        const imageSrc = `./articleImages/rotor/${reversed ? "reversed/" : ""}rotor-${index}.png`;
+        document.querySelector("#box img").setAttribute("src", imageSrc);
+      }
+
+      document.querySelector("#step").addEventListener("click", () => {
+        if (reversed) {
+          index -= 1;
+          if (index < 0) index = 33
+        } else {
+          index += 1;
+          if (index > 33) index = 0;
+        }
+
+        nextFrame();
+      });
+
+      document.querySelector("#reverse").addEventListener("click", () => {
+        reversed = !reversed;
+        flipFrame();
+      })
+    </script>
     <p>It&rsquo;s a shame that the paper presenting this theory didn&rsquo;t include such an animation, because that by
       far is the most natural way to consume this information. It speaks to the fact that creating animations is really
       hard! (It took several hours even to produce this crude version.) Per Bret Victor&rsquo;s talk <span><a
