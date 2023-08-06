@@ -26,15 +26,34 @@ let eColiHeading = randomBetween(0, 359);
 let speed = 2;
 let rotation = 0;
 let size = 5;
-let color = "red";
 let isRunning = true;
+let timeSinceLastRunBegan = 0;
+let timeSinceLastTumbleBegan = 0;
 
-animate(() => {
+animate((getTimeElapsed) => {
   CTX.fillStyle = "#000117";
   CTX.fillRect(0, 0, width, height);
 
+  if (isRunning) {
+    eColiHeading += randomBetween(-3, 3);
+
+    if (getTimeElapsed() - timeSinceLastRunBegan > 5_000) {
+      isRunning = false;
+      speed = 3;
+      timeSinceLastTumbleBegan = getTimeElapsed();
+    }
+  } else {
+    eColiHeading += randomBetween(-40, 40);
+
+    if (getTimeElapsed() - timeSinceLastTumbleBegan > 1000) {
+      isRunning = true;
+      speed = 2;
+      timeSinceLastRunBegan = getTimeElapsed();
+    }
+  }
+
   eColiPosition = getNewLocation(eColiHeading, speed, eColiPosition, size);
-  eColiHeading += randomBetween(-8, 8);
+
   const shapeCenter = {
     x: eColiPosition.x + size / 2,
     y: eColiPosition.y + size / 2,
@@ -45,7 +64,7 @@ animate(() => {
   CTX.translate(shapeCenter.x, shapeCenter.y);
   CTX.rotate(rotationAmount);
   CTX.translate(-size / 2, -size / 2);
-  CTX.fillStyle = color;
+  CTX.fillStyle = isRunning ? "blue" : "red";
   CTX.beginPath();
   CTX.arc(size / 2, size / 2, size, 0, 2 * Math.PI);
   CTX.closePath();
