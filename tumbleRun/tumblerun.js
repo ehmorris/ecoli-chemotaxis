@@ -9,7 +9,7 @@ import { animate } from "../ecoliSimulation/animation.js";
 import { make24pxCornerRadiusSquirclePath } from "../makeSquircle.js";
 
 const width = document.querySelector("article").clientWidth;
-const height = width * 0.5625;
+const height = width;
 const [CTX, canvasEl] = generateCanvas({
   width,
   height,
@@ -20,90 +20,73 @@ canvasEl.style.clipPath = `path('${make24pxCornerRadiusSquirclePath(
   height
 )}')`;
 
-const runColor = "#0E4782";
+const runColor = "#C2D6FF";
 const tumbleColor = "#C2D6FF";
 const eatingColor = "#C2D6FF";
 let eColiPosition = { x: 50, y: 50 };
 let eColiHeading = randomBetween(0, 359);
 let speed = 2;
-let rotation = 0;
 let size = 7;
 let isRunning = true;
 let timeSinceLastRunBegan = 0;
 let timeSinceLastTumbleBegan = 0;
-let stateHistory = new Array(1000).fill("none");
+let positionHistory = [];
 
 const attractant = [
-  { x: width / 8, y: height / 6, size: width / 3 },
-  { x: width - width / 3, y: height - height / 2, size: width / 8 },
+  { x: width / 10, y: height / 10, size: width / 2.5 },
+  { x: width - width / 3, y: height - height / 3, size: width / 5.5 },
 ];
 
 const drawAttractant = () => {
   attractant.forEach(({ x, y, size }) => {
     CTX.save();
     CTX.translate(x, y);
-    CTX.fillStyle = "gray";
-    CTX.beginPath();
-    CTX.arc(size / 2, size / 2, size / 1.8, 0, 2 * Math.PI);
-    CTX.closePath();
-    CTX.fill();
+    for (let index = 1; index < 6; index++) {
+      CTX.strokeStyle = `rgba(255, 255, 255, ${index * 0.2})`;
+      CTX.beginPath();
+      CTX.arc(size / 2, size / 2, size / (index * 1.8), 0, 2 * Math.PI);
+      CTX.closePath();
+      CTX.stroke();
+    }
     CTX.restore();
   });
 };
 
 const drawEcoli = (isOnAttractant) => {
-  const shapeCenter = {
-    x: eColiPosition.x + size / 2,
-    y: eColiPosition.y + size / 2,
-  };
-  const rotationAmount = (Math.PI / 180) * rotation;
-
   CTX.save();
-  CTX.translate(shapeCenter.x, shapeCenter.y);
-  CTX.rotate(rotationAmount);
-  CTX.translate(-size / 2, -size / 2);
+  CTX.translate(eColiPosition.x, eColiPosition.y);
   CTX.fillStyle = isOnAttractant
     ? eatingColor
     : isRunning
     ? runColor
     : tumbleColor;
   CTX.beginPath();
-  CTX.arc(size / 2, size / 2, size, 0, 2 * Math.PI);
+  CTX.arc(0, 0, size, 0, 2 * Math.PI);
   CTX.closePath();
   CTX.fill();
   CTX.restore();
 };
 
-const drawStateHistory = () => {
-  const padding = 12;
-  const entryWidth = (width - padding * 2) / stateHistory.length;
-  const entryHeight = 12;
-
+const drawPositionHistory = () => {
   CTX.save();
-  stateHistory.forEach((entry, index) => {
-    if (entry === "none") {
-      CTX.fillStyle = "transparent";
-    } else if (entry === "eating") {
-      CTX.fillStyle = eatingColor;
-    } else if (entry === "run") {
-      CTX.fillStyle = runColor;
-    } else if (entry === "tumble") {
-      CTX.fillStyle = tumbleColor;
+  CTX.globalAlpha = 0.5;
+  CTX.strokeStyle = runColor;
+  CTX.beginPath();
+  positionHistory.forEach(({ x, y }, index) => {
+    if (index > 0) {
+      CTX.lineTo(x, y);
+    } else {
+      CTX.moveTo(x, y);
     }
-
-    CTX.fillRect(
-      padding + index * entryWidth,
-      height - padding - entryHeight,
-      entryWidth * 2,
-      entryHeight
-    );
   });
+  CTX.stroke();
   CTX.restore();
 };
 
 animate((getTimeElapsed) => {
   CTX.fillStyle = "#000117";
   CTX.fillRect(0, 0, width, height);
+  let positionWasReset = false;
 
   drawAttractant();
 
@@ -111,7 +94,12 @@ animate((getTimeElapsed) => {
     isColliding(eColiPosition, size, { x: a.x, y: a.y }, a.size)
   );
 
-  eColiPosition = getNewLocation(eColiHeading, speed, eColiPosition, size);
+  [eColiPosition, positionWasReset] = getNewLocation(
+    eColiHeading,
+    speed,
+    eColiPosition,
+    size
+  );
 
   const isOnAttractant = attractant.some((a) =>
     isColliding(eColiPosition, size, { x: a.x, y: a.y }, a.size)
@@ -139,10 +127,11 @@ animate((getTimeElapsed) => {
     }
   }
 
-  stateHistory.push(isOnAttractant ? "eating" : isRunning ? "run" : "tumble");
-  stateHistory.shift();
-
-  drawStateHistory();
+  if (positionWasReset) {
+    positionHistory = [];
+  }
+  positionHistory.push(eColiPosition);
+  drawPositionHistory();
 
   drawEcoli(isOnAttractant);
 });
@@ -158,6 +147,8 @@ const getNewLocation = (
     currentSpeed,
     heading
   );
+
+  let _positionWasReset = false;
 
   if (
     isAtBoundary(
@@ -182,7 +173,8 @@ const getNewLocation = (
           ? height - currentSize
           : prospectiveNewLocation.y,
     };
+    _positionWasReset = true;
   }
 
-  return prospectiveNewLocation;
+  return [prospectiveNewLocation, _positionWasReset];
 };
