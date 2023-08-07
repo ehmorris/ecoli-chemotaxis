@@ -1,6 +1,5 @@
 import {
   randomBetween,
-  randomBool,
   nextPositionAlongHeading,
   isShapeInPath,
 } from "../helpers.js";
