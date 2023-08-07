@@ -10,18 +10,19 @@ import { make24pxCornerRadiusSquirclePath } from "../makeSquircle.js";
 
 const width = document.querySelector("article").clientWidth;
 const height = width * 0.5625;
-
 const [CTX, canvasEl] = generateCanvas({
   width,
   height,
   attachNode: "#tumbleRunCanvasContainer",
 });
-
 canvasEl.style.clipPath = `path('${make24pxCornerRadiusSquirclePath(
   width,
   height
 )}')`;
 
+const runColor = "#0E4782";
+const tumbleColor = "#C2D6FF";
+const eatingColor = "#C2D6FF";
 let eColiPosition = { x: 50, y: 50 };
 let eColiHeading = randomBetween(0, 359);
 let speed = 2;
@@ -30,10 +31,11 @@ let size = 7;
 let isRunning = true;
 let timeSinceLastRunBegan = 0;
 let timeSinceLastTumbleBegan = 0;
+let stateHistory = new Array(1000).fill("none");
 
 const attractant = [
-  { x: width / 8, y: height / 6, size: 180 },
-  { x: width - width / 3, y: height - height / 2, size: 120 },
+  { x: width / 8, y: height / 6, size: width / 3 },
+  { x: width - width / 3, y: height - height / 2, size: width / 8 },
 ];
 
 const drawAttractant = () => {
@@ -49,7 +51,7 @@ const drawAttractant = () => {
   });
 };
 
-const drawEcoli = () => {
+const drawEcoli = (isOnAttractant) => {
   const shapeCenter = {
     x: eColiPosition.x + size / 2,
     y: eColiPosition.y + size / 2,
@@ -60,11 +62,42 @@ const drawEcoli = () => {
   CTX.translate(shapeCenter.x, shapeCenter.y);
   CTX.rotate(rotationAmount);
   CTX.translate(-size / 2, -size / 2);
-  CTX.fillStyle = isRunning ? "blue" : "red";
+  CTX.fillStyle = isOnAttractant
+    ? eatingColor
+    : isRunning
+    ? runColor
+    : tumbleColor;
   CTX.beginPath();
   CTX.arc(size / 2, size / 2, size, 0, 2 * Math.PI);
   CTX.closePath();
   CTX.fill();
+  CTX.restore();
+};
+
+const drawStateHistory = () => {
+  const padding = 12;
+  const entryWidth = (width - padding * 2) / stateHistory.length;
+  const entryHeight = 12;
+
+  CTX.save();
+  stateHistory.forEach((entry, index) => {
+    if (entry === "none") {
+      CTX.fillStyle = "transparent";
+    } else if (entry === "eating") {
+      CTX.fillStyle = eatingColor;
+    } else if (entry === "run") {
+      CTX.fillStyle = runColor;
+    } else if (entry === "tumble") {
+      CTX.fillStyle = tumbleColor;
+    }
+
+    CTX.fillRect(
+      padding + index * entryWidth,
+      height - padding - entryHeight,
+      entryWidth * 2,
+      entryHeight
+    );
+  });
   CTX.restore();
 };
 
@@ -106,7 +139,12 @@ animate((getTimeElapsed) => {
     }
   }
 
-  drawEcoli();
+  stateHistory.push(isOnAttractant ? "eating" : isRunning ? "run" : "tumble");
+  stateHistory.shift();
+
+  drawStateHistory();
+
+  drawEcoli(isOnAttractant);
 });
 
 const getNewLocation = (
