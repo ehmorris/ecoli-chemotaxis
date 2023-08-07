@@ -23,14 +23,18 @@ canvasEl.style.clipPath = `path('${make24pxCornerRadiusSquirclePath(
 const runColor = "#C2D6FF";
 const tumbleColor = "#C2D6FF";
 const eatingColor = "#C2D6FF";
-let eColiPosition = { x: 50, y: 50 };
 let eColiHeading = randomBetween(0, 359);
 let speed = 2;
 let size = 7;
+let eColiPosition = {
+  x: randomBetween(0, width - size),
+  y: randomBetween(0, height - size),
+};
 let isRunning = true;
 let timeSinceLastRunBegan = 0;
 let timeSinceLastTumbleBegan = 0;
-let positionHistory = [];
+let currentPositionHistory = [];
+let pastPositions = new Array(6).fill([]);
 
 const attractant = [
   { x: width / 10, y: height / 10, size: width / 2.5 },
@@ -68,11 +72,27 @@ const drawEcoli = (isOnAttractant) => {
 };
 
 const drawPositionHistory = () => {
+  pastPositions.forEach((positionHistory, index) => {
+    CTX.save();
+    CTX.globalAlpha = index * 0.1;
+    CTX.strokeStyle = runColor;
+    CTX.beginPath();
+    positionHistory.forEach(({ x, y }, index) => {
+      if (index > 0) {
+        CTX.lineTo(x, y);
+      } else {
+        CTX.moveTo(x, y);
+      }
+    });
+    CTX.stroke();
+    CTX.restore();
+  });
+
   CTX.save();
   CTX.globalAlpha = 0.5;
   CTX.strokeStyle = runColor;
   CTX.beginPath();
-  positionHistory.forEach(({ x, y }, index) => {
+  currentPositionHistory.forEach(({ x, y }, index) => {
     if (index > 0) {
       CTX.lineTo(x, y);
     } else {
@@ -106,7 +126,7 @@ animate((getTimeElapsed) => {
   );
 
   if (isRunning) {
-    eColiHeading += randomBetween(-2, 2);
+    eColiHeading += randomBetween(-10, 10);
 
     if (
       (getTimeElapsed() - timeSinceLastRunBegan > 4_000 ||
@@ -118,7 +138,7 @@ animate((getTimeElapsed) => {
       timeSinceLastTumbleBegan = getTimeElapsed();
     }
   } else {
-    eColiHeading += randomBetween(-40, 40);
+    eColiHeading += randomBetween(-180, 180);
 
     if (getTimeElapsed() - timeSinceLastTumbleBegan > 800 || isOnAttractant) {
       isRunning = true;
@@ -128,9 +148,13 @@ animate((getTimeElapsed) => {
   }
 
   if (positionWasReset) {
-    positionHistory = [];
+    if (currentPositionHistory.length > 20) {
+      pastPositions.push(currentPositionHistory);
+      pastPositions.shift();
+    }
+    currentPositionHistory = [];
   }
-  positionHistory.push(eColiPosition);
+  currentPositionHistory.push(eColiPosition);
   drawPositionHistory();
 
   drawEcoli(isOnAttractant);
