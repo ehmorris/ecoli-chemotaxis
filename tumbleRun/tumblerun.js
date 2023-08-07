@@ -23,9 +23,10 @@ canvasEl.style.clipPath = `path('${make24pxCornerRadiusSquirclePath(
 const runColor = "#C2D6FF";
 const tumbleColor = "#C2D6FF";
 const eatingColor = "#C2D6FF";
+const backgroundColor = "#000117";
 let eColiHeading = randomBetween(0, 359);
 let speed = 2;
-let size = 7;
+let size = 14;
 let eColiPosition = {
   x: randomBetween(0, width - size),
   y: randomBetween(0, height - size),
@@ -59,15 +60,21 @@ const drawAttractant = () => {
 const drawEcoli = (isOnAttractant) => {
   CTX.save();
   CTX.translate(eColiPosition.x, eColiPosition.y);
-  CTX.fillStyle = isOnAttractant
+  CTX.fillStyle = backgroundColor;
+  CTX.strokeStyle = isOnAttractant
     ? eatingColor
     : isRunning
     ? runColor
     : tumbleColor;
+
+  CTX.rotate((eColiHeading + 90) * (Math.PI / 180));
   CTX.beginPath();
-  CTX.arc(0, 0, size, 0, 2 * Math.PI);
+  CTX.moveTo(0, -size / 2);
+  CTX.lineTo(size / 2, size / 2);
+  CTX.lineTo(-size / 2, size / 2);
   CTX.closePath();
   CTX.fill();
+  CTX.stroke();
   CTX.restore();
 };
 
@@ -104,7 +111,7 @@ const drawPositionHistory = () => {
 };
 
 animate((getTimeElapsed) => {
-  CTX.fillStyle = "#000117";
+  CTX.fillStyle = backgroundColor;
   CTX.fillRect(0, 0, width, height);
   let positionWasReset = false;
 
@@ -117,8 +124,7 @@ animate((getTimeElapsed) => {
   [eColiPosition, positionWasReset] = getNewLocation(
     eColiHeading,
     speed,
-    eColiPosition,
-    size
+    eColiPosition
   );
 
   const isOnAttractant = attractant.some((a) =>
@@ -134,7 +140,6 @@ animate((getTimeElapsed) => {
       !isOnAttractant
     ) {
       isRunning = false;
-      speed = 3;
       timeSinceLastTumbleBegan = getTimeElapsed();
     }
   } else {
@@ -142,7 +147,6 @@ animate((getTimeElapsed) => {
 
     if (getTimeElapsed() - timeSinceLastTumbleBegan > 800 || isOnAttractant) {
       isRunning = true;
-      speed = 2;
       timeSinceLastRunBegan = getTimeElapsed();
     }
   }
@@ -160,12 +164,7 @@ animate((getTimeElapsed) => {
   drawEcoli(isOnAttractant);
 });
 
-const getNewLocation = (
-  heading,
-  currentSpeed,
-  currentLocation,
-  currentSize
-) => {
+const getNewLocation = (heading, currentSpeed, currentLocation) => {
   let prospectiveNewLocation = nextPositionAlongHeading(
     currentLocation,
     currentSpeed,
@@ -174,27 +173,19 @@ const getNewLocation = (
 
   let _positionWasReset = false;
 
-  if (
-    isAtBoundary(
-      prospectiveNewLocation,
-      0,
-      width - currentSize,
-      height - currentSize,
-      0
-    )
-  ) {
+  if (isAtBoundary(prospectiveNewLocation, 0, width, height, 0)) {
     prospectiveNewLocation = {
       x:
         prospectiveNewLocation.x > width
           ? 0
           : prospectiveNewLocation.x < 0
-          ? width - currentSize
+          ? width
           : prospectiveNewLocation.x,
       y:
         prospectiveNewLocation.y > height
           ? 0
           : prospectiveNewLocation.y < 0
-          ? height - currentSize
+          ? height
           : prospectiveNewLocation.y,
     };
     _positionWasReset = true;
