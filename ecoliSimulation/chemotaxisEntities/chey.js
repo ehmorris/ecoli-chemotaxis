@@ -3,7 +3,7 @@ import {
   nextPositionAlongHeading,
   isShapeInPath,
 } from "../helpers.js";
-import { cheYProperties, ecoliProperties } from "../data.js";
+import { canvasProperties, cheYProperties, ecoliProperties } from "../data.js";
 
 export const makeCheY = (CTX) => {
   // Internal props
@@ -20,8 +20,12 @@ export const makeCheY = (CTX) => {
   // Exposed props
   const props = new Map()
     .set("position", {
-      x: ecoliProperties.boundaryLeft + ecoliProperties.width / 2,
-      y: ecoliProperties.boundaryTop + ecoliProperties.height / 2,
+      x:
+        ecoliProperties.boundaryLeft * canvasProperties.illustrationScale +
+        (ecoliProperties.width / 2) * canvasProperties.illustrationScale,
+      y:
+        ecoliProperties.boundaryTop * canvasProperties.illustrationScale +
+        (ecoliProperties.height / 2) * canvasProperties.illustrationScale,
     })
     .set("type", "chey")
     .set("size", cheYProperties.defaultSize)
@@ -90,6 +94,10 @@ export const makeCheY = (CTX) => {
       CTX.translate(shapeCenter.x, shapeCenter.y);
       CTX.rotate(rotationAmount);
       CTX.translate(-props.get("size") / 2, -props.get("size") / 2);
+      CTX.scale(
+        canvasProperties.illustrationScale,
+        canvasProperties.illustrationScale
+      );
       CTX.fill(new Path2D(cheYProperties.shapePath));
       CTX.restore();
 
@@ -147,7 +155,8 @@ const getNewRandomLocationInBoundary = (
         boundaryPathXOffset,
         boundaryPathYOffset,
         prospectiveNewLocation,
-        currentSize
+        currentSize,
+        canvasProperties.illustrationScale
       )
     ) {
       const newHeading = randomBetween(1, 360);

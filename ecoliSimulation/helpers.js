@@ -48,16 +48,17 @@ export const isShapeInPath = (
   pathXOffset,
   pathYOffset,
   location,
-  size
+  size,
+  extraScaleFactor
 ) => {
   // isPointInPath is basing its result on a 2X size version of the input
   // path. Not sure how to fix this, so we pass in a 2X size coordinate
   const scaleFactor = window.devicePixelRatio;
   const scaledLocation = {
-    x: (location.x - pathXOffset) * scaleFactor,
-    y: (location.y - pathYOffset) * scaleFactor,
+    x: (location.x - pathXOffset * extraScaleFactor) * scaleFactor,
+    y: (location.y - pathYOffset * extraScaleFactor) * scaleFactor,
   };
-  const scaledSize = size * scaleFactor;
+  const scaledSize = size * extraScaleFactor * scaleFactor;
 
   return (
     context.isPointInPath(path, scaledLocation.x, scaledLocation.y) &&

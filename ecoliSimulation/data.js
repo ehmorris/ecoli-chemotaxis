@@ -3,6 +3,7 @@ const width = window.innerWidth - 32;
 export const canvasProperties = {
   width,
   height: Math.min(Math.max(width * 0.4, 400), 680),
+  illustrationScale: Math.min(width / 1000, 1),
 };
 
 export const graphProperties = {

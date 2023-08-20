@@ -127,11 +127,19 @@ animate(
       ? flagella.tumble()
       : flagella.run();
 
+    CTX.save();
+    CTX.scale(
+      canvasProperties.illustrationScale,
+      canvasProperties.illustrationScale
+    );
+
     flagella.draw(millisecondsElapsed, resetElapsedTime);
     drawEcoli(CTX);
     receptors.forEach((r) => r.draw());
     motors.forEach((m) => m.draw());
     chey.forEach((c) => c.draw());
+
+    CTX.restore();
   }
 );
 
