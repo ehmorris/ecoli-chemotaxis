@@ -110,7 +110,6 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
 
     CTX.font = "800 8px/1 -apple-system, BlinkMacSystemFont, sans-serif";
     CTX.fillStyle = "rgba(255, 255, 255, .8)";
-    // CTX.fillText("HUNGER", pipWidth - 124, height / 2 + 3);
 
     // Control
     CTX.save();
@@ -118,12 +117,6 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
     CTX.rotate((-rotation * Math.PI) / 180);
     CTX.drawImage(cursorImage, -26, -26, 52, 52);
     CTX.restore();
-
-    if (pipWidth > controlPositionInPixels + 100) {
-      // CTX.fillText("FOOD", controlPositionInPixels - 60, height / 2 + 3);
-    } else {
-      // CTX.fillText("FOOD", controlPositionInPixels + 34, height / 2 + 3);
-    }
   });
 
   return { setValue };

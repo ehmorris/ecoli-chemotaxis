@@ -118,10 +118,22 @@
       width: calc(100vw - 32px);
       height: 64px;
       margin: 8px auto 0;
+      margin-bottom: 2em;
     }
 
     .sliderAndPip canvas {
       cursor: pointer;
+    }
+
+    .sliderLabel {
+      position: absolute;
+      top: calc(100% + .2em);
+      font-size: .8em;
+      color: #999;
+    }
+
+    .sliderLabel:last-of-type {
+      right: 0;
     }
 
     footer {
@@ -186,7 +198,10 @@
     <div class="fullWidthContainer">
       <div id="heroCanvasContainer"></div>
     </div>
-    <div class="sliderAndPip"></div>
+    <div class="sliderAndPip">
+      <div class="sliderLabel">Less attractant</div>
+      <div class="sliderLabel">More attractant</div>
+    </div>
     <p>The default behavior of the rotors is to spin clockwise, which makes the <em>E. coli</em> tumble. When attractant
       is detected, the CheY gets transformed&mdash;&ldquo;phosphorylated&rdquo;&mdash;into a new shape that binds to the
       rotors. You can see that the cell is extremely responsive to attractant: just a tiny bit causes a flurry of
@@ -251,19 +266,23 @@
       just the proteins that phosphorylate CheY but those that dephosphorylate it; and not just the proteins that
       methylate the receptors but those that demethylate it. What you come to see is that these doers and undoers define
       a sort of equilibrated circuit whose activity can be conveniently dialed up or down.</p>
-    <p>Dennis Bray describes these sorts of circuits nicely in his book, <em>Wetware: A Computer in Every Living Cell</em>:</p>
-    <blockquote><p>In a typical signaling pathway, proteins are continually being modified and demodified. Kinases and phosphatases
-      work ceaselessly like ants in a nest, adding phosphate groups to proteins and removing them again. It seems a
-      pointless exercise, especially when you consider that each cycle of addition and removal costs the cell one
-      molecule of ATP&mdash;one unit of precious energy. Indeed, cyclic reactions of this kind were originally labeled
-      &ldquo;futile.&rdquo; But the adjective is misleading. The addition of phosphate groups to proteins is the single
-      most common reaction in cells and underpins a large proportion of the computations they perform. Far from being
-      futile, this cyclic reaction provides the cell with an essential resource: a flexible and rapidly tunable device.
+    <p>Dennis Bray describes these sorts of circuits nicely in his book, <em>Wetware: A Computer in Every Living
+        Cell</em>:</p>
+    <blockquote>
+      <p>In a typical signaling pathway, proteins are continually being modified and demodified. Kinases and
+        phosphatases work ceaselessly like ants in a nest, adding phosphate groups to proteins and removing them again.
+        It seems a pointless exercise, especially when you consider that each cycle of addition and removal costs the
+        cell one molecule of ATP&mdash;one unit of precious energy. Indeed, cyclic reactions of this kind were
+        originally labeled &ldquo;futile.&rdquo; But the adjective is misleading. The addition of phosphate groups to
+        proteins is the single most common reaction in cells and underpins a large proportion of the computations they
+        perform. Far from being futile, this cyclic reaction provides the cell with an essential resource: a flexible
+        and rapidly tunable device. </p>
+      <p>If the cell really needs to change the concentration of the modified protein very quickly, it can. All it has
+        to do is to switch on or shut off the phosphate-adding reaction and the concentration will fall
+        precipitously&mdash;at the speed of the spinning cycle. There is no buildup of products or depletion of
+        substrates to slow down the process, as there would be in a linear chain of enzyme reactions.
+    </blockquote>
     </p>
-    <p>If the cell really needs to change the concentration of the modified protein very quickly, it can. All it has to
-      do is to switch on or shut off the phosphate-adding reaction and the concentration will fall
-      precipitously&mdash;at the speed of the spinning cycle. There is no buildup of products or depletion of substrates
-      to slow down the process, as there would be in a linear chain of enzyme reactions.</blockquote></p>
     <p>Regulation via phosphorylation and dephosphorylation (by &ldquo;kinases&rdquo; and &ldquo;phosphatases&rdquo;
       respectively) is an extremely general feature of life. &ldquo;About 30&ndash;50% of human proteins contain
       covalently attached phosphate. [. . .] A typical mammalian cell makes use of hundreds of distinct types of protein
@@ -457,14 +476,13 @@
     <p>The flagellar motor operates with nearly 100% energy efficiency, near the limit of thermal noise. It spins at
       about 1,500 rotations per second. And the craziest part is that like all molecular nanomachines it is entirely
       self-assembled. There&rsquo;s an amazing 30-minute documentary <a
-        href="https://www.youtube.com/watch?v=uw0-MHI_248">available
-        on YouTube</a> that details the mechanics of the self-assembly process&mdash;and, refreshingly, profiles some of
-      the scientists who figured it out, describing the methods they used to make their discoveries.</p>
+        href="https://www.youtube.com/watch?v=uw0-MHI_248">available on YouTube</a> that details the mechanics of the
+      self-assembly process&mdash;and, refreshingly, profiles some of the scientists who figured it out, describing the
+      methods they used to make their discoveries.</p>
     <figure>
       <img loading="lazy" alt="" src="articleImages/flagellar-self-assembly.png" />
-      <figcaption>Source: <a
-        href="https://youtu.be/uw0-MHI_248?t=130">Self-Assembling
-        NanoMachine: a film about flagellar biosynthesis</a>
+      <figcaption>Source: <a href="https://youtu.be/uw0-MHI_248?t=130">Self-Assembling NanoMachine: a film about
+          flagellar biosynthesis</a>
       </figcaption>
     </figure>
     <p>My favorite part of the self-assembly process is that after building a base for the rotor, a sort of tunnel is
@@ -771,11 +789,11 @@
   <footer>
     <h2>Annotated bibliography</h2>
     <p>
-      <span>Bray, Dennis. </span><em>Wetware: A Computer in Every Living Cell</em><span>. 2009. This is the book
-        that kicked off my interest in E. coli chemotaxis. Bray built computer models of the network of interacting
-        parts that give rise to E. coli&rsquo;s sophisticated foraging behavior&mdash;an early example of
-      </span><span>in silico</span><span>&nbsp;&ldquo;systems biology.&rdquo; This is a very evocative book, giving you
-        a newfound appreciation for the computational power of an individual cell.</span>
+      <span>Bray, Dennis. </span><em>Wetware: A Computer in Every Living Cell</em><span>. 2009. This is the book that
+        kicked off my interest in E. coli chemotaxis. Bray built computer models of the network of interacting parts
+        that give rise to E. coli&rsquo;s sophisticated foraging behavior&mdash;an early example of </span><span>in
+        silico</span><span>&nbsp;&ldquo;systems biology.&rdquo; This is a very evocative book, giving you a newfound
+        appreciation for the computational power of an individual cell.</span>
     </p>
     <p>
       <span>&ldquo;</span><span><a
