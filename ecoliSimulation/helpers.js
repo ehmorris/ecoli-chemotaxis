@@ -86,14 +86,20 @@ export const isColliding = (pos1, size1, pos2, size2) => {
   );
 };
 
-export const getEntityIntersection = (entityArr1, entityArr2) =>
+export const getEntityIntersection = (entityArr1, entityArr2, scale) =>
   entityArr1.filter((entity1) =>
     entityArr2.some((entity2) =>
       isColliding(
-        entity2.props.get("position"),
-        entity2.props.get("size"),
-        entity1.props.get("position"),
-        entity1.props.get("size")
+        {
+          x: entity2.props.get("position").x * scale,
+          y: entity2.props.get("position").y * scale,
+        },
+        entity2.props.get("size") * scale,
+        {
+          x: entity1.props.get("position").x,
+          y: entity1.props.get("position").y,
+        },
+        entity1.props.get("size") * scale
       )
     )
   );

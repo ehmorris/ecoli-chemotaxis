@@ -64,9 +64,9 @@ animate((millisecondsElapsed, resetElapsedTime) => {
               acceptsSticky.props.get("position").y *
               canvasProperties.illustrationScale,
           },
-          acceptsSticky.props.get("size"),
+          acceptsSticky.props.get("size") * canvasProperties.illustrationScale,
           sticky.props.get("position"),
-          sticky.props.get("size")
+          sticky.props.get("size") * canvasProperties.illustrationScale
         )
       ) {
         collidingEntitityPairs.push({
@@ -111,7 +111,8 @@ animate((millisecondsElapsed, resetElapsedTime) => {
         collidingEntitiesFlat.filter(
           ({ props }) => props.get("type") === "chey" && props.get("isStuck")
         ),
-        [motor]
+        [motor],
+        canvasProperties.illustrationScale
       );
 
       cheYOnThisMotor.length >= motorProperties.cheYRequiredToTumble
@@ -151,12 +152,11 @@ animate((millisecondsElapsed, resetElapsedTime) => {
 let sliderLastChanged = Date.now();
 
 const slider = makeSlider({
-  value: state.get("numAttractantPerReceptor"),
   max: attractantSliderProperties.maxAttractantAmount,
   min: 0,
   attachNode: ".sliderAndPip",
-  onInput: (value) => {
-    state.set("numAttractantPerReceptor", value);
+  onInput: (val) => {
+    state.set("numAttractantPerReceptor", val);
     sliderLastChanged = Date.now();
   },
 });

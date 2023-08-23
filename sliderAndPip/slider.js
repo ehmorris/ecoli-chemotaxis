@@ -11,14 +11,14 @@ cursorImage.src = "./sliderAndPip/images/Cursor.png";
 const meterImage = new Image();
 meterImage.src = "./sliderAndPip/images/Meter.png";
 
-export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
+export const makeSlider = ({ max, min, attachNode, onInput }) => {
   const attachNodeElement = document.querySelector(attachNode);
   const width = attachNodeElement.clientWidth;
   const leftViewportOffset = attachNodeElement.getBoundingClientRect().left;
   const height = attachNodeElement.clientHeight;
   const rootElement = document.documentElement;
   let controlPositionInPixels =
-    clampNumber(progress(min, max, value), 0, 100) / width;
+    clampNumber(progress(min, max, 0), 0, 100) / width;
   let rotation = 0;
   let previousTouch;
 
@@ -33,9 +33,9 @@ export const makeSlider = ({ value, max, min, attachNode, onInput }) => {
     height
   )}')`;
 
-  const setValue = (value) => {
+  const setValue = (newValue) => {
     controlPositionInPixels = clampNumber(
-      width * progress(min, max, value),
+      width * progress(min, max, newValue),
       32,
       width - 32
     );
