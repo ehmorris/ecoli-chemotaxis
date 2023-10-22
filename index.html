@@ -172,89 +172,86 @@
       </h2>
       <p>
         I want to tell the story of a beautiful phenomenon in biology. In some
-        sense it&rsquo;s the prototype of much of the activity of life. The
-        phenomenon is the way in which an individual cell of
+        sense it’s the prototype of much of the activity of life. The phenomenon
+        is the way in which an individual cell of
         <em>E. coli</em> forages for nutrients. This process, known as
-        &ldquo;chemotaxis&rdquo;&mdash;the &ldquo;chemo-&rdquo; for chemical and
-        the &ldquo;taxis&rdquo; from the Greek &tau;&#940;&xi;&iota;&sigmaf;,
-        for tactics&mdash;is intelligence in one of its most elemental forms. An
-        individual <em>E. coli</em> has no brain, obviously, and is even many
-        orders of magnitude simpler than a human cell, and yet already it
-        possesses something like a sense of smell, drive, even a memory.
-        Chemotaxis recasts <em>E. coli</em> not as some aimless gut-pest but
-        rather as an exquisitely sophisticated
+        “chemotaxis”—the “chemo-” for chemical and the “taxis” from the Greek
+        &tau;&#940;&xi;&iota;&sigmaf;, for tactics—is intelligence in one of its
+        most elemental forms. An individual <em>E. coli</em> has no brain,
+        obviously, and is even many orders of magnitude simpler than a human
+        cell, and yet already it possesses something like a sense of smell,
+        drive, even a memory. Chemotaxis recasts <em>E. coli</em> not as some
+        aimless gut-pest but rather as an exquisitely sophisticated
         <a
           href="https://yalebooks.yale.edu/book/9780300167849/wetware/#:~:text=This%20book%20offers%20a%20startling,is%20a%20form%20of%20computation."
           >physical computer</a
         >.
       </p>
       <p>
-        I&rsquo;m also telling this story because
+        I’m also telling this story because
         <a href="https://jsomers.net/i-should-have-loved-biology"
           >I never liked the way biology was taught in high school</a
         >. It was too much about the names of things. A subject so vast is
         spoiled by a textbook, which can only point, rotely, at the endless
-        parade of stuff-there-is-to-know. It&rsquo;s better approached in
-        narrow, deep slices. Chemotaxis is a great slice: it&rsquo;s a triumph
-        of systems biology&mdash;we understand it holistically but also in fine
-        detail at almost every level. It acquaints you with many of the most
-        important motifs in biology, including the way in which protein
-        structure determines function; how membranes control the information
-        flow into cells; and how chemical modifications store and communicate
-        state. It involves one of the most sophisticated and beautiful pieces of
-        molecular nanotechnology, the flagellar motor. And it helps give an
-        intuition for how a bag of unthinking chemicals could possibly give rise
-        to a being.
+        parade of stuff-there-is-to-know. It’s better approached in narrow, deep
+        slices. Chemotaxis is a great slice: it’s a triumph of systems
+        biology—we understand it holistically but also in fine detail at almost
+        every level. It acquaints you with many of the most important motifs in
+        biology, including the way in which protein structure determines
+        function; how membranes control the information flow into cells; and how
+        chemical modifications store and communicate state. It involves one of
+        the most sophisticated and beautiful pieces of molecular nanotechnology,
+        the flagellar motor. And it helps give an intuition for how a bag of
+        unthinking chemicals could possibly give rise to a being.
       </p>
       <h3>The 30,000-foot view</h3>
       <p>
-        The basic idea is this: <em>E. coli</em> &ldquo;smells&rdquo; chemicals
-        it&rsquo;s attracted to with a set of nose-like receptors on its front.
-        If attractant is present, it uses its flagellar tails to swim
-        forward&mdash;this is known as a &ldquo;run&rdquo;&mdash;and otherwise
-        it spins in a random direction (a &ldquo;tumble&rdquo;). By running when
-        the getting is good and tumbling when it isn&rsquo;t, the
-        <em>E. coli</em> takes a meandering path toward the attractant.
+        The basic idea is this: <em>E. coli</em> “smells” chemicals it’s
+        attracted to with a set of nose-like receptors on its front. If
+        attractant is present, it uses its flagellar tails to swim forward—this
+        is known as a “run”—and otherwise it spins in a random direction (a
+        “tumble”). By running when the getting is good and tumbling when it
+        isn’t, the <em>E. coli</em> takes a meandering path toward the
+        attractant.
       </p>
       <div class="normalWidthContainer">
         <div id="tumbleRunCanvasContainer"></div>
       </div>
       <p>
         A little more detail now: there are half a dozen or so rotors on the
-        <em>E. coli&rsquo;s</em> body, each controlling a long whip-like tail
-        that flows behind it. When all the rotors are spinning in the same
-        direction, the tails join together into a coil that torques the cell
-        forward into a run. When even one rotor is spinning against the others,
-        the coil unbundles and <em>E. coli</em> spins into a tumble.
+        <em>E. coli’s</em> body, each controlling a long whip-like tail that
+        flows behind it. When all the rotors are spinning in the same direction,
+        the tails join together into a coil that torques the cell forward into a
+        run. When even one rotor is spinning against the others, the coil
+        unbundles and <em>E. coli</em> spins into a tumble.
       </p>
       <p>
         In a uniform chemical environment, the E. coli swims in a random walk by
         balancing runs with periodic tumbles. By default, a run lasts about a
         second, or ten times longer than a tumble. The rate of runs versus
         tumbles, and their relative duration, is carefully tuned to balance
-        &ldquo;exploitation&rdquo; and &ldquo;exploration&rdquo;: if runs
-        happened too often or lasted too long, <em>E. coli</em> would range too
-        widely and zip past its food; too seldom or too short, and it&rsquo;d
-        likely never find food in the first place.
+        “exploitation” and “exploration”: if runs happened too often or lasted
+        too long, <em>E. coli</em> would range too widely and zip past its food;
+        too seldom or too short, and it’d likely never find food in the first
+        place.
       </p>
       <p>
         But how is this balance achieved? The crux of it is a signaling molecule
-        called CheyY (pronounced like &ldquo;KEY-why&rdquo;). CheY is constantly
-        bouncing around in the cytoplasm of the <em>E. coli</em>, interacting
-        with both the receptor complex (the &ldquo;nose&rdquo;) and the rotors,
-        carrying information between them. The way it works in the steady state
-        is that anytime CheY encounters the receptor complex, it gets chemically
-        modified, or &ldquo;phosphorylated,&rdquo; to become CheY-p. Unlike
-        CheY, CheY-p has a strong affinity for the rotors, and when it binds to
-        one, it reverses its direction of spin, causing a tumble. The trick is
-        that when the nose detects an <em>increase</em> in the concentration of
-        attractant, that steady turning of CheYs into CheY-ps is interrupted
-        (we&rsquo;ll see how in a minute). As a result, fewer CheY-ps bind to
-        the rotors; fewer reversals take place; and so the <em>E. coli</em> runs
-        more and tumbles less. In other words, the all-important relative rate
-        of runs versus tumbles is determined entirely by how often CheY-p gets
-        to the rotors&mdash;and this, in turn, is determined by how much
-        attractant is detected by the nose.
+        called CheyY (pronounced like “KEY-why”). CheY is constantly bouncing
+        around in the cytoplasm of the <em>E. coli</em>, interacting with both
+        the receptor complex (the “nose”) and the rotors, carrying information
+        between them. The way it works in the steady state is that anytime CheY
+        encounters the receptor complex, it gets chemically modified, or
+        “phosphorylated,” to become CheY-p. Unlike CheY, CheY-p has a strong
+        affinity for the rotors, and when it binds to one, it reverses its
+        direction of spin, causing a tumble. The trick is that when the nose
+        detects an <em>increase</em> in the concentration of attractant, that
+        steady turning of CheYs into CheY-ps is interrupted (we’ll see how in a
+        minute). As a result, fewer CheY-ps bind to the rotors; fewer reversals
+        take place; and so the <em>E. coli</em> runs more and tumbles less. In
+        other words, the all-important relative rate of runs versus tumbles is
+        determined entirely by how often CheY-p gets to the rotors—and this, in
+        turn, is determined by how much attractant is detected by the nose.
       </p>
       <p>
         You can see this process in action in the interactive illustration. Try
@@ -269,25 +266,25 @@
       </div>
       <p>
         Why do you need all this complexity? You could imagine a system in which
-        the motors themselves responded directly to attractant. We&rsquo;ll see
-        later on that the stream of CheY-ps acts as a kind of adaptable, tunable
-        chemical amplifier. &ldquo;<a
+        the motors themselves responded directly to attractant. We’ll see later
+        on that the stream of CheY-ps acts as a kind of adaptable, tunable
+        chemical amplifier. “<a
           href="https://www.ks.uiuc.edu/Research/chemotaxis/#:~:text=In%20particular%2C%20bacterial,per%20cell%20volume!"
           >Bacterial cells can amplify</a
         >
         signals more than 50-fold; that is to say, a 2% change in receptor
         occupancy can bring about a 100% change in the output of the system at
         the flagellar motors. This feature allows cells to sense minute changes
-        in concentration&mdash;less than three molecules per cell volume!&rdquo;
+        in concentration—less than three molecules per cell volume!”
       </p>
       <h3>The story gets more complicated: adaptation</h3>
       <p>
         If the system were as described above, then the
-        <em>E. coli</em> wouldn&rsquo;t have much dynamic range. Imagine: if a
-        mere three molecules of attractant can set off a flood of CheY
-        phosphorylation&mdash;enough to make the cell switch from tumbling to
-        running&mdash;then how could it possibly react any more aggressively to
-        yet more attractant? It&rsquo;s way too keyed up.
+        <em>E. coli</em> wouldn’t have much dynamic range. Imagine: if a mere
+        three molecules of attractant can set off a flood of CheY
+        phosphorylation—enough to make the cell switch from tumbling to
+        running—then how could it possibly react any more aggressively to yet
+        more attractant? It’s way too keyed up.
       </p>
       <p>
         In reality, the <em>E. coli</em> is able to respond sensitively across
@@ -301,43 +298,42 @@
       </p>
       <p>
         The mechanism powering this adaptation is extremely clever. You can
-        think of each receptor as being equipped with &ldquo;struts&rdquo; with
-        little closed pockets in them. (There are some detailed illustrations of
-        this later.) When the receptor is bound to attractant, its struts change
+        think of each receptor as being equipped with “struts” with little
+        closed pockets in them. (There are some detailed illustrations of this
+        later.) When the receptor is bound to attractant, its struts change
         shape so that these pockets open up, and become the targets for little
         molecules known as methyl groups. Methyl groups are ubiquitous in
         biochemistry: gene transcription, for instance, is heavily regulated by
         the binding of methyl groups to structural proteins your DNA strands
-        coil around, called histones; the &ldquo;methylated&rdquo; histone can
-        kink the DNA strand into or out of view of your transcription machinery,
-        turning it on or off.
+        coil around, called histones; the “methylated” histone can kink the DNA
+        strand into or out of view of your transcription machinery, turning it
+        on or off.
       </p>
       <p>
-        In this case, methylation serves to fill up the strut&rsquo;s pockets,
-        causing it to become more rigid. (I&rsquo;m simplifying the actual
-        physical details somewhat, as we&rsquo;ll see later.) With more rigid
-        struts the receptor&rsquo;s signaling power is dampened: it takes more
-        attractant to elicit the same response. &nbsp;Because there are many
-        methylation sites per strut and many struts per receptor, there&rsquo;s
-        a wide range of possible dampening values&mdash;as if those pockets were
-        really the holes of an elaborate wind instrument. This wide dynamic
-        range is what allows the bacteria not just to find a favorable
-        environment but to keenly and speedily nose its way up a chemical
-        gradient. No wonder a similar mechanism is used by cells in your immune
-        system to track and hunt down invaders.
+        In this case, methylation serves to fill up the strut’s pockets, causing
+        it to become more rigid. (I’m simplifying the actual physical details
+        somewhat, as we’ll see later.) With more rigid struts the receptor’s
+        signaling power is dampened: it takes more attractant to elicit the same
+        response. Because there are many methylation sites per strut and many
+        struts per receptor, there’s a wide range of possible dampening
+        values—as if those pockets were really the holes of an elaborate wind
+        instrument. This wide dynamic range is what allows the bacteria not just
+        to find a favorable environment but to keenly and speedily nose its way
+        up a chemical gradient. No wonder a similar mechanism is used by cells
+        in your immune system to track and hunt down invaders.
       </p>
       <p>
-        Methylation of the receptors gives <em>E. coli</em> a &ldquo;<a
+        Methylation of the receptors gives <em>E. coli</em> a “<a
           href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2899694/#:~:text=The%20receptor%20methylation%20level%20also%20provides%20a%20simple%20chemical%20memory%20used%20to%20ascertain%20whether%20the%20current%20direction%20of%20swimming%20is%20favorable%20or%20unfavorable."
           >simple chemical memory</a
-        >.&rdquo; This is a powerful and somewhat profound idea: individual
-        bacteria can model their environment and remember important features of
-        it by encoding that information in internal chemical modifications.
-        <em>E. coli</em> &ldquo;knows&rdquo; whether attractant has become more
-        or less concentrated in its surroundings going back
+        >.” This is a powerful and somewhat profound idea: individual bacteria
+        can model their environment and remember important features of it by
+        encoding that information in internal chemical modifications.
+        <em>E. coli</em> “knows” whether attractant has become more or less
+        concentrated in its surroundings going back
         <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2899694"
           >several seconds</a
-        >; that helps it determine whether it&rsquo;s swimming in a good or bad
+        >; that helps it determine whether it’s swimming in a good or bad
         direction. Which is not that different in principle from what brains do.
         In fact one reason that it requires an artificial neural network of
         about a
@@ -346,8 +342,8 @@
           >thousand</a
         >
         elements just to model the computational capabilities of a single real
-        neuron is that the real neuron stores so much &ldquo;state&rdquo; in its
-        internal chemistry.
+        neuron is that the real neuron stores so much “state” in its internal
+        chemistry.
       </p>
       <h3>The full picture: a complex signaling network</h3>
       <figure class="video169">
@@ -379,65 +375,62 @@
           like ants in a nest, adding phosphate groups to proteins and removing
           them again. It seems a pointless exercise, especially when you
           consider that each cycle of addition and removal costs the cell one
-          molecule of ATP&mdash;one unit of precious energy. Indeed, cyclic
-          reactions of this kind were originally labeled &ldquo;futile.&rdquo;
-          But the adjective is misleading. The addition of phosphate groups to
-          proteins is the single most common reaction in cells and underpins a
-          large proportion of the computations they perform. Far from being
-          futile, this cyclic reaction provides the cell with an essential
-          resource: a flexible and rapidly tunable device.
+          molecule of ATP—one unit of precious energy. Indeed, cyclic reactions
+          of this kind were originally labeled “futile.” But the adjective is
+          misleading. The addition of phosphate groups to proteins is the single
+          most common reaction in cells and underpins a large proportion of the
+          computations they perform. Far from being futile, this cyclic reaction
+          provides the cell with an essential resource: a flexible and rapidly
+          tunable device.
         </p>
         <p>
           If the cell really needs to change the concentration of the modified
           protein very quickly, it can. All it has to do is to switch on or shut
           off the phosphate-adding reaction and the concentration will fall
-          precipitously&mdash;at the speed of the spinning cycle. There is no
-          buildup of products or depletion of substrates to slow down the
-          process, as there would be in a linear chain of enzyme reactions.
+          precipitously—at the speed of the spinning cycle. There is no buildup
+          of products or depletion of substrates to slow down the process, as
+          there would be in a linear chain of enzyme reactions.
         </p>
       </blockquote>
 
       <p>
-        Regulation via phosphorylation and dephosphorylation (by
-        &ldquo;kinases&rdquo; and &ldquo;phosphatases&rdquo; respectively) is an
-        extremely general feature of life. &ldquo;About 30&ndash;50% of human
-        proteins contain covalently attached phosphate. [. . .] A typical
-        mammalian cell makes use of hundreds of distinct types of protein
-        kinases at any moment.&rdquo; [Alberts]
+        Regulation via phosphorylation and dephosphorylation (by “kinases” and
+        “phosphatases” respectively) is an extremely general feature of life.
+        “About 30–50% of human proteins contain covalently attached phosphate.
+        [. . .] A typical mammalian cell makes use of hundreds of distinct types
+        of protein kinases at any moment.” [Alberts]
       </p>
-      <h3>Down the rabbit-hole&hellip;</h3>
+      <h3>Down the rabbit-hole…</h3>
       <p>
-        One thing I don&rsquo;t love in presentations of chemotaxis&mdash;and of
-        biological concepts generally&mdash;is that they often prominently
-        feature flowcharts and network diagrams. In the case of chemotaxis, as
-        you can gather from the video above, there are many players with nearly
-        indistinguishable names: CheA phosphorylates CheY to become CheY-p, and
-        CheZ dephosphorylates it back to CheY; CheW couples CheA to the
-        receptors, and CheR methylates those receptors&rsquo; struts; CheB,
-        meanwhile, &ldquo;clips off&rdquo; the methyl groups added to the struts
-        by CheR. A network diagram is no doubt useful for organizing this sea of
-        names but in a sense it foregrounds the most abstract view of the
-        process. I&rsquo;d rather try to get a sense of the parts as a living
-        whole or in their individual physical detail.
+        One thing I don’t love in presentations of chemotaxis—and of biological
+        concepts generally—is that they often prominently feature flowcharts and
+        network diagrams. In the case of chemotaxis, as you can gather from the
+        video above, there are many players with nearly indistinguishable names:
+        CheA phosphorylates CheY to become CheY-p, and CheZ dephosphorylates it
+        back to CheY; CheW couples CheA to the receptors, and CheR methylates
+        those receptors’ struts; CheB, meanwhile, “clips off” the methyl groups
+        added to the struts by CheR. A network diagram is no doubt useful for
+        organizing this sea of names but in a sense it foregrounds the most
+        abstract view of the process. I’d rather try to get a sense of the parts
+        as a living whole or in their individual physical detail.
       </p>
-      <p>When you do that, it&rsquo;s amazing what you find.</p>
+      <p>When you do that, it’s amazing what you find.</p>
       <h3>What does it mean for a receptor to detect attractant?</h3>
       <p>
         Almost every action in a cell depends on proteins changing shape and
-        binding to each other. It&rsquo;s no different in the
+        binding to each other. It’s no different in the
         <em>E. coli</em> receptor complex.
       </p>
       <p>
         The way it works is that there are stimulus-specific proteins embedded
-        in the <em>E. coli&rsquo;s</em> cell membrane, protruding into
-        what&rsquo;s known as the periplasm. These proteins are
-        &ldquo;stimulus-specific&rdquo; in the literal sense that they are
-        shaped so as to bind favorably with individual molecules of attractant.
-        <em>E. coli</em> has five or six of these, for instance one that detects
-        a crucial amino acid called aspartate. This sensor protein has little
-        clefts in it that are shaped just so for molecules of aspartate to fit
-        snugly into them. [Falke] In schematic form the aspartate receptor looks
-        like this:
+        in the <em>E. coli’s</em> cell membrane, protruding into what’s known as
+        the periplasm. These proteins are “stimulus-specific” in the literal
+        sense that they are shaped so as to bind favorably with individual
+        molecules of attractant. <em>E. coli</em> has five or six of these, for
+        instance one that detects a crucial amino acid called aspartate. This
+        sensor protein has little clefts in it that are shaped just so for
+        molecules of aspartate to fit snugly into them. [Falke] In schematic
+        form the aspartate receptor looks like this:
       </p>
       <figure>
         <img
@@ -450,39 +443,39 @@
         <figcaption>
           Source: Falke,
           <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2899694/"
-            >&ldquo;The Two-Component Signaling Pathway of Bacterial Chemotaxis:
-            A Molecular View of Signal Transduction by Receptors, Kinases, and
-            Adaptation Enzymes&rdquo;</a
+            >“The Two-Component Signaling Pathway of Bacterial Chemotaxis: A
+            Molecular View of Signal Transduction by Receptors, Kinases, and
+            Adaptation Enzymes”</a
           >
         </figcaption>
       </figure>
       <p>
-        You can see that the sensory part&mdash;up top, where the aspartate
-        binds&mdash;is connected to the signaling proteins CheW and CheA by a
-        columnar structure that straddles the cell&rsquo;s membrane. What does
-        this protein complex &ldquo;actually&rdquo; look like?
+        You can see that the sensory part—up top, where the aspartate binds—is
+        connected to the signaling proteins CheW and CheA by a columnar
+        structure that straddles the cell’s membrane. What does this protein
+        complex “actually” look like?
       </p>
       <p>
-        An individual protein is small enough&mdash;<a
+        An individual protein is small enough—<a
           href="http://book.bionumbers.org/how-big-is-the-average-protein/"
           >like a few nanometers wide</a
-        >&mdash;that it can&rsquo;t really be seen through a light microscope.
-        This receptor from top to bottom measures about 350 angstroms, or 35
-        nanometers. But modern biology is all about seeing the unseeable.
-        Nowadays, we try to find out what nanostructures look like by
+        >—that it can’t really be seen through a light microscope. This receptor
+        from top to bottom measures about 350 angstroms, or 35 nanometers. But
+        modern biology is all about seeing the unseeable. Nowadays, we try to
+        find out what nanostructures look like by
         <a href="https://en.wikipedia.org/wiki/X-ray_crystallography"
           >X-ray diffraction</a
         >
         or, more and more often, by cryo-freezing them in an electron
-        microscope. Once we determine a protein&rsquo;s structure it&rsquo;s
-        usually rendered using ribbon diagrams, a style
+        microscope. Once we determine a protein’s structure it’s usually
+        rendered using ribbon diagrams, a style
         <a
           href="https://stories.duke.edu/sciences-mother-of-ribbon-diagrams-celebrates-50-years-at-duke"
           >invented by the biochemist Jane Richardson</a
         >
-        in the late 1970s. Here&rsquo;s a ribbon diagram for the
-        <em>E. coli</em> serine receptor (really it&rsquo;s a &ldquo;trimer of
-        dimers,&rdquo; or a complex of six receptors):
+        in the late 1970s. Here’s a ribbon diagram for the
+        <em>E. coli</em> serine receptor (really it’s a “trimer of dimers,” or a
+        complex of six receptors):
       </p>
       <figure>
         <img
@@ -506,11 +499,10 @@
         struts.) How exactly it works is quite complex, and an active area of
         research. But in simplified terms it acts like one big piston: what
         happens is that when the asparate binds to the part in the periplasm,
-        the columnar structure it&rsquo;s attached to changes shape&mdash;a real
-        biologist would call these subtle allosteric effects; to me it looks
-        like dipping and tilting&mdash;in such a way to lock the thing
-        that&rsquo;s supposed to be phosphorylating CheY, the CheA kinase, into
-        an inactive state.
+        the columnar structure it’s attached to changes shape—a real biologist
+        would call these subtle allosteric effects; to me it looks like dipping
+        and tilting—in such a way to lock the thing that’s supposed to be
+        phosphorylating CheY, the CheA kinase, into an inactive state.
       </p>
       <figure>
         <p id="dip-box">
@@ -539,24 +531,19 @@
         });
       </script>
       <p>
-        When I think of a cell I imagine a Rube Goldberg&ndash;type contraption
-        where an arm swings here, which drops a ball into a slide there, which
-        rolls down and opens a trap door, which... eventually turns on or off
-        some important cellular function. Indeed, <em>E. coli</em>&rsquo;s
-        &ldquo;sense of smell&rdquo; rests ultimately in a series of physical
-        lock-and-key mechanisms, starting with literal molecules of e.g.
-        aspartate nuzzling into a protein and transmitting that physical
-        shape-change across the membrane.
+        When I think of a cell I imagine a Rube Goldberg–type contraption where
+        an arm swings here, which drops a ball into a slide there, which rolls
+        down and opens a trap door, which… eventually turns on or off some
+        important cellular function. Indeed, <em>E. coli</em>’s “sense of smell”
+        rests ultimately in a series of physical lock-and-key mechanisms,
+        starting with literal molecules of e.g. aspartate nuzzling into a
+        protein and transmitting that physical shape-change across the membrane.
       </p>
       <p>
-        <span
-          >This piston-shaped receptor complex is just one of a huge array
-          arranged near the front of </span
-        ><em>E. coli</em
-        ><span
-          >&rsquo;s body. In cross section they appear almost to have been laid
-          down through a lithography process, in a neat hexagonal pattern:</span
-        >
+        This piston-shaped receptor complex is just one of a huge array arranged
+        near the front of <em>E. coli</em>’s body. In cross section they appear
+        almost to have been laid down through a lithography process, in a neat
+        hexagonal pattern:
       </p>
       <figure>
         <img
@@ -590,59 +577,42 @@
         </figcaption>
       </figure>
       <p>
-        <span>Calling </span><em>E. coli</em
-        ><span
-          >&rsquo;s receptor complex its &ldquo;nose&rdquo; is no mere metaphor.
-          Our own noses operate on a similar principle: when you smell a flower,
-          it means that actual flower-molecules&mdash;possibly only a tiny
-          number of them&mdash;have reached the inside of your nose and bound to
-          some protein with a specific affinity for that very molecule. This
-          signal is then transmitted via nerves to your brain. The human nose
-          has several hundred receptor proteins for smell; a dog has </span
-        ><span
-          ><a
-            href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5884888/#:~:text=The%20canine%20OR%20repertoire%20is%20composed%20of%201%2C094%20genes%2C%20approximately%20three%20times%20more%20than%20a%20human."
-            >more than a thousand</a
-          ></span
-        ><span
-          >. Every one of our senses works like this. Touch is underwritten by
-          proteins that get &ldquo;squished&rdquo; by tactile forces into cell
-          membranes, triggering a set of downstream responses. Sight is my
-          favorite example. There&rsquo;s a protein called opsin that lives in
-          the cells of our retina. What&rsquo;s so cool about it is that the
-          thing that changes </span
-        ><span>its</span><span>&nbsp;shape is a literal photon. That is, </span
-        ><span
-          ><a
-            href="https://pdb101.rcsb.org/motm/147#:~:text=Rhodopsin%2C%20shown%20here,to%20the%20brain."
-            >opsin converts the electromagnetic force of an incoming photon into
-            a biomechanical / biochemical signal</a
-          ></span
-        ><span
-          >. This is why I tend to think of molecular biology as the science of
-          shapes bumping into each other.</span
-        >
+        Calling <em>E. coli’s</em> receptor complex its “nose” is no mere
+        metaphor. Our own noses operate on a similar principle: when you smell a
+        flower, it means that actual flower-molecules—possibly only a tiny
+        number of them—have reached the inside of your nose and bound to some
+        protein with a specific affinity for that very molecule. This signal is
+        then transmitted via nerves to your brain. The human nose has several
+        hundred receptor proteins for smell; a dog has
+        <a
+          href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5884888/#:~:text=The%20canine%20OR%20repertoire%20is%20composed%20of%201%2C094%20genes%2C%20approximately%20three%20times%20more%20than%20a%20human."
+          >more than a thousand</a
+        >. Every one of our senses works like this. Touch is underwritten by
+        proteins that get “squished” by tactile forces into cell membranes,
+        triggering a set of downstream responses. Sight is my favorite example.
+        There’s a protein called opsin that lives in the cells of our retina.
+        What’s so cool about it is that the thing that changes its shape is a
+        literal photon. That is,
+        <a
+          href="https://pdb101.rcsb.org/motm/147#:~:text=Rhodopsin%2C%20shown%20here,to%20the%20brain."
+          >opsin converts the electromagnetic force of an incoming photon into a
+          biomechanical / biochemical signal</a
+        >. This is why I tend to think of molecular biology as the science of
+        shapes bumping into each other.
       </p>
       <p>
-        <span>I think of </span><em>E. coli</em
-        ><span
-          >&rsquo;s receptor complex as a protoversion of our own sensory
-          apparatus. Its nose has only </span
-        ><span
-          ><a
-            href="https://www.youtube.com/watch?t=2596&v=cT855rpX8bc&feature=youtu.be"
-            >five or six</a
-          ></span
-        ><span
-          >&nbsp;attractant-specific sensory proteins, but their signals are
-          integrated&mdash;as if different sets of receptor-protein activations
-          were playing different &ldquo;chords&rdquo; on the </span
-        ><em>E. coli</em
-        ><span
-          >&rsquo;s sensorium. &ldquo;In short, the chemosensory array functions
-          as an ultrasensitive, ultrastable biological integrated circuit or
-          sensory chip.&rdquo; [Falke 2]</span
+        I think of <em>E. coli’s</em> receptor complex as a protoversion of our
+        own sensory apparatus. Its nose has only
+        <a
+          href="https://www.youtube.com/watch?t=2596&v=cT855rpX8bc&feature=youtu.be"
+          >five or six</a
         >
+        attractant-specific sensory proteins, but their signals are
+        integrated—as if different sets of receptor-protein activations were
+        playing different “chords” on the
+        <em>E. coli’s</em> sensorium. “In short, the chemosensory array
+        functions as an ultrasensitive, ultrastable biological integrated
+        circuit or sensory chip.” [Falke 2]
       </p>
       <h3>How the signal is carried</h3>
       <p>
@@ -657,33 +627,25 @@
       <p>
         The CheY-ps had been binding to the flagellar rotors, flipping them,
         causing tumbles. That now no longer happens as much, because the
-        unphosphorylated CheY doesn&rsquo;t have the same affinity for the rotor
-        as CheY-p. As a result, the cell tumbles less, runs more, and biases its
+        unphosphorylated CheY doesn’t have the same affinity for the rotor as
+        CheY-p. As a result, the cell tumbles less, runs more, and biases its
         random walk toward the attractant.
       </p>
       <p>
-        <span
-          >There&rsquo;s something really important worth dwelling on here. When
-          we say that CheY-p has an &ldquo;affinity&rdquo; for the rotor
-          protein, it&rsquo;s not like it gets directed there; nor does it have
-          some long-acting magnetic attraction for it. What this really means is
-          that it has a strong inclination to bind to the rotor protein when it
-          gets </span
-        ><span>really really</span
-        ><span
-          >&nbsp;close to it. (And CheY, without the -p, doesn't have such an
-          inclination.) Given how small a single CheY-p is in the scheme of the
-          whole cell&rsquo;s cytoplasm, it might seem improbable that
-          it&rsquo;ll somehow sidle up right next to one of these rotor proteins
-          somewhere on the other end of the </span
-        ><em>E. coli</em
-        ><span>&rsquo;s body. But that gets at the heart of </span
-        ><span
-          ><a
-            href="https://www.newyorker.com/magazine/2022/03/07/a-journey-to-the-center-of-our-cells"
-            >the crazy kinetic chaos inside our cells</a
-          ></span
-        ><span>.</span>
+        There’s something really important worth dwelling on here. When we say
+        that CheY-p has an “affinity” for the rotor protein, it’s not like it
+        gets directed there; nor does it have some long-acting magnetic
+        attraction for it. What this really means is that it has a strong
+        inclination to bind to the rotor protein when it gets really really
+        close to it. (And CheY, without the -p, doesn't have such an
+        inclination.) Given how small a single CheY-p is in the scheme of the
+        whole cell’s cytoplasm, it might seem improbable that it’ll somehow
+        sidle up right next to one of these rotor proteins somewhere on the
+        other end of the <em>E. coli’s</em> body. But that gets at the heart of
+        <a
+          href="https://www.newyorker.com/magazine/2022/03/07/a-journey-to-the-center-of-our-cells"
+          >the crazy kinetic chaos inside our cells</a
+        >.
       </p>
       <figure class="rightBar">
         <img
@@ -722,51 +684,38 @@
         </p>
       </blockquote>
       <p>
-        <span>Just to put this in perspective: imagine you took an </span
-        ><em>E. coli</em
-        ><span
-          >&nbsp;cell and scaled it up so that it was the length of a football
-          field. And imagine you kept all the physics the same. A water molecule
-          would be about an inch wide; a protein would be about the size of a
-          basketball. The proteins would be juddering violently due to the
-          thermal motion of the water particles bombarding them&mdash;so
-          violently in fact that if left unchecked they&rsquo;d be moving at </span
-        ><span>500 meters per second</span
-        ><span
-          >. But they aren&rsquo;t left unchecked: if you were in such an
-          environment it would be so crowded as to be nearly impossible to see.
-          What you really get, then, is an incredible ceaseless shaking and
-          bouncing-into-each-other of all the component parts.</span
-        >
+        Just to put this in perspective: imagine you took an
+        <em>E. coli</em>cell and scaled it up so that it was the length of a
+        football field. And imagine you kept all the physics the same. A water
+        molecule would be about an inch wide; a protein would be about the size
+        of a basketball. The proteins would be juddering violently due to the
+        thermal motion of the water particles bombarding them—so violently in
+        fact that if left unchecked they’d be moving at 500 meters per second.
+        But they aren’t left unchecked: if you were in such an environment it
+        would be so crowded as to be nearly impossible to see. What you really
+        get, then, is an incredible ceaseless shaking and
+        bouncing-into-each-other of all the component parts.
       </p>
       <p>
-        <span
-          >This is why shape changes that lead to different bonding affinities
-          are so important in biology. It&rsquo;s as if inside a cell everyone
-          is constantly going up to everyone else, seeing if they fit together.
-          Proteins sample the space of interactions with other proteins so
-          quickly that for a long time, most biologists didn&rsquo;t really
-          contemplate </span
-        ><span>where</span
-        ><span
-          >&nbsp;in the cytoplasm two reactants lived; they knew that you never
-          had to wait too long for them to meet each other. In fact it was a
-          relatively recent discovery that inside the cytoplasm certain proteins
-          that share functional relationships </span
-        ><span>do</span
-        ><span
-          >&nbsp;seem to keep especially close together, inside little oil drops
-          known as &ldquo;phase-separated liquids.&rdquo; Weak interactive
-          forces between the floppy tails of different proteins cause them to
-          spontaneously &ldquo;phase separate&rdquo; into these more viscous
-          pools, and this biases them to interact more frequently.</span
-        >
+        This is why shape changes that lead to different bonding affinities are
+        so important in biology. It’s as if inside a cell everyone is constantly
+        going up to everyone else, seeing if they fit together. Proteins sample
+        the space of interactions with other proteins so quickly that for a long
+        time, most biologists didn’t really contemplate where in the cytoplasm
+        two reactants lived; they knew that you never had to wait too long for
+        them to meet each other. In fact it was a relatively recent discovery
+        that inside the cytoplasm certain proteins that share functional
+        relationships do seem to keep especially close together, inside little
+        oil drops known as “phase-separated liquids.” Weak interactive forces
+        between the floppy tails of different proteins cause them to
+        spontaneously “phase separate” into these more viscous pools, and this
+        biases them to interact more frequently.
       </p>
       <p>
-        The rate-limiting step in <em>E. coli&rsquo;s</em> reaction to
-        attractant is the time it takes for CheY-p to diffuse from the nose to
-        the motor. It takes about a tenth of a second. The journey has actually
-        been tracked on camera, using a fluorescent version of the protein:
+        The rate-limiting step in <em>E. coli’s</em> reaction to attractant is
+        the time it takes for CheY-p to diffuse from the nose to the motor. It
+        takes about a tenth of a second. The journey has actually been tracked
+        on camera, using a fluorescent version of the protein:
       </p>
       <figure>
         <img
@@ -786,21 +735,19 @@
       </figure>
       <h3>What happens when the signal reaches the motor?</h3>
       <p>
-        Let&rsquo;s talk about these motors. These things are so intricate and
-        beautiful and seem so reminiscent of machines we&rsquo;d engineer
-        ourselves that they&rsquo;re sometimes cited as evidence for intelligent
-        design.
+        Let’s talk about these motors. These things are so intricate and
+        beautiful and seem so reminiscent of machines we’d engineer ourselves
+        that they’re sometimes cited as evidence for intelligent design.
       </p>
       <p>
         The flagellar motor operates with nearly 100% energy efficiency, near
         the limit of thermal noise. It spins at about 1,500 rotations per
         second. And the craziest part is that like all molecular nanomachines it
-        is entirely self-assembl ed. There&rsquo;s an amazing 30-minute
-        documentary
+        is entirely self-assembl ed. There’s an amazing 30-minute documentary
         <a href="https://www.youtube.com/watch?v=uw0-MHI_248"
           >available on YouTube</a
         >
-        that details the mechanics of the self-assembly process&mdash;and,
+        that details the mechanics of the self-assembly process—and,
         refreshingly, profiles some of the scientists who figured it out,
         describing the methods they used to make their discoveries.
       </p>
@@ -822,26 +769,24 @@
       <p>
         My favorite part of the self-assembly process is that after building a
         base for the rotor, a sort of tunnel is built and the proteins that
-        comprise the whip-like &ldquo;hook&rdquo; of the flagellum are extruded
-        through it&mdash;as if the flagellum were built by vomiting forth parts
-        of itself.
+        comprise the whip-like “hook” of the flagellum are extruded through
+        it—as if the flagellum were built by vomiting forth parts of itself.
       </p>
       <p>
         Anyway, at the base of each rotor there are a series of proteins called
-        FliG, FliM, and FliN&mdash;pronounced like &ldquo;Fly G,&rdquo;
-        &ldquo;Fly M,&rdquo; &ldquo;Fly N&rdquo;&mdash;to which CheY-p, our
-        Frodo-esque bearer of the message from the nose, attaches once it
-        finally arrives. CheY-p has a strong affinity for FliG and will readily
-        glom onto it. We&rsquo;ll see how that actually affects the flagellum in
-        a second. But for now it&rsquo;s worth noting that there&rsquo;s a
-        thresholding mechanism here: just one CheY-p attaching to FliG
-        won&rsquo;t be enough to flip the motor from counter-clockwise to
-        clockwise (thereby causing a tumble)&mdash;it actually takes a handful
-        of CheY-ps conspiring to make that happen. In fact the motor has
-        something like seven states, from rotating quickly counterclockwise at
-        three discrete levels of decreasing speed&mdash;as if stepping through
-        three gears on a bike&mdash;to stalling entirely, to starting back up
-        again in the clockwise direction, also with three speeds.
+        FliG, FliM, and FliN—pronounced like “Fly G,” “Fly M,” “Fly N”—to which
+        CheY-p, our Frodo-esque bearer of the message from the nose, attaches
+        once it finally arrives. CheY-p has a strong affinity for FliG and will
+        readily glom onto it. We’ll see how that actually affects the flagellum
+        in a second. But for now it’s worth noting that there’s a thresholding
+        mechanism here: just one CheY-p attaching to FliG won’t be enough to
+        flip the motor from counter-clockwise to clockwise (thereby causing a
+        tumble)—it actually takes a handful of CheY-ps conspiring to make that
+        happen. In fact the motor has something like seven states, from rotating
+        quickly counterclockwise at three discrete levels of decreasing speed—as
+        if stepping through three gears on a bike—to stalling entirely, to
+        starting back up again in the clockwise direction, also with three
+        speeds.
       </p>
       <p>
         Even as the motor is in the process of changing direction, any CheY-ps
@@ -858,14 +803,13 @@
       <p>
         As a matter of pure mechanics this might be the most ingenious part of
         the story. It took quite a long time to figure out and even still it
-        seems that we&rsquo;re not entirely confident with our explanation. But
-        the mechanism that&rsquo;s been proposed is that CheY-p binds to a
-        protein called FliM (&ldquo;Fly EM&rdquo;) embedded in that ring that
-        defines the base of the rotor. This tilts it and causes a 90-degree
-        rotation in an attached protein called FliGc. That protein sits at the
-        interface between the rotating part of the motor and the so-called
-        &ldquo;stator,&rdquo; which drives it from the part that&rsquo;s
-        anchored solidly in the cell membrane.
+        seems that we’re not entirely confident with our explanation. But the
+        mechanism that’s been proposed is that CheY-p binds to a protein called
+        FliM (“Fly EM”) embedded in that ring that defines the base of the
+        rotor. This tilts it and causes a 90-degree rotation in an attached
+        protein called FliGc. That protein sits at the interface between the
+        rotating part of the motor and the so-called “stator,” which drives it
+        from the part that’s anchored solidly in the cell membrane.
       </p>
       <figure>
         <img
@@ -888,8 +832,7 @@
         normally drives the motor counterclockwise starts driving it clockwise
         instead. In the illustration below, Figure A shows the stator, i.e., the
         driving mechanism of the motor. It works by stepping back and forth
-        between the &ldquo;open&rdquo; and &ldquo;closed&rdquo; states,
-        schematized by the
+        between the “open” and “closed” states, schematized by the
         <img
           class="inlineWithText"
           loading="lazy"
@@ -905,8 +848,8 @@
         />
         symbols respectively. In Figure B you can see how, in the normal CCW
         direction, the repeated cycling between these two states drives the
-        &ldquo;teeth&rdquo; of the motor&mdash;the crucial FliGc proteins, here
-        tilted left-to-right.
+        “teeth” of the motor—the crucial FliGc proteins, here tilted
+        left-to-right.
       </p>
       <figure>
         <img
@@ -925,15 +868,10 @@
         </figcaption>
       </figure>
       <p>
-        <span
-          >When the CheY-p arrives at the rotor it has the effect of flipping
-          the FliG</span
-        ><span>c </span
-        ><span
-          >proteins so that now they tilt right-to-left. In that orientation the
-          step-drive action works the opposite way, and the motor rotates
-          clockwise:</span
-        >
+        When the CheY-p arrives at the rotor it has the effect of flipping the
+        FliGc proteins so that now they tilt right-to-left. In that orientation
+        the step-drive action works the opposite way, and the motor rotates
+        clockwise:
       </p>
       <figure>
         <img
@@ -945,12 +883,10 @@
         />
       </figure>
       <p>
-        <span
-          >You can see this more clearly below in the interactive version of
-          those figures. Click “Step” to drive the motor in one direction, and
-          “Reverse” to flip the orientation of the FliGc proteins; Step again
-          and you&rsquo;ll see it run in the opposite direction.</span
-        >
+        You can see this more clearly below in the interactive version of those
+        figures. Click “Step” to drive the motor in one direction, and “Reverse”
+        to flip the orientation of the FliGc proteins; Step again and you’ll see
+        it run in the opposite direction.
       </p>
       <div style="text-align: center">
         <input id="step" type="button" value="Step" />
@@ -1004,37 +940,32 @@
         });
       </script>
       <p>
-        It&rsquo;s a shame that the paper presenting this theory didn&rsquo;t
-        include such an animation, because that by far is the most natural way
-        to consume this information. It speaks to the fact that creating
-        animations is really hard! (It took several hours even to produce this
-        crude version.) Per Bret Victor&rsquo;s talk
-        <span
-          ><a href="https://www.youtube.com/watch?v=ZfytHvgHybA"
-            >Stop Drawing Dead Fish</a
-          ></span
-        ><span
-          >, making moving pictures shouldn&rsquo;t be so difficult. If it were
-          easier, such animations would spread everywhere in scientific
-          communication, because so often what a paper describes is some kind of
-          dynamic process. Dynamic illustrations would help readers grasp
-          proposed mechanisms more quickly. As it is, someone who understands a
-          complex mechanism usually has to explain it, in patient detail, to
-          someone who&rsquo;s good at animating; this costs time and money; and
-          most people simply opt not to go through with it. Perhaps, someday,
-          the process will be democratized by better tools, or a multimodal AI
-          system.</span
-        >
+        It’s a shame that the paper presenting this theory didn’t include such
+        an animation, because that by far is the most natural way to consume
+        this information. It speaks to the fact that creating animations is
+        really hard! (It took several hours even to produce this crude version.)
+        Per Bret Victor’s talk
+        <a href="https://www.youtube.com/watch?v=ZfytHvgHybA"
+          >Stop Drawing Dead Fish</a
+        >, making moving pictures shouldn’t be so difficult. If it were easier,
+        such animations would spread everywhere in scientific communication,
+        because so often what a paper describes is some kind of dynamic process.
+        Dynamic illustrations would help readers grasp proposed mechanisms more
+        quickly. As it is, someone who understands a complex mechanism usually
+        has to explain it, in patient detail, to someone who’s good at
+        animating; this costs time and money; and most people simply opt not to
+        go through with it. Perhaps, someday, the process will be democratized
+        by better tools, or a multimodal AI system.
       </p>
       <h3>
         How the motor changing directions causes the <em>E. coli</em> to tumble
       </h3>
       <p>
-        The final part of the story&mdash;for me, anyway; there&rsquo;s a lot
-        more to explore!&mdash;is why exactly the clockwise rotation of just one
-        of the flagellar motors would send the whole cell a-tumbling. It helps
-        to understand how the thing works in &ldquo;run&rdquo; mode, when all
-        the flagella are oriented the same way.
+        The final part of the story—for me, anyway; there’s a lot more to
+        explore!—is why exactly the clockwise rotation of just one of the
+        flagellar motors would send the whole cell a-tumbling. It helps to
+        understand how the thing works in “run” mode, when all the flagella are
+        oriented the same way.
       </p>
       <figure>
         <img
@@ -1052,14 +983,11 @@
         </figcaption>
       </figure>
       <p>
-        <span
-          >Even though this bundle of flagella sort of looks like a propeller,
-          when you actually think about it, that&rsquo;s not really what it is.
-          It&rsquo;s more like a pig&rsquo;s curly tail that spins with a whip-y
-          sort of motion. How exactly does that propel the entire cell? A
-          wonderful book called </span
-        ><span>Random Walks in Biology</span
-        ><span>&nbsp;gets into the physics in some detail:</span>
+        Even though this bundle of flagella sort of looks like a propeller, when
+        you actually think about it, that’s not really what it is. It’s more
+        like a pig’s curly tail that spins with a whip-y sort of motion. How
+        exactly does that propel the entire cell? A wonderful book called Random
+        Walks in Biology gets into the physics in some detail:
       </p>
       <figure>
         <img
@@ -1072,24 +1000,16 @@
         <figcaption>Source: Howard C. Berg, Random Walks in Biology</figcaption>
       </figure>
       <p>
-        <span
-          >To get a grip on things like this, it helps to have a model of some
-          kind that you can hold in your hand. And actually the question of how
-          separate filaments running in phase near each other would come to
-          bundle was explored nicely in </span
-        ><span
-          ><a href="https://www.pnas.org/doi/10.1073/pnas.2633596100"
-            >this paper</a
-          ></span
-        ><span>.</span
-        ><span
-          >&nbsp;The authors used physical models of the flagella by wrapping
-          hollow Tygon tubes around a mandrel and filling them with epoxy. They
-          then used a couple stepper motors to drive the counter-clockwise
-          rotation. &ldquo;The flow field generated by each helix tilts the
-          other helix, causing the helices to roll around each other and form a
-          right-handed wrapping&rdquo;:</span
-        >
+        To get a grip on things like this, it helps to have a model of some kind
+        that you can hold in your hand. And actually the question of how
+        separate filaments running in phase near each other would come to bundle
+        was explored nicely in
+        <a href="https://www.pnas.org/doi/10.1073/pnas.2633596100">this paper</a
+        >. The authors used physical models of the flagella by wrapping hollow
+        Tygon tubes around a mandrel and filling them with epoxy. They then used
+        a couple stepper motors to drive the counter-clockwise rotation. “The
+        flow field generated by each helix tilts the other helix, causing the
+        helices to roll around each other and form a right-handed wrapping”:
       </p>
       <figure>
         <img
@@ -1110,68 +1030,50 @@
       <p>
         We tend to think of a colony of something like <em>E. coli</em> as an
         undifferentiated evil goo, each bacterium identical to its neighbors.
-        But people who&rsquo;ve studied these organisms under the microscope
-        observe a surprising amount of individual personality.
+        But people who’ve studied these organisms under the microscope observe a
+        surprising amount of individual personality.
         <a href="https://www.nature.com/articles/262467a0"
           >A 1976 Nature paper</a
-        >, &ldquo;Non-genetic individuality: chance in the single cell,&rdquo;
-        explores variation in the context of chemotaxis using strains of
-        Salmonella and Enterobacter bacteria.
+        >, “Non-genetic individuality: chance in the single cell,” explores
+        variation in the context of chemotaxis using strains of Salmonella and
+        Enterobacter bacteria.
       </p>
       <p>
         The paper came out before the exact mechanism behind chemotactic
-        regulation was well-understood; all the authors knew was that
-        &ldquo;control of tumbling can be rationalised as caused by changes in
-        the levels of a tumble regulator.&rdquo; They hypothesized that although
-        bacteria of the same strain would all share the exact same DNA, there
-        might be a relatively small number of copies of that &ldquo;tumble
-        regulator,&rdquo; and natural variation in the transcription,
-        translation, and destruction of these regulator proteins could account
-        for differences in behavior. Their experiments were mostly at the
-        behavioral level. They observed how different
-        individuals&mdash;including those in a particularly &ldquo;tumbly&rdquo;
-        mutant strain (I love that word)&mdash;reacted to environments with and
-        without attractant, and found plenty of variance.
+        regulation was well-understood; all the authors knew was that “control
+        of tumbling can be rationalised as caused by changes in the levels of a
+        tumble regulator.” They hypothesized that although bacteria of the same
+        strain would all share the exact same DNA, there might be a relatively
+        small number of copies of that “tumble regulator,” and natural variation
+        in the transcription, translation, and destruction of these regulator
+        proteins could account for differences in behavior. Their experiments
+        were mostly at the behavioral level. They observed how different
+        individuals—including those in a particularly “tumbly” mutant strain (I
+        love that word)—reacted to environments with and without attractant, and
+        found plenty of variance.
       </p>
       <p>
-        <span>Their theory was spot-on. We talked above about how </span
-        ><em>E. coli</em
-        ><span
-          >&nbsp;adapt to higher and higher concentrations of attractant via a
-          clever methylation mechanism. Well, it turns out that the methylation
-          of the receptor struts is governed by only about </span
-        ><span
-          ><a
-            href="https://www.youtube.com/watch?t=3032&v=cT855rpX8bc&feature=youtu.be"
-            >100 CheR proteins</a
-          ></span
-        ><span
-          >&nbsp;in the cell. The number of those proteins&mdash;along with
-          CheB, which </span
-        ><span>un</span
-        ><span
-          >-methylates the struts&mdash;determines the speed of the
-          &ldquo;futile cycle&rdquo; that reacts to changes in attractant
-          concentration. That is, it affects how quickly the bacterium adapts
-          when the concentration goes up and refracts when it goes down. [Gore </span
-        ><span
-          ><a href="https://www.youtube.com/watch?v=cT855rpX8bc&t=3989s"
-            >1:06:30</a
-          ></span
-        ><span
-          >] Because 100 copies of CheR is so extraordinarily tiny in the
-          context of the full cell buzzing with something like ten million
-          proteins, variation by just a handful can have a relatively large
-          effect on the cell&rsquo;s behavior. [Gore </span
-        ><span
-          ><a href="https://www.youtube.com/watch?v=cT855rpX8bc&t=4390s"
-            >1:13:20</a
-          ></span
-        ><span>] That helps account for why different </span><em>E. coli</em
-        ><span
-          >&nbsp;with the exact same genetic sequence will tumble and adapt at
-          different frequencies.</span
+        Their theory was spot-on. We talked above about how
+        <em>E. coli</em> adapt to higher and higher concentrations of attractant
+        via a clever methylation mechanism. Well, it turns out that the
+        methylation of the receptor struts is governed by only about
+        <a
+          href="https://www.youtube.com/watch?t=3032&v=cT855rpX8bc&feature=youtu.be"
+          >100 CheR proteins</a
         >
+        in the cell. The number of those proteins—along with CheB, which
+        un-methylates the struts—determines the speed of the “futile cycle” that
+        reacts to changes in attractant concentration. That is, it affects how
+        quickly the bacterium adapts when the concentration goes up and refracts
+        when it goes down. [Gore
+        <a href="https://www.youtube.com/watch?v=cT855rpX8bc&t=3989s">1:06:30</a
+        >] Because 100 copies of CheR is so extraordinarily tiny in the context
+        of the full cell buzzing with something like ten million proteins,
+        variation by just a handful can have a relatively large effect on the
+        cell’s behavior. [Gore
+        <a href="https://www.youtube.com/watch?v=cT855rpX8bc&t=4390s">1:13:20</a
+        >] That helps account for why different <em>E. coli</em> with the exact
+        same genetic sequence will tumble and adapt at different frequencies.
       </p>
       <p>
         Recent
@@ -1182,189 +1084,122 @@
       </p>
       <h3>How did we figure all this stuff out?</h3>
       <p>
-        We don&rsquo;t yet have the technology to just observe all of the
-        activity inside a living cell. That Goodsell painting above that shows
-        the crowded cytoplasm packed with proteins is an artistic
-        composite&mdash;backed by rigorous research to be sure&mdash;because
-        there&rsquo;s no way to capture all the different players in situ at
-        once. And obviously it&rsquo;s a &ldquo;still life,&rdquo; not a video.
-        So how could we possibly know all this detail about what exactly a given
-        protein looks like, and how and when it interacts with others to kick
-        off some particular part of the chemotaxis process?
+        We don’t yet have the technology to just observe all of the activity
+        inside a living cell. That Goodsell painting above that shows the
+        crowded cytoplasm packed with proteins is an artistic composite—backed
+        by rigorous research to be sure—because there’s no way to capture all
+        the different players in situ at once. And obviously it’s a “still
+        life,” not a video. So how could we possibly know all this detail about
+        what exactly a given protein looks like, and how and when it interacts
+        with others to kick off some particular part of the chemotaxis process?
       </p>
       <p>
-        <span
-          >There seem to be three or four major kinds of experiment. Probably
-          the most important is genetic: you can selectively disrupt one gene at
-          a time and, by observing how the mutant </span
-        ><em>E. coli</em
-        ><span
-          >&nbsp;behaves, begin to get a grip on each gene&rsquo;s function. All
-          of the proteins &ldquo;CheY,&rdquo; &ldquo;CheZ,&rdquo;
-          &ldquo;CheW,&rdquo; and so on are named simply because they are the
-          products of genes that, when excised, &ldquo;cause a general defect in
-          chemotaxis.&rdquo; [How Bacteria Sense and Swim] As you can imagine,
-          identifying all of these is painstaking work, and involves a
-          considerable amount of clever inference. For instance you might
-          observe that without gene </span
-        ><span>X</span
-        ><span
-          >&nbsp;the bacteria never seems to tumble; is that because that gene
-          is involved in recognizing attractant or in forcing the rotor to run
-          clockwise?</span
+        There seem to be three or four major kinds of experiment. Probably the
+        most important is genetic: you can selectively disrupt one gene at a
+        time and, by observing how the mutant <em>E. coli</em> behaves, begin to
+        get a grip on each gene’s function. All of the proteins “CheY,” “CheZ,”
+        “CheW,” and so on are named simply because they are the products of
+        genes that, when excised, “cause a general defect in chemotaxis.” [How
+        Bacteria Sense and Swim] As you can imagine, identifying all of these is
+        painstaking work, and involves a considerable amount of clever
+        inference. For instance you might observe that without gene X the
+        bacteria never seems to tumble; is that because that gene is involved in
+        recognizing attractant or in forcing the rotor to run clockwise?
+      </p>
+      <p>
+        Once you have a hypothesis, a second kind of experiment involves
+        purifying some subset of these proteins-of-interest in vitro to see how
+        they work together to form a particular signaling pathway. For example
+        you could put CheA and CheY along with some phosphate groups and other
+        necessary reactants and observe whether and how much phosphorylation
+        takes place. That’s what the authors did in
+        <a href="https://doi.org/10.1016/0092-8674(90)90429-I">this paper</a> in
+        Cell, in 1990. They used a radioactive version of phosphate as a tracer.
+        “Incorporation of [32P]phosphate into CheA or CheY was determined by
+        excising the radioactive band out of the dried gel and quantitating in
+        scintillation fluid or by analysis of the intact gel using a
+        Phosphorimager (Molecular Dynamics, Sunnyvale, CA) and compare with
+        known radioactive standards.” Another common method for observing in
+        vitro dynamics is to genetically modify proteins to fluoresce; or to
+        “find” a protein in solution using an antibody that recognizes some part
+        of it—you attach that antibody to another protein, and that one you
+        fluoresce, so you can find the hidden one.
+      </p>
+      <p>
+        To understand the literal lock-and-key mechanics at a particular binding
+        site—for instance how exactly a molecule of aspartate causes a receptor
+        to deform, kicking off a signaling cascade—involves “structural” biology
+        work, i.e., taking pictures of individual proteins or, increasingly,
+        ensembles of them in situ. For this you can use X-ray crystallography,
+        nuclear magnetic resonance imaging, cryo-electron microscopy,
+        super-resolution light microscopy, or some combination.
+      </p>
+      <p>
+        A <a href="https://www.ks.uiuc.edu/Research/chemotaxis/">group</a> at
+        University of Illinois at Urbana-Champagne uses atomic-scale molecular
+        dynamics simulations, in software, to understand structural details—like
+        the exact
+        <a href="https://www.youtube.com/watch?v=MCobqYrE67w">way</a> that CheA
+        changes shape to kick off a downstream signaling process—that wouldn’t
+        be apparent from high-resolution imaging alone. (Keith Cassidy, whose
+        figures appeared above, now has a
+        <a href="https://ckcassidy.mufaculty.umsystem.edu/"
+          >lab at the University of Missouri-Columbia</a
         >
+        that’s studying molecular dynamics of the receptor signaling complex.)
       </p>
       <p>
-        <span
-          >Once you have a hypothesis, a second kind of experiment involves
-          purifying some subset of these proteins-of-interest in vitro to see
-          how they work together to form a particular signaling pathway. For
-          example you could put CheA and CheY along with some phosphate groups
-          and other necessary reactants and observe whether and how much
-          phosphorylation takes place. That&rsquo;s what the authors did in </span
-        ><span
-          ><a href="https://doi.org/10.1016/0092-8674(90)90429-I"
-            >this paper</a
-          ></span
-        ><span>&nbsp;in </span><span>Cell</span
-        ><span
-          >, in 1990. They used a radioactive version of phosphate as a tracer.
-          &ldquo;Incorporation of [32P]phosphate into CheA or CheY was
-          determined by excising the radioactive band out of the dried gel and
-          quantitating in scintillation fluid or by analysis of the intact gel
-          using a Phosphorimager (Molecular Dynamics, Sunnyvale, CA) and compare
-          with known radioactive standards.&rdquo; Another common method for
-          observing in vitro dynamics is to genetically modify proteins to
-          fluoresce; or to &ldquo;find&rdquo; a protein in solution using an
-          antibody that recognizes some part of it&mdash;you attach that
-          antibody to </span
-        ><span>another</span
-        ><span
-          >&nbsp;protein, and that one you fluoresce, so you can find the hidden
-          one.</span
+        Sometimes you can’t get a direct picture. It may require deduction to
+        understand, say, how exactly a protein fits in.
+        <a href="https://pubmed.ncbi.nlm.nih.gov/1326408/">One experiment</a>
+        found that CheA didn’t bind to a receptor except in the presence of
+        CheW; that plus the fact that adding too much CheW into the mixture
+        actually led to a decrease in the ability of CheA–CheW complexes to bind
+        receptor suggested that CheW competed with that complex for the binding
+        site on the receptor and that therefore it must sit between the receptor
+        and CheW in the receptor–CheW–CheA trimer [Cited in Blair]. Biology is
+        lousy with heroic inferences like that. It’s a world that’s hard to see;
+        sometimes you just have to imagine what’s going on down there, and back
+        up those imaginings with the right experiments.
+      </p>
+      <p>
+        The very idea that bacteria run and tumble came from experiments
+        <a href="https://www.nature.com/articles/239500a0">published in 1972</a>
+        by Howard Berg and Douglas Brown, who used a special three-dimensional
+        tracking microscope of their own design to watch the little suckers in
+        action. (A fun fact is that they called the non-runs “twiddles” instead
+        of “tumbles.”) Some of the physics of flagellar propulsion—like how much
+        force the little tails generate—<a
+          href="https://www.google.com/books/edition/An_Introduction_to_Systems_Biology/tcxCkIxzCO4C?hl=en&gbpv=1&pg=PAfrontcover&printsec=frontcover"
+          >was discovered</a
         >
-      </p>
-      <p>
-        <span
-          >To understand the literal lock-and-key mechanics at a particular
-          binding site&mdash;for instance how exactly a molecule of aspartate
-          causes a receptor to deform, kicking off a signaling
-          cascade&mdash;involves &ldquo;structural&rdquo; biology work, i.e.,
-          taking pictures of individual proteins or, increasingly, ensembles of
-          them in situ. For this you can use X-ray crystallography, nuclear
-          magnetic resonance imaging, cryo-electron microscopy, super-resolution
-          light microscopy, or some combination.</span
+        later by tethering the flagella to a microscope slide: you can then
+        measure how fast the <em>E. coli’s</em> body spins. We know that
+        bacterial flagellar motors are powered by the
+        <a
+          href="https://link.springer.com/referenceworkentry/10.1007/978-3-642-11274-4_141"
+          >proton motive force</a
         >
-      </p>
-      <p>
-        <span>A </span
-        ><span
-          ><a href="https://www.ks.uiuc.edu/Research/chemotaxis/"
-            >group</a
-          ></span
-        ><span
-          >&nbsp;at University of Illinois at Urbana-Champagne uses atomic-scale
-          molecular dynamics simulations, in software, to understand structural
-          details&mdash;like the exact </span
-        ><span
-          ><a href="https://www.youtube.com/watch?v=MCobqYrE67w">way</a></span
-        ><span
-          >&nbsp;that CheA changes shape to kick off a downstream signaling
-          process&mdash;that wouldn&rsquo;t be apparent from high-resolution
-          imaging alone. (Keith Cassidy, whose figures appeared above, now has a
-          <a href="https://ckcassidy.mufaculty.umsystem.edu/"
-            >lab at the University of Missouri-Columbia</a
-          >
-          that&rsquo;s studying molecular dynamics of the receptor signaling
-          complex.)</span
+        from a
+        <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC431412/"
+          >1977 paper</a
         >
+        that measured how cells ran or “twiddled” in the presence or absence of
+        an electrical potential. But the research has become even more refined
+        than that. Just by observing the strength of the rotation under various
+        conditions—different viscosities, temperatures, and so on—we know that
+        “rotation is tightly coupled to proton flow, with a fixed number of
+        protons (~500) used to drive each revolution.” [Blair] Think of how
+        detailed an understanding we’ve gotten!
       </p>
       <p>
-        <span
-          >Sometimes you can&rsquo;t get a direct picture. It may require
-          deduction to understand, say, how exactly a protein fits in. </span
-        ><span
-          ><a href="https://pubmed.ncbi.nlm.nih.gov/1326408/"
-            >One experiment</a
-          ></span
-        ><span
-          >&nbsp;found that CheA didn&rsquo;t bind to a receptor except in the
-          presence of CheW; that plus the fact that adding too much CheW into
-          the mixture actually led to a </span
-        ><span>decrease</span
-        ><span
-          >&nbsp;in the ability of CheA&ndash;CheW complexes to bind receptor
-          suggested that CheW competed with that complex for the binding site on
-          the receptor and that therefore it must sit </span
-        ><span>between</span
-        ><span
-          >&nbsp;the receptor and CheW in the receptor&ndash;CheW&ndash;CheA
-          trimer [Cited in Blair]. </span
-        ><span
-          >Biology is lousy with heroic inferences like that. It&rsquo;s a world
-          that&rsquo;s hard to see; sometimes you just have to </span
-        ><span>imagine</span
-        ><span
-          >&nbsp;what&rsquo;s going on down there, and back up those imaginings
-          with the right experiments.</span
-        >
-      </p>
-      <p>
-        <span
-          >The very idea that bacteria run and tumble came from experiments </span
-        ><span
-          ><a href="https://www.nature.com/articles/239500a0"
-            >published in 1972</a
-          ></span
-        ><span
-          >&nbsp;by Howard Berg and Douglas Brown, who used a special
-          three-dimensional tracking microscope of their own design to watch the
-          little suckers in action. (A fun fact is that they called the non-runs
-          &ldquo;twiddles&rdquo; instead of &ldquo;tumbles.&rdquo;) Some of the
-          physics of flagellar propulsion&mdash;like how much force the little
-          tails generate&mdash;</span
-        ><span
-          ><a
-            href="https://www.google.com/books/edition/An_Introduction_to_Systems_Biology/tcxCkIxzCO4C?hl=en&gbpv=1&pg=PAfrontcover&printsec=frontcover"
-            >was discovered</a
-          ></span
-        ><span
-          >&nbsp;later by tethering the flagella to a microscope slide: you can
-          then measure how fast the </span
-        ><em>E. coli</em
-        ><span
-          >&rsquo;s body spins. We know that bacterial flagellar motors are
-          powered by the </span
-        ><span
-          ><a
-            href="https://link.springer.com/referenceworkentry/10.1007/978-3-642-11274-4_141"
-            >proton motive force</a
-          ></span
-        ><span>&nbsp;from a </span
-        ><span
-          ><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC431412/"
-            >1977 paper</a
-          ></span
-        ><span
-          >&nbsp;that measured how cells ran or &ldquo;twiddled&rdquo; in the
-          presence or absence of an electrical potential. But the research has
-          become even more refined than that. Just by observing the strength of
-          the rotation under various conditions&mdash;different viscosities,
-          temperatures, and so on&mdash;we know that &ldquo;rotation is tightly
-          coupled to proton flow, with a fixed number of protons (~500) used to
-          drive each revolution.&rdquo; [Blair] Think of how detailed an
-          understanding we&rsquo;ve gotten!</span
-        >
-      </p>
-      <p>
-        One reason I&rsquo;m particularly attracted to studies of
-        <em>E. coli</em>chemotaxis is that it&rsquo;s an early star of
-        what&rsquo;s been called &ldquo;in silico&rdquo; biology. It&rsquo;s
-        been the subject of many computer models. Dennis Bray, the author of
-        that book that put me onto this stuff in the first place, made one of
-        the more
+        One reason I’m particularly attracted to studies of
+        <em>E. coli</em>chemotaxis is that it’s an early star of what’s been
+        called “in silico” biology. It’s been the subject of many computer
+        models. Dennis Bray, the author of that book that put me onto this stuff
+        in the first place, made one of the more
         <a href="https://pubmed.ncbi.nlm.nih.gov/17208180/">popular models</a>.
-        Here&rsquo;s a nice still shot of the model in action:
+        Here’s a nice still shot of the model in action:
       </p>
       <figure>
         <img
@@ -1380,351 +1215,233 @@
         the first place you have to explicitly articulate every one of your
         assumptions. In much the same way that writing tends to clarify your
         thinking (or at least reveal how unclear it really is), a computer model
-        forces you to synthesize what you know. (Though if anything it&rsquo;s
-        even more exacting than a blank page.)
+        forces you to synthesize what you know. (Though if anything it’s even
+        more exacting than a blank page.)
       </p>
       <p>
         Once you have a model, you can use it to explore variations on those
-        assumptions. &ldquo;The program gives the correct phenotype of over 60
-        mutants in which chemotaxis-pathway components are deleted or
-        overexpressed,&rdquo; Bray writes. At best, a good enough model lets you
-        discover things you didn&rsquo;t already know, or suggests your next
-        experiment. &ldquo;In order to match the impulse response to a brief
-        stimulus [. . .] we also had to increase the activities of the
-        adaptational enzymes CheR and CheB at least an order of magnitude
-        greater than published values.&rdquo;
+        assumptions. “The program gives the correct phenotype of over 60 mutants
+        in which chemotaxis-pathway components are deleted or overexpressed,”
+        Bray writes. At best, a good enough model lets you discover things you
+        didn’t already know, or suggests your next experiment. “In order to
+        match the impulse response to a brief stimulus [. . .] we also had to
+        increase the activities of the adaptational enzymes CheR and CheB at
+        least an order of magnitude greater than published values.”
       </p>
       <h3>So what?</h3>
       <p>
         Why should you care about <em>E. coli</em> chemotaxis? A typical answer
-        to that sort of question&mdash;and I&rsquo;m sure the answer given in
-        many of the grant applications supporting the work cited here&mdash;is
-        that there are medical and practical uses. For instance: if you
-        understand the signaling pathways of bacterial chemotaxis you can
-        disrupt them; that work might lead to a new kind of antibiotic, which,
-        in an era of increasing resistance, is direly needed. Or you might
-        hijack chemotaxis pathways to create &ldquo;intelligent sniffers&rdquo;
-        (Keith Cassidy's phrase) that could home in on cancer cells or
-        environmental waste.
+        to that sort of question—and I’m sure the answer given in many of the
+        grant applications supporting the work cited here—is that there are
+        medical and practical uses. For instance: if you understand the
+        signaling pathways of bacterial chemotaxis you can disrupt them; that
+        work might lead to a new kind of antibiotic, which, in an era of
+        increasing resistance, is direly needed. Or you might hijack chemotaxis
+        pathways to create “intelligent sniffers” (Keith Cassidy's phrase) that
+        could home in on cancer cells or environmental waste.
       </p>
       <p>
-        More generally you might say&mdash;and in fact I led with this up
-        top&mdash;that understanding this specific phenomenon equips you to
-        understand all kinds of others. &ldquo;Bacterial two-component pathways
-        [<a href="https://en.wikipedia.org/wiki/Two-component_regulatory_system"
-          >def&rsquo;n</a
+        More generally you might say—and in fact I led with this up top—that
+        understanding this specific phenomenon equips you to understand all
+        kinds of others. “Bacterial two-component pathways [<a
+          href="https://en.wikipedia.org/wiki/Two-component_regulatory_system"
+          >def’n</a
         >] control a dazzling array of functions including cell division,
         virulence, antibiotic resistance, metabolite fixation and utilization,
-        response to environmental stress, sporulation, and taxis.&rdquo;
+        response to environmental stress, sporulation, and taxis.”
       </p>
       <p>
-        But I dunno, to me the real reason is that it&rsquo;s neat. It&rsquo;s
-        just fun to find out about. &ldquo;To learn, and at due times to repeat
-        what one has learnt, is that not after all a pleasure?&rdquo;
+        But I dunno, to me the real reason is that it’s neat. It’s just fun to
+        find out about. “To learn, and at due times to repeat what one has
+        learnt, is that not after all a pleasure?”
       </p>
     </article>
     <footer>
       <h2>Annotated bibliography</h2>
       <p>
-        <span>Bray, Dennis. </span
-        ><em>Wetware: A Computer in Every Living Cell</em
-        ><span
-          >. 2009. This is the book that kicked off my interest in E. coli
-          chemotaxis. Bray built computer models of the network of interacting
-          parts that give rise to E. coli&rsquo;s sophisticated foraging
-          behavior&mdash;an early example of </span
-        ><span>in silico</span
-        ><span
-          >&nbsp;&ldquo;systems biology.&rdquo; This is a very evocative book,
-          giving you a newfound appreciation for the computational power of an
-          individual cell.</span
+        Bray, Dennis. <em>Wetware: A Computer in Every Living Cell</em>. 2009.
+        This is the book that kicked off my interest in E. coli chemotaxis. Bray
+        built computer models of the network of interacting parts that give rise
+        to E. coli’s sophisticated foraging behavior—an early example of in
+        silico “systems biology.” This is a very evocative book, giving you a
+        newfound appreciation for the computational power of an individual cell.
+      </p>
+      <p>
+        “<a href="https://www.youtube.com/watch?v=LgPDOSou1tw"
+          >Chemotaxis: Molecular Events</a
+        >.” A superb video that gives an overview of everything you need to know
+        about chemotaxis. I think this was prepared for Molecular Biology of the
+        Cell, the textbook cited below. Is it sufficient to just watch this
+        video and be done with it? Maybe, but for some reason I had a bunch of
+        questions I still wanted answered that led me to all this other stuff.
+      </p>
+      <p>
+        Webre, Daniel J. et al. “<a
+          href="https://www.cell.com/current-biology/pdf/S0960-9822(02)01424-0.pdf"
+          >Bacterial chemotaxis</a
+        >.” Current Biology,
+        <a
+          href="https://www.sciencedirect.com/journal/current-biology/vol/13/issue/2"
+          >Vol 13 No 2</a
+        >, 2003. Good short overview article, like an encyclopedia entry.
+      </p>
+      <p>
+        Gore, Jeff. “<a href="https://www.youtube.com/watch?v=cT855rpX8bc"
+          >Robustness and Bacterial Chemotaxis.</a
+        >” 2014. This is a truly awesome lecture that gives you a sense of the
+        majesty of bacterial chemotaxis and also of the weird physics of the
+        microscopic world (which Gore calls “Life at low Reynold’s number”).
+        This lecture is part of Gore’s
+        <a
+          href="https://ocw.mit.edu/courses/physics/8-591j-systems-biology-fall-2014/syllabus/"
+          >MIT Systems Biology course</a
+        >, available via MIT’s amazing OpenCourseWare initiative.
+      </p>
+      <p>
+        Alberts, Bruce et al.
+        <a href="https://wwnorton.com/books/9780393884821"
+          >Molecular Biology of the Cell</a
+        >, 7th edition, 2022. The meme bio textbook. It’s good, and I actually
+        in my adulthood paid for a digital copy of this thing. I refer to it
+        every so often—actually maybe just twice since I paid for it. It feels
+        handy, the kind of known-good and deep source it’s helpful to have for
+        answering your own and others’ basic questions. One thing that strikes
+        me about this book, excellent as it is, is that it’d probably be a tough
+        way to actually learn biology. Instead, try the stuff cited in the
+        “Reading list” at the bottom of
+        <a href="https://jsomers.net/i-should-have-loved-biology/">this post</a
+        >.
+      </p>
+      <p>
+        Falke, Joseph J. et al. “<a
+          href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2899694/"
+          >The Two-Component Signaling Pathway of Bacterial Chemotaxis: A
+          Molecular View of Signal Transduction by Receptors, Kinases, and
+          Adaptation Enzymes.</a
+        >” 1997. A really nice paper that tells the basic story, if in somewhat
+        forbidding technical language.
+      </p>
+      <p>
+        Falke , Joseph J. et al. “<a
+          href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4268382/"
+          >Architecture and signal transduction mechanism of the bacterial
+          chemosensory array: Progress, controversies, and challenges.</a
+        >” 2014. Another good review-ish paper.
+      </p>
+      <p>
+        Bray, Dennis et al.
+        <a
+          href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC300951/pdf/mbc00099-0029.pdf"
+          >“Computer Simulation of the Phosphorylation Cascade Controlling
+          Bacterial Chemotaxis.”</a
+        >
+        1993. A good example of in silico biology.
+      </p>
+      <p>
+        Bray, Dennis et al. “<a
+          href="https://www.cell.com/current-biology/fulltext/S0960-9822(06)02508-5?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0960982206025085%3Fshowall%3Dtrue"
+          >The chemotactic behavior of computer-based surrogate bacteria.</a
+        >” 2007. Another, later paper by Bray with a more detailed computer
+        model.
+      </p>
+      <p>
+        “<a href="https://www.ks.uiuc.edu/Research/chemotaxis/"
+          >Bacterial Chemotaxis</a
+        >.” A nice page from the Theoretical and Computational Biophysics group
+        at the University of Illinois at Urbana–Champaign.
+      </p>
+      <p>
+        Cassidy, C. Keith.
+        <a href="https://ckcassidy.com/">Personal website.</a> This fellow used
+        to work at the UIUC group in the previous reference. He may be the
+        expert on the chemotaxis signaling complex. He now directs a
+        <a href="https://ckcassidy.mufaculty.umsystem.edu/"
+          >lab at the University of Missouri-Columbia</a
         >
       </p>
       <p>
-        <span>&ldquo;</span
-        ><span
-          ><a href="https://www.youtube.com/watch?v=LgPDOSou1tw"
-            >Chemotaxis: Molecular Events</a
-          ></span
-        ><span
-          >.&rdquo; A superb video that gives an overview of everything you need
-          to know about chemotaxis. I think this was prepared for </span
-        ><span>Molecular Biology of the Cell</span
-        ><span
-          >, the textbook cited below. Is it sufficient to just watch this video
-          and be done with it? Maybe, but for some reason I had a bunch of
-          questions I still wanted answered that led me to all this other
-          stuff.</span
-        >
-      </p>
-      <p>
-        <span>Webre, Daniel J. et al. &ldquo;</span
-        ><span
-          ><a
-            href="https://www.cell.com/current-biology/pdf/S0960-9822(02)01424-0.pdf"
-            >Bacterial chemotaxis</a
-          ></span
-        ><span>.&rdquo; Current Biology, </span
-        ><span
-          ><a
-            href="https://www.sciencedirect.com/journal/current-biology/vol/13/issue/2"
-            >Vol 13 No 2</a
-          ></span
-        ><span>, 2003</span><span>. </span
-        ><span>Good short overview article, like an encyclopedia entry.</span>
-      </p>
-      <p>
-        <span>Gore, Jeff. &ldquo;</span
-        ><span
-          ><a href="https://www.youtube.com/watch?v=cT855rpX8bc"
-            >Robustness and Bacterial Chemotaxis.</a
-          ></span
-        ><span
-          >&rdquo; 2014. This is a truly awesome lecture that gives you a sense
-          of the majesty of bacterial chemotaxis and also of the weird physics
-          of the microscopic world (which Gore calls &ldquo;Life at low
-          Reynold&rsquo;s number&rdquo;). This lecture is part of Gore&rsquo;s </span
-        ><span
-          ><a
-            href="https://ocw.mit.edu/courses/physics/8-591j-systems-biology-fall-2014/syllabus/"
-            >MIT Systems Biology course</a
-          ></span
-        ><span
-          >, available via MIT&rsquo;s amazing OpenCourseWare initiative.</span
-        >
-      </p>
-      <p>
-        <span>Alberts, Bruce et al. </span
-        ><span
-          ><a href="https://wwnorton.com/books/9780393884821"
-            >Molecular Biology of the Cell</a
-          ></span
-        ><span
-          >, 7th edition, 2022. The meme bio textbook. It&rsquo;s good, and I
-          actually in my adulthood paid for a digital copy of this thing. I
-          refer to it every so often&mdash;actually maybe just twice since I
-          paid for it. It feels handy, the kind of known-good and deep source
-          it&rsquo;s helpful to have for answering your own and others&rsquo;
-          basic questions. One thing that strikes me about this book, excellent
-          as it is, is that it&rsquo;d probably be a tough way to actually </span
-        ><span>learn</span
-        ><span
-          >&nbsp;biology. Instead, try the stuff cited in the &ldquo;Reading
-          list&rdquo; at the bottom of </span
-        ><span
-          ><a href="https://jsomers.net/i-should-have-loved-biology/"
-            >this post</a
-          ></span
-        ><span>.</span>
-      </p>
-      <p>
-        <span>Falke, Joseph J. et al. &ldquo;</span
-        ><span
-          ><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2899694/"
-            >The Two-Component Signaling Pathway of Bacterial Chemotaxis: A
-            Molecular View of Signal Transduction by Receptors, Kinases, and
-            Adaptation Enzymes.</a
-          ></span
-        ><span
-          >&rdquo; 1997. A really nice paper that tells the basic story, if in
-          somewhat forbidding technical language.</span
-        >
-      </p>
-      <p>
-        <span>Falke , Joseph J. et al. &ldquo;</span
-        ><span
-          ><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4268382/"
-            >Architecture and signal transduction mechanism of the bacterial
-            chemosensory array: Progress, controversies, and challenges.</a
-          ></span
-        ><span>&rdquo; 2014. Another good review-ish paper.</span>
-      </p>
-      <p>
-        <span>Bray, Dennis et al. </span
-        ><span
-          ><a
-            href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC300951/pdf/mbc00099-0029.pdf"
-            >&ldquo;Computer Simulation of the Phosphorylation Cascade
-            Controlling Bacterial Chemotaxis.&rdquo;</a
-          ></span
-        ><span>&nbsp;1993. A good example of </span><span>in silico</span
-        ><span>&nbsp;biology.</span>
-      </p>
-      <p>
-        <span>Bray, Dennis et al. &ldquo;</span
-        ><span
-          ><a
-            href="https://www.cell.com/current-biology/fulltext/S0960-9822(06)02508-5?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0960982206025085%3Fshowall%3Dtrue"
-            >The chemotactic behavior of computer-based surrogate bacteria.</a
-          ></span
-        ><span
-          >&rdquo; 2007. Another, later paper by Bray with a more detailed
-          computer model.
-        </span>
-      </p>
-      <p>
-        <span>&ldquo;</span
-        ><span
-          ><a href="https://www.ks.uiuc.edu/Research/chemotaxis/"
-            >Bacterial Chemotaxis</a
-          ></span
-        ><span
-          >.&rdquo; A nice page from the Theoretical and Computational
-          Biophysics group at the University of Illinois at
-          Urbana&ndash;Champaign.</span
-        >
-      </p>
-      <p>
-        <span>Cassidy, C. Keith. </span
-        ><span><a href="https://ckcassidy.com/">Personal website.</a></span
-        ><span
-          >&nbsp;This fellow used to work at the UIUC group in the previous
-          reference. He may be </span
-        ><span>the</span
-        ><span
-          >&nbsp;expert on the chemotaxis signaling complex. He now directs a
-          <a href="https://ckcassidy.mufaculty.umsystem.edu/"
-            >lab at the University of Missouri-Columbia</a
-          ></span
-        >
-      </p>
-      <p>
-        Beniaguev, David et al. &ldquo;<a
+        Beniaguev, David et al. “<a
           href="https://www.sciencedirect.com/science/article/pii/S0896627321005018"
           >Single cortical neurons as deep artificial neural networks.</a
-        >&rdquo; 2021. A paper showing that &ldquo;cortical neurons are well
-        approximated by a deep neural network (DNN) with 5&ndash;8
-        layers.&rdquo;
+        >” 2021. A paper showing that “cortical neurons are well approximated by
+        a deep neural network (DNN) with 5–8 layers.”
       </p>
       <p>
-        <span>Koushik, Paul et al. &ldquo;</span
-        ><span
-          ><a href="https://www.pnas.org/doi/10.1073/pnas.1110111108"
-            >A molecular mechanism of direction switching in the flagellar motor
-            of Escherichia coli.</a
-          ></span
-        ><span
-          >&rdquo; 2011. This is where all those great diagrams showing a
-          hypothesized mechanism for the rotor switching come from. I only wish
-          they&rsquo;d animated them! (Maybe they felt that they were already
-          out on a limb, and making a video of a proposed mechanism would make
-          it seem realer than it deserve to be? Or maybe they just thought it
-          was too hard.)</span
-        >
+        Koushik, Paul et al. “<a
+          href="https://www.pnas.org/doi/10.1073/pnas.1110111108"
+          >A molecular mechanism of direction switching in the flagellar motor
+          of Escherichia coli.</a
+        >” 2011. This is where all those great diagrams showing a hypothesized
+        mechanism for the rotor switching come from. I only wish they’d animated
+        them! (Maybe they felt that they were already out on a limb, and making
+        a video of a proposed mechanism would make it seem realer than it
+        deserve to be? Or maybe they just thought it was too hard.)
       </p>
       <p>
-        <span>Berg, Howard. &ldquo;</span
-        ><span
-          ><a
-            href="https://web.archive.org/web/20220810172710/http://www.rowland.harvard.edu/labs/bacteria/movies/ecoli.php"
-            >Swimming
-          </a></span
-        ><span
-          ><a
-            href="https://web.archive.org/web/20220810172710/http://www.rowland.harvard.edu/labs/bacteria/movies/ecoli.php"
-            >Escherichia coli</a
-          ></span
-        ><span
-          ><a
-            href="https://web.archive.org/web/20220810172710/http://www.rowland.harvard.edu/labs/bacteria/movies/ecoli.php"
-            >.</a
-          ></span
-        ><span>&rdquo; Archived web page with lots of videos of </span
-        ><em>E. coli</em
-        ><span
-          >&nbsp;in motion. Berg was one of the OG chemotaxis people, and also
-          wrote the amazing </span
-        ><span>Random Walks in Biology</span><span>, cited below.</span>
+        Berg, Howard. “<a
+          href="https://web.archive.org/web/20220810172710/http://www.rowland.harvard.edu/labs/bacteria/movies/ecoli.php"
+          >Swimming </a
+        ><a
+          href="https://web.archive.org/web/20220810172710/http://www.rowland.harvard.edu/labs/bacteria/movies/ecoli.php"
+          >Escherichia coli</a
+        ><a
+          href="https://web.archive.org/web/20220810172710/http://www.rowland.harvard.edu/labs/bacteria/movies/ecoli.php"
+          >.</a
+        >” Archived web page with lots of videos of <em>E. coli</em> in motion.
+        Berg was one of the OG chemotaxis people, and also wrote the amazing
+        Random Walks in Biology, cited below.
       </p>
       <p>
-        <span>Alon, U. et al. &ldquo;</span
-        ><span
-          ><a href="https://www.nature.com/articles/16483"
-            >Robustness in bacterial chemotaxis.</a
-          ></span
-        ><span
-          >&rdquo; 1999. I don&rsquo;t know if I understood this paper all that
-          well, except to get the point that the chemotaxis system doesn&rsquo;t
-          rely on there being some precise concentration of any of the component
-          parts, e.g. CheY. Like many biological systems it works in the face of
-          lots of gotchas and what-have-yous.</span
-        >
+        Alon, U. et al. “<a href="https://www.nature.com/articles/16483"
+          >Robustness in bacterial chemotaxis.</a
+        >” 1999. I don’t know if I understood this paper all that well, except
+        to get the point that the chemotaxis system doesn’t rely on there being
+        some precise concentration of any of the component parts, e.g. CheY.
+        Like many biological systems it works in the face of lots of gotchas and
+        what-have-yous.
       </p>
       <p>
-        <span>&ldquo;</span
-        ><span
-          ><a href="https://www.youtube.com/watch?v=uw0-MHI_248"
-            >Self-Assembling NanoMachine: a film about flagellar biosynthesis</a
-          ></span
-        ><span
-          >.&rdquo; A documentary (!) about the way that the bacterial flagellar
-          motor is made, and the various discoveries that elaborated the
-          process. Pretty hard to believe that this documentary
-          exists&mdash;but, there it is. It&rsquo;s awesome.</span
-        >
+        “<a href="https://www.youtube.com/watch?v=uw0-MHI_248"
+          >Self-Assembling NanoMachine: a film about flagellar biosynthesis</a
+        >.” A documentary (!) about the way that the bacterial flagellar motor
+        is made, and the various discoveries that elaborated the process. Pretty
+        hard to believe that this documentary exists—but, there it is. It’s
+        awesome.
       </p>
       <p>
-        <span>Di Paolo, Diana et al. &ldquo;</span
-        ><span
-          ><a
-            href="https://royalsocietypublishing.org/doi/10.1098/rstb.2015.0492"
-            >Single-molecule imaging of electroporated dye-labelled CheY in live
-            E coli.</a
-          ></span
-        ><span
-          >&rdquo; A neat paper showing the tracking of CheY through the
-          cytoplasm.</span
-        >
+        Di Paolo, Diana et al. “<a
+          href="https://royalsocietypublishing.org/doi/10.1098/rstb.2015.0492"
+          >Single-molecule imaging of electroporated dye-labelled CheY in live E
+          coli.</a
+        >” A neat paper showing the tracking of CheY through the cytoplasm.
       </p>
       <p>
-        <span>MunJu, Kim et al. </span
-        ><span
-          ><a href="https://www.youtube.com/watch?v=25FtMdIFtXM"
-            >Macro Scale Model E. Coli Flagella Bundling</a
-          ></span
-        ><span>. YouTube video from </span
-        ><span
-          ><a href="https://www.pnas.org/doi/10.1073/pnas.2633596100"
-            >this paper</a
-          ></span
-        ><span
-          >. 2003. Uses the drill and tubing to simulate flagellar
-          bundling.</span
-        >
+        MunJu, Kim et al.
+        <a href="https://www.youtube.com/watch?v=25FtMdIFtXM"
+          >Macro Scale Model E. Coli Flagella Bundling</a
+        >. YouTube video from
+        <a href="https://www.pnas.org/doi/10.1073/pnas.2633596100">this paper</a
+        >. 2003. Uses the drill and tubing to simulate flagellar bundling.
       </p>
       <p>
-        <span>Sarkar, Mayukh K. et al. &ldquo;</span
-        ><span
-          ><a href="https://www.pnas.org/doi/10.1073/pnas.1000935107"
-            >Chemotaxis signaling protein CheY binds to the rotor protein FliN
-            to control the direction of flagellar rotation in Escherichia
-            coli.</a
-          ></span
-        ><span>&rdquo; Pretty clear title!</span>
+        Sarkar, Mayukh K. et al. “<a
+          href="https://www.pnas.org/doi/10.1073/pnas.1000935107"
+          >Chemotaxis signaling protein CheY binds to the rotor protein FliN to
+          control the direction of flagellar rotation in Escherichia coli.</a
+        >” Pretty clear title!
       </p>
       <p>
-        <span>Vladimirov, Nikita. &ldquo;</span
-        ><span
-          ><a href="https://github.com/nvladimus/rapidcell"
-            >Multiscale modeling of E.coli chemotaxis.</a
-          ></span
-        ><span
-          >&rdquo; Github project page. Here&rsquo;s a model I tried to actually
-          run&mdash;and shockingly, it worked out of the box. Sadly it
-          didn&rsquo;t show little virtual </span
-        ><span>E. colis</span
-        ><span
-          >&nbsp;running and tumbling around on my screen, but still pretty
-          cool.
-        </span>
+        Vladimirov, Nikita. “<a href="https://github.com/nvladimus/rapidcell"
+          >Multiscale modeling of E.coli chemotaxis.</a
+        >” Github project page. Here’s a model I tried to actually run—and
+        shockingly, it worked out of the box. Sadly it didn’t show little
+        virtual E. colis running and tumbling around on my screen, but still
+        pretty cool.
       </p>
       <p>
-        <span>Blair, D F. &ldquo;</span
-        ><span
-          ><a href="https://pubmed.ncbi.nlm.nih.gov/8561469/"
-            >How bacteria sense and swim.</a
-          ></span
-        ><span>&rdquo; 1995. A really well-written review article.</span>
+        Blair, D F. “<a href="https://pubmed.ncbi.nlm.nih.gov/8561469/"
+          >How bacteria sense and swim.</a
+        >” 1995. A really well-written review article.
       </p>
     </footer>
     <script type="module" src="ecoliSimulation/index.js"></script>
