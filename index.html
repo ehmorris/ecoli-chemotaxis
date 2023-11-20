@@ -8,13 +8,31 @@
     <meta charset="utf-8" />
     <title>E. coli</title>
     <style>
+      @font-face {
+        font-family: "Orbiter";
+        src: url("./fonts/TASAOrbiterVF.woff2") format("woff2-variations");
+        font-weight: 125 950;
+        font-stretch: 75% 125%;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Explorer";
+        src: url("./fonts/TASAExplorerVF.woff2") format("woff2-variations");
+        font-weight: 125 950;
+        font-stretch: 75% 125%;
+        font-style: normal;
+      }
+
       :root {
         --slider-pip-left-value: 0%;
       }
 
       body {
+        background: #010010;
+        color: #dddddd;
         margin: 0;
-        font-family: system-ui, -apple-system, sans-serif;
+        font-family: Orbiter, sans-serif;
         font-size: 18px;
         line-height: 1.3;
       }
@@ -31,24 +49,21 @@
 
       img {
         display: block;
-        max-width: 100%;
         height: auto;
       }
 
-      img.inlineWithText {
-        display: inline;
-        height: 1em;
-      }
-
-      article {
-        max-width: 38em;
-        margin: 18px 18px 0;
-        position: relative;
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: Explorer, sans-serif;
+        color: #fff;
+        font-weight: 800;
+        text-transform: uppercase;
       }
 
       h1 {
         font-size: clamp(2rem, 5vw, 6rem);
-        font-weight: 800;
         margin: 0.3em auto;
         max-width: calc(100vw - 36px);
         line-height: 1.05;
@@ -57,6 +72,25 @@
       h2 {
         font-size: inherit;
         margin: 0;
+      }
+
+      a {
+        color: #fff;
+      }
+
+      article {
+        max-width: 38em;
+        margin: 18px 18px 0;
+        position: relative;
+      }
+
+      article img {
+        max-width: 50%;
+      }
+
+      article img.inlineWithText {
+        display: inline;
+        height: 1em;
       }
 
       figure {
@@ -140,7 +174,10 @@
       }
 
       footer {
+        max-width: 76em;
         margin: 64px 18px 0;
+        position: relative;
+        columns: 2;
       }
     </style>
   </head>
@@ -204,6 +241,10 @@
         the flagellar motor. And it helps give an intuition for how a bag of
         unthinking chemicals could possibly give rise to a being.
       </p>
+      <figure class="rightBar">
+        <div id="tumbleRunCanvasContainer"></div>
+        <figcaption>Caption</figcaption>
+      </figure>
       <h3>The 30,000-foot view</h3>
       <p>
         The basic idea is this: <em>E. coli</em> “smells” chemicals it’s
@@ -214,9 +255,6 @@
         isn’t, the <em>E. coli</em> takes a meandering path toward the
         attractant.
       </p>
-      <div class="normalWidthContainer">
-        <div id="tumbleRunCanvasContainer"></div>
-      </div>
       <p>
         A little more detail now: there are half a dozen or so rotors on the
         <em>E. coli’s</em> body, each controlling a long whip-like tail that
