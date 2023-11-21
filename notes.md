@@ -10,6 +10,7 @@
 - When very wide, some assets overlap
 - How does slider sometimes become broken in top left corner?
 - Something is wrong with the default state of the animation where no cheY is being activated by default
+- Better hero image. Looks dead.
 
 # Notes 5/3/23
 

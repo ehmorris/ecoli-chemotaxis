@@ -196,7 +196,7 @@ figure.video169 iframe {
 }
 
 .caption {
-  font-family: "DM Mono", monospace;
+  font-family: monospace;
   font-size: 14px;
   line-height: 1.6em;
   color: #999;
@@ -262,14 +262,20 @@ footer {
   border-top: 4px solid #eeeeee;
   max-width: 720px;
   margin: 64px 48px;
-  font-family: "DM Mono", monospace;
+  font-family: monospace;
   font-size: 16px;
+  color: #777;
+}
+
+footer a {
+  color: inherit;
 }
 
 .footerHeadline {
-  font-family: "DM Mono", monospace;
+  font-family: monospace;
   font-size: 32px;
   margin-top: 52px;
+  color: #222;
 }
 
 @media (max-width: 600px) {
