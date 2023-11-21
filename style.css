@@ -11,6 +11,11 @@ body {
   line-height: 26px;
 }
 
+.bodyContainer {
+  max-width: 1570px;
+  margin: 0 auto;
+}
+
 @media (max-width: 600px) {
   body {
     font-size: 16px;
@@ -44,12 +49,6 @@ h1 {
   margin: 80px 18px 0;
 }
 
-blockquote {
-  margin-left: 1.5em;
-  font-size: 16px;
-  line-height: 24px;
-}
-
 .headlineLarge {
   font-family: "DM Serif Display", serif;
   font-size: 64px;
@@ -74,11 +73,6 @@ blockquote {
 @media (max-width: 600px) {
   h1 {
     margin: 60px 18px 0;
-  }
-
-  blockquote {
-    font-size: 14px;
-    line-height: 19px;
   }
 
   .headlineLarge {
@@ -149,6 +143,19 @@ article img.fullWidth {
   max-width: 100%;
 }
 
+article blockquote {
+  margin-left: 1.5em;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+@media (max-width: 600px) {
+  blockquote {
+    font-size: 14px;
+    line-height: 19px;
+  }
+}
+
 figure {
   margin: 0 0 1em;
 }
@@ -171,7 +178,7 @@ figure .sideBySide img {
 figure.rightBar {
   position: absolute;
   left: 100%;
-  width: calc(100vw - 38em - 48px);
+  width: calc(min(100vw, 1570px) - 720px - 48px);
   padding: 0 48px;
   box-sizing: border-box;
 }
@@ -204,7 +211,7 @@ figure.video169 iframe {
 
 .caption {
   font-family: monospace;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.6em;
   color: #999;
 }
@@ -240,7 +247,7 @@ figure.video169 iframe {
 .fullWidthContainer {
   position: relative;
   margin: 1em auto 0;
-  width: calc(100vw - 96px);
+  width: calc(min(100vw, 1570px) - 96px);
 }
 
 @media (max-width: 600px) {
@@ -256,7 +263,7 @@ figure.video169 iframe {
 
 .sliderAndPip {
   position: relative;
-  width: calc(100vw - 96px);
+  width: calc(min(100vw, 1570px) - 96px);
   height: 64px;
   margin: 8px auto 0;
   margin-bottom: 52px;
