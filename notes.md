@@ -1,3 +1,13 @@
+# Notes 11/21/23
+
+- CheA video was supposed to be just the 6 frames
+  - Focused in on blue central piece connecting to red piece
+- Self assembly video not playing on mobile
+- Drill video going fullscreen on mobile
+- Clarify "step" and "reverse" interaction on diagram
+  - Maybe make the only button "reverse"? and it's always playing
+- Better way to display book caption (also fix line height)
+
 # Notes 5/3/23
 
 - Red line pip should be decaying to the left and so should the black circle (attractant eaten)
