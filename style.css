@@ -143,6 +143,12 @@ article img.fullWidth {
   max-width: 100%;
 }
 
+article sub {
+  vertical-align: unset;
+  position: relative;
+  bottom: -0.2em;
+}
+
 article blockquote {
   margin-left: 1.5em;
   font-size: 16px;
