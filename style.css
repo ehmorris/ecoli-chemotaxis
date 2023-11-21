@@ -11,6 +11,13 @@ body {
   line-height: 26px;
 }
 
+@media (max-width: 600px) {
+  body {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
+
 canvas {
   display: block;
   overflow: hidden;
@@ -30,6 +37,10 @@ h1 {
   line-height: 1.05;
   text-align: center;
   margin: 80px 18px 0;
+}
+
+blockquote {
+  margin-left: 1.5em;
 }
 
 .headline-large {
@@ -53,15 +64,41 @@ h1 {
   margin: 16px 0 80px;
 }
 
+@media (max-width: 600px) {
+  h1 {
+    margin: 60px 18px 0;
+  }
+
+  .headline-large {
+    font-size: 48px;
+  }
+
+  .headline-small {
+    font-size: 32px;
+    margin-top: 8px;
+  }
+
+  .author {
+    font-size: 14px;
+    margin: 16px 0 60px;
+  }
+}
+
 .author a {
   color: inherit;
 }
 
-h3 {
+.article-headline {
   font-size: 48px;
   margin: 1em 0 0.6em;
   line-height: 1.05;
   font-family: "DM Serif Display", serif;
+}
+
+@media (max-width: 600px) {
+  .article-headline {
+    font-size: 32px;
+  }
 }
 
 a {
@@ -126,6 +163,12 @@ figure.video169 iframe {
   font-size: 14px;
   line-height: 1.6em;
   color: #999;
+}
+
+@media (max-width: 600px) {
+  .caption {
+    font-size: 12px;
+  }
 }
 
 .normalWidthContainer {
