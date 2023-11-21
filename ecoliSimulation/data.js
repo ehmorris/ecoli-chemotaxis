@@ -1,4 +1,4 @@
-const width = window.innerWidth - 32;
+const width = window.innerWidth - 96;
 
 export const canvasProperties = {
   width,

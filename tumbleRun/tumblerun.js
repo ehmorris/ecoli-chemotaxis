@@ -8,7 +8,7 @@ import {
 import { animate } from "../ecoliSimulation/animation.js";
 import { make24pxCornerRadiusSquirclePath } from "../makeSquircle.js";
 
-const width = document.querySelector("article").clientWidth;
+const width = document.querySelector("#tumbleRunCanvasContainer").clientWidth;
 const height = width;
 const [CTX, canvasEl] = generateCanvas({
   width,
