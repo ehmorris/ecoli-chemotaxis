@@ -33,6 +33,11 @@ img {
   height: auto;
 }
 
+video {
+  display: block;
+  height: auto;
+}
+
 h1 {
   line-height: 1.05;
   text-align: center;
@@ -43,13 +48,13 @@ blockquote {
   margin-left: 1.5em;
 }
 
-.headline-large {
+.headlineLarge {
   font-family: "DM Serif Display", serif;
   font-size: 64px;
   display: block;
 }
 
-.headline-small {
+.headlineSmall {
   font-family: "DM Sans", sans-serif;
   font-size: 54px;
   margin-top: 12px;
@@ -69,11 +74,11 @@ blockquote {
     margin: 60px 18px 0;
   }
 
-  .headline-large {
+  .headlineLarge {
     font-size: 48px;
   }
 
-  .headline-small {
+  .headlineSmall {
     font-size: 32px;
     margin-top: 8px;
   }
@@ -88,7 +93,7 @@ blockquote {
   color: inherit;
 }
 
-.article-headline {
+.articleHeadline {
   font-size: 48px;
   margin: 1em 0 0.6em;
   line-height: 1.05;
@@ -96,7 +101,7 @@ blockquote {
 }
 
 @media (max-width: 600px) {
-  .article-headline {
+  .articleHeadline {
     font-size: 32px;
   }
 }
@@ -111,7 +116,8 @@ article {
   position: relative;
 }
 
-article img {
+article img,
+article video {
   max-width: 50%;
 }
 
@@ -121,7 +127,8 @@ article img {
     margin-right: 24px;
   }
 
-  article img {
+  article img,
+  article video {
     max-width: 100%;
   }
 }
@@ -131,8 +138,27 @@ article img.inlineWithText {
   height: 1em;
 }
 
+article img.fullWidth {
+  max-width: 100%;
+}
+
 figure {
   margin: 0 0 1em;
+}
+
+figure img,
+figure video {
+  margin-bottom: 14px;
+}
+
+figure .sideBySide {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 1em;
+}
+
+figure .sideBySide img {
+  max-width: 100%;
 }
 
 figure.rightBar {
@@ -240,7 +266,7 @@ footer {
   font-size: 16px;
 }
 
-.footer-headline {
+.footerHeadline {
   font-family: "DM Mono", monospace;
   font-size: 32px;
   margin-top: 52px;
@@ -252,7 +278,7 @@ footer {
     font-size: 12px;
   }
 
-  .footer-headline {
+  .footerHeadline {
     font-size: 24px;
     margin-top: 52px;
   }

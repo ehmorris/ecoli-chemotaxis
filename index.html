@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300&family=DM+Sans:ital,opsz,wght@0,9..40,300;1,9..40,300&family=DM+Serif+Display&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;1,9..40,300&family=DM+Serif+Display&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" type="text/css" href="./style.css" />
@@ -18,9 +18,9 @@
 
   <body>
     <h1>
-      <span class="headline-large"
+      <span class="headlineLarge"
         >The Baffling Intelligence of a Single Cell</span
-      ><span class="headline-small">The Story of E. coli Chemotaxis</span>
+      ><span class="headlineSmall">The Story of E. coli Chemotaxis</span>
     </h1>
     <h2 rel="author" class="author">
       By <a rel="author" href="https://jsomers.net">James Somers</a> and
@@ -76,7 +76,7 @@
         the flagellar motor. And it helps give an intuition for how a bag of
         unthinking chemicals could possibly give rise to a being.
       </p>
-      <h3 class="article-headline">The 30,000-foot view</h3>
+      <h3 class="articleHeadline">The 30,000-foot view</h3>
       <figure class="rightBar">
         <div id="tumbleRunCanvasContainer"></div>
         <figcaption class="caption">Caption</figcaption>
@@ -150,7 +150,7 @@
         the flagellar motors. This feature allows cells to sense minute changes
         in concentration—less than three molecules per cell volume!”
       </p>
-      <h3 class="article-headline">
+      <h3 class="articleHeadline">
         The story gets more complicated: adaptation
       </h3>
       <p>
@@ -220,7 +220,7 @@
         neuron is that the real neuron stores so much “state” in its internal
         chemistry.
       </p>
-      <h3 class="article-headline">
+      <h3 class="articleHeadline">
         The full picture: a complex signaling network
       </h3>
       <figure class="video169">
@@ -277,7 +277,7 @@
         [. . .] A typical mammalian cell makes use of hundreds of distinct types
         of protein kinases at any moment.” [Alberts]
       </p>
-      <h3 class="article-headline">Down the rabbit-hole…</h3>
+      <h3 class="articleHeadline">Down the rabbit-hole…</h3>
       <p>
         One thing I don’t love in presentations of chemotaxis—and of biological
         concepts generally—is that they often prominently feature flowcharts and
@@ -292,7 +292,7 @@
         as a living whole or in their individual physical detail.
       </p>
       <p>When you do that, it’s amazing what you find.</p>
-      <h3 class="article-headline">
+      <h3 class="articleHeadline">
         What does it mean for a receptor to detect attractant?
       </h3>
       <p>
@@ -383,32 +383,23 @@
         and tilting—in such a way to lock the thing that’s supposed to be
         phosphorylating CheY, the CheA kinase, into an inactive state.
       </p>
-      <figure>
-        <p id="dip-box">
-          <img
-            loading="lazy"
-            width="1760"
-            height="1282"
-            src="articleImages/dip/dip-1.png"
-          />
-        </p>
-        <div style="text-align: center">
-          <input id="dip-slider" type="range" min="1" max="8" value="1" />
-        </div>
+      <figure class="rightBar">
+        <video
+          loading="lazy"
+          width="480"
+          height="480"
+          src="articleImages/CheA-conformational-change.mp4"
+          autoplay
+          muted
+          loop
+        ></video>
         <figcaption class="caption">
-          (Adapted from:
+          Adapted from:
           <a href="https://www.youtube.com/watch?v=MCobqYrE67w"
             ><u>CheA conformation change, posted by Keith Cassidy</u></a
-          >)
+          >
         </figcaption>
       </figure>
-      <script>
-        const slider = document.querySelector("#dip-slider");
-        slider.addEventListener("input", (event) => {
-          const imageSrc = `articleImages/dip/dip-${event.target.value}.png`;
-          document.querySelector("#dip-box img").setAttribute("src", imageSrc);
-        });
-      </script>
       <p>
         When I think of a cell I imagine a Rube Goldberg–type contraption where
         an arm swings here, which drops a ball into a slide there, which rolls
@@ -493,7 +484,7 @@
         functions as an ultrasensitive, ultrastable biological integrated
         circuit or sensory chip.” [Falke 2]
       </p>
-      <h3 class="article-headline">How the signal is carried</h3>
+      <h3 class="articleHeadline">How the signal is carried</h3>
       <p>
         So a bit of attractant binds one of the receptors, and lo, the
         equilibrium inside the cell begins to shift. Because the CheA kinase is
@@ -612,7 +603,7 @@
           >
         </figcaption>
       </figure>
-      <h3 class="article-headline">
+      <h3 class="articleHeadline">
         What happens when the signal reaches the motor?
       </h3>
       <p>
@@ -674,7 +665,7 @@
         and in fact is reversed at a regular rate. This means that in the
         absence of further signal the cell will quickly return to baseline.
       </p>
-      <h3 class="article-headline">
+      <h3 class="articleHeadline">
         How does the motor actually change directions?
       </h3>
       <p>
@@ -689,13 +680,23 @@
         from the part that’s anchored solidly in the cell membrane.
       </p>
       <figure>
-        <img
-          loading="lazy"
-          width="449"
-          height="1280"
-          alt=""
-          src="articleImages/image11.jpg"
-        />
+        <div class="sideBySide">
+          <img
+            class="left"
+            loading="lazy"
+            width="438"
+            height="539"
+            alt=""
+            src="articleImages/flagellar-motor-a.png"
+          />
+          <img
+            loading="lazy"
+            width="449"
+            height="699"
+            alt=""
+            src="articleImages/flagellar-motor-b-c.png"
+          />
+        </div>
         <figcaption class="caption">
           Source:
           <a href="https://www.pnas.org/doi/10.1073/pnas.1110111108"
@@ -730,6 +731,7 @@
       </p>
       <figure>
         <img
+          class="fullWidth"
           loading="lazy"
           width="1328"
           height="1068"
@@ -752,6 +754,7 @@
       </p>
       <figure>
         <img
+          class="fullWidth"
           loading="lazy"
           width="1512"
           height="816"
@@ -834,7 +837,7 @@
         go through with it. Perhaps, someday, the process will be democratized
         by better tools, or a multimodal AI system.
       </p>
-      <h3 class="article-headline">
+      <h3 class="articleHeadline">
         How the motor changing directions causes the <em>E. coli</em> to tumble
       </h3>
       <p>
@@ -901,9 +904,7 @@
         ></iframe>
       </figure>
 
-      <h3 class="article-headline">
-        Individuality in the bacterial population
-      </h3>
+      <h3 class="articleHeadline">Individuality in the bacterial population</h3>
       <p>
         We tend to think of a colony of something like <em>E. coli</em> as an
         undifferentiated evil goo, each bacterium identical to its neighbors.
@@ -959,7 +960,7 @@
         E. coli cells, individuality that arises not from differences in gene
         expression but from the dynamics of signaling networks.
       </p>
-      <h3 class="article-headline">How did we figure all this stuff out?</h3>
+      <h3 class="articleHeadline">How did we figure all this stuff out?</h3>
       <p>
         We don’t yet have the technology to just observe all of the activity
         inside a living cell. That Goodsell painting above that shows the
@@ -1105,7 +1106,7 @@
         increase the activities of the adaptational enzymes CheR and CheB at
         least an order of magnitude greater than published values.”
       </p>
-      <h3 class="article-headline">So what?</h3>
+      <h3 class="articleHeadline">So what?</h3>
       <p>
         Why should you care about <em>E. coli</em> chemotaxis? A typical answer
         to that sort of question—and I’m sure the answer given in many of the
@@ -1134,7 +1135,7 @@
       </p>
     </article>
     <footer>
-      <h3 class="footer-headline">Annotated bibliography</h3>
+      <h3 class="footerHeadline">Annotated bibliography</h3>
       <p>
         Bray, Dennis. <em>Wetware: A Computer in Every Living Cell</em>. 2009.
         This is the book that kicked off my interest in E. coli chemotaxis. Bray
