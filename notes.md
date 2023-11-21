@@ -7,6 +7,9 @@
 - Clarify "step" and "reverse" interaction on diagram
   - Maybe make the only button "reverse"? and it's always playing
 - Better way to display book caption (also fix line height)
+- When very wide, some assets overlap
+- How does slider sometimes become broken in top left corner?
+- Something is wrong with the default state of the animation where no cheY is being activated by default
 
 # Notes 5/3/23
 
