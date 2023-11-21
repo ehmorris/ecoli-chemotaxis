@@ -46,6 +46,8 @@ h1 {
 
 blockquote {
   margin-left: 1.5em;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 .headlineLarge {
@@ -72,6 +74,11 @@ blockquote {
 @media (max-width: 600px) {
   h1 {
     margin: 60px 18px 0;
+  }
+
+  blockquote {
+    font-size: 14px;
+    line-height: 19px;
   }
 
   .headlineLarge {
