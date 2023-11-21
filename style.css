@@ -115,6 +115,17 @@ article img {
   max-width: 50%;
 }
 
+@media (max-width: 600px) {
+  article {
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+
+  article img {
+    max-width: 100%;
+  }
+}
+
 article img.inlineWithText {
   display: inline;
   height: 1em;
@@ -183,6 +194,12 @@ figure.video169 iframe {
   width: calc(100vw - 96px);
 }
 
+@media (max-width: 600px) {
+  .fullWidthContainer {
+    width: calc(100vw - 48px);
+  }
+}
+
 .fullWidthContainer canvas {
   background: url("./ecoliSimulation/images/Background.png") #010010;
   background-size: 100% 100%;
@@ -194,6 +211,12 @@ figure.video169 iframe {
   height: 64px;
   margin: 8px auto 0;
   margin-bottom: 52px;
+}
+
+@media (max-width: 600px) {
+  .sliderAndPip {
+    width: calc(100vw - 48px);
+  }
 }
 
 .sliderAndPip canvas {
@@ -217,8 +240,20 @@ footer {
   font-size: 16px;
 }
 
-footer h3 {
+.footer-headline {
   font-family: "DM Mono", monospace;
   font-size: 32px;
   margin-top: 52px;
+}
+
+@media (max-width: 600px) {
+  footer {
+    margin: 64px 24px;
+    font-size: 12px;
+  }
+
+  .footer-headline {
+    font-size: 24px;
+    margin-top: 52px;
+  }
 }

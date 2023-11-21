@@ -33,7 +33,7 @@
     />
     <script type="module">
       import { make24pxCornerRadiusSquirclePath } from "./makeSquircle.js";
-      const width = window.innerWidth - 96;
+      const width = document.querySelector(".fullWidthContainer").clientWidth;
       document.querySelector(
         "#heroImage"
       ).style.clipPath = `path('${make24pxCornerRadiusSquirclePath(
@@ -602,7 +602,7 @@
           width="1626"
           height="660"
           alt=""
-          src="articleImages/image17.png"
+          src="articleImages/electroporated-dye-labelled-CheY.png"
         />
         <figcaption class="caption">
           Source:
@@ -1134,7 +1134,7 @@
       </p>
     </article>
     <footer>
-      <h3 class="article-headline">Annotated bibliography</h3>
+      <h3 class="footer-headline">Annotated bibliography</h3>
       <p>
         Bray, Dennis. <em>Wetware: A Computer in Every Living Cell</em>. 2009.
         This is the book that kicked off my interest in E. coli chemotaxis. Bray

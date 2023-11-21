@@ -1,4 +1,4 @@
-const width = window.innerWidth - 96;
+const width = document.querySelector(".fullWidthContainer").clientWidth;
 
 export const canvasProperties = {
   width,
