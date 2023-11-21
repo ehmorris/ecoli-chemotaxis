@@ -209,6 +209,22 @@ figure.video169 iframe {
   color: #999;
 }
 
+.attribution {
+  font-size: 16px;
+  color: #999;
+}
+
+.attribution a {
+  color: inherit;
+}
+
+@media (max-width: 600px) {
+  .attribution {
+    font-size: 12px;
+    color: #999;
+  }
+}
+
 @media (max-width: 600px) {
   .caption {
     font-size: 12px;
