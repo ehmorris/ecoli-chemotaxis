@@ -13,7 +13,8 @@ export const graphProperties = {
 };
 
 export const attractantSliderProperties = {
-  defaultAmount: 0,
+  minAttractantAmount: 0,
+  defaultAmount: 1,
   maxAttractantAmount: 20,
 };
 

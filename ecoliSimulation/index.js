@@ -165,11 +165,11 @@ function eatAttractant() {
   const newNum = clampNumber(
     transition(
       state.get("numAttractantPerReceptor"),
-      attractantSliderProperties.defaultAmount,
+      attractantSliderProperties.minAttractantAmount,
       progress(sliderLastChanged, sliderLastChanged + 15_000, Date.now()),
       easeInExpo
     ),
-    attractantSliderProperties.defaultAmount,
+    attractantSliderProperties.minAttractantAmount,
     attractantSliderProperties.maxAttractantAmount
   );
 
