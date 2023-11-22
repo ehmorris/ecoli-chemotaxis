@@ -107,6 +107,10 @@ h1 {
   }
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 a {
   color: #0046c9;
 }

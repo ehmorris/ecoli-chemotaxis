@@ -24,23 +24,35 @@ const runColor = "#C2D6FF";
 const tumbleColor = "#C2D6FF";
 const eatingColor = "#C2D6FF";
 const backgroundColor = "#000117";
-let eColiHeading = randomBetween(0, 359);
-let speed = 2;
-let size = 14;
-let eColiPosition = {
-  x: randomBetween(0, width - size),
-  y: randomBetween(0, height - size),
-};
-let isRunning = true;
-let timeSinceLastRunBegan = 0;
-let timeSinceLastTumbleBegan = 0;
-let currentPositionHistory = [];
-let pastPositions = new Array(6).fill([]);
+const speed = 2;
+const size = 14;
+let eColiHeading;
+let eColiPosition;
+let isRunning;
+let timeSinceLastRunBegan;
+let timeSinceLastTumbleBegan;
+let currentPositionHistory;
+let pastPositions;
 
 const attractant = [
   { x: width / 10, y: height / 10, size: width / 2.5 },
   { x: width - width / 3, y: height - height / 3, size: width / 5.5 },
 ];
+
+const reset = () => {
+  eColiHeading = randomBetween(0, 359);
+  eColiPosition = {
+    x: randomBetween(0, width - size),
+    y: randomBetween(0, height - size),
+  };
+  isRunning = true;
+  timeSinceLastRunBegan = 0;
+  timeSinceLastTumbleBegan = 0;
+  currentPositionHistory = [];
+  pastPositions = new Array(6).fill([]);
+};
+
+reset();
 
 const drawAttractant = () => {
   attractant.forEach(({ x, y, size }) => {
@@ -193,3 +205,5 @@ const getNewLocation = (heading, currentSpeed, currentLocation) => {
 
   return [prospectiveNewLocation, _positionWasReset];
 };
+
+canvasEl.addEventListener("click", reset);
