@@ -23,10 +23,22 @@ const ecoliHeight = 274;
 export const ecoliProperties = {
   width: ecoliWidth,
   height: ecoliHeight,
-  boundaryTop: canvasProperties.height / 2 - ecoliHeight / 2,
-  boundaryRight: canvasProperties.width / 2.5 + ecoliWidth / 2,
-  boundaryBottom: canvasProperties.height / 2 + ecoliHeight / 2,
-  boundaryLeft: canvasProperties.width / 2.5 - ecoliWidth / 2,
+  boundaryTop:
+    canvasProperties.width < 730
+      ? canvasProperties.height / 1.2 - ecoliHeight / 2
+      : canvasProperties.height / 2 - ecoliHeight / 2,
+  boundaryRight:
+    canvasProperties.width < 730
+      ? canvasProperties.width / 1.2 + ecoliWidth / 2
+      : canvasProperties.width / 2.5 + ecoliWidth / 2,
+  boundaryBottom:
+    canvasProperties.width < 730
+      ? canvasProperties.height / 1.2 + ecoliHeight / 2
+      : canvasProperties.height / 2 + ecoliHeight / 2,
+  boundaryLeft:
+    canvasProperties.width < 730
+      ? canvasProperties.width / 1.2 - ecoliWidth / 2
+      : canvasProperties.width / 2.5 - ecoliWidth / 2,
   numMotor: 4,
   numReceptor: 8,
   numCheY: 200,
