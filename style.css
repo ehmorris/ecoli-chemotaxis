@@ -128,8 +128,7 @@ article {
     margin-right: 24px;
   }
 
-  & img,
-  & video {
+  & :is(img, video) {
     max-width: 50%;
 
     @media (max-width: 600px) {
@@ -167,19 +166,8 @@ article {
 figure {
   margin: 0 0 1em;
 
-  & img,
-  & video {
+  & :is(img, video) {
     margin-bottom: 14px;
-  }
-
-  .sideBySide {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-gap: 1em;
-
-    & img {
-      max-width: 100%;
-    }
   }
 
   &.video169 {
@@ -192,17 +180,27 @@ figure {
     }
   }
 
-  .rightBar {
+  &.rightBar {
     position: absolute;
     left: 100%;
     width: calc(min(100vw, 1570px) - 720px - 48px);
     padding: 0 48px;
     box-sizing: border-box;
 
-    @media only screen and (max-width: 1190px) {
+    @media (max-width: 1190px) {
       position: static;
       width: auto;
       padding: 0;
+    }
+  }
+
+  .sideBySide {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 1em;
+
+    & img {
+      max-width: 100%;
     }
   }
 }
