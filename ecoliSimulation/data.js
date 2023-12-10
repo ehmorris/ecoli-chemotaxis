@@ -25,19 +25,19 @@ export const ecoliProperties = {
   height: ecoliHeight,
   boundaryTop:
     canvasProperties.width < 730
-      ? canvasProperties.height / 1.2 - ecoliHeight / 2
+      ? canvasProperties.height / 0.98 - ecoliHeight / 2
       : canvasProperties.height / 2 - ecoliHeight / 2,
   boundaryRight:
     canvasProperties.width < 730
-      ? canvasProperties.width / 1.2 + ecoliWidth / 2
+      ? canvasProperties.width / 0.98 + ecoliWidth / 2
       : canvasProperties.width / 2.5 + ecoliWidth / 2,
   boundaryBottom:
     canvasProperties.width < 730
-      ? canvasProperties.height / 1.2 + ecoliHeight / 2
+      ? canvasProperties.height / 0.98 + ecoliHeight / 2
       : canvasProperties.height / 2 + ecoliHeight / 2,
   boundaryLeft:
     canvasProperties.width < 730
-      ? canvasProperties.width / 1.2 - ecoliWidth / 2
+      ? canvasProperties.width / 0.98 - ecoliWidth / 2
       : canvasProperties.width / 2.5 - ecoliWidth / 2,
   numMotor: 4,
   numReceptor: 8,
