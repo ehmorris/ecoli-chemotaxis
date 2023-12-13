@@ -64,6 +64,10 @@ h1 {
   }
 }
 
+p {
+  text-wrap: pretty;
+}
+
 .headlineLarge {
   font-family: "DM Serif Display", serif;
   font-size: 64px;
