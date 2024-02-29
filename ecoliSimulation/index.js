@@ -134,7 +134,7 @@ animate((millisecondsElapsed, resetElapsedTime) => {
   eatAttractant();
 
   // Toggle flagella animation based on majority motor state
-  if (state.get("activeMotorCount") > ecoliProperties.numMotor - 1) {
+  if (state.get("activeMotorCount") > 0) {
     flagella.tumble();
     backgroundFlagella.tumble();
   } else {
