@@ -2,7 +2,10 @@ import { drawEcoli } from "./chemotaxisEntities/ecoli.js";
 import { makeCheY } from "./chemotaxisEntities/chey.js";
 import { makeMotor } from "./chemotaxisEntities/motor.js";
 import { makeReceptor } from "./chemotaxisEntities/receptor.js";
-import { makeFlagella } from "./chemotaxisEntities/flagella.js";
+import {
+  makeFlagella,
+  makeBackgroundFlagella,
+} from "./chemotaxisEntities/flagella.js";
 import {
   generateCanvas,
   getEntityIntersection,
@@ -43,6 +46,7 @@ const receptors = generateArrayOfX(ecoliProperties.numReceptor, () =>
 const motors = generateArrayOfX(ecoliProperties.numMotor, () => makeMotor(CTX));
 const chey = generateArrayOfX(ecoliProperties.numCheY, () => makeCheY(CTX));
 const flagella = makeFlagella(CTX);
+const backgroundFlagella = makeBackgroundFlagella(CTX);
 
 animate((millisecondsElapsed, resetElapsedTime) => {
   CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
@@ -130,9 +134,13 @@ animate((millisecondsElapsed, resetElapsedTime) => {
   eatAttractant();
 
   // Toggle flagella animation based on majority motor state
-  state.get("activeMotorCount") > ecoliProperties.numMotor - 1
-    ? flagella.tumble()
-    : flagella.run();
+  if (state.get("activeMotorCount") > ecoliProperties.numMotor - 1) {
+    flagella.tumble();
+    backgroundFlagella.tumble();
+  } else {
+    flagella.run();
+    backgroundFlagella.run();
+  }
 
   CTX.save();
   CTX.scale(
@@ -140,8 +148,9 @@ animate((millisecondsElapsed, resetElapsedTime) => {
     canvasProperties.illustrationScale
   );
 
-  flagella.draw(millisecondsElapsed, resetElapsedTime);
+  backgroundFlagella.draw(millisecondsElapsed, resetElapsedTime);
   drawEcoli(CTX);
+  flagella.draw(millisecondsElapsed, resetElapsedTime);
   receptors.forEach((r) => r.draw());
   motors.forEach((m) => m.draw());
   chey.forEach((c) => c.draw());
