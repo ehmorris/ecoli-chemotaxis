@@ -74,36 +74,36 @@ export const receptorProperties = {
   boundaryLeft: ecoliProperties.boundaryLeft - receptorSize / 2,
   positions: [
     {
-      x: ecoliProperties.boundaryLeft + 90,
-      y: ecoliProperties.boundaryTop + 82,
+      x: ecoliProperties.boundaryLeft + 16,
+      y: ecoliProperties.boundaryTop + 84,
     },
     {
-      x: ecoliProperties.boundaryLeft + 40,
-      y: ecoliProperties.boundaryTop + 100,
+      x: ecoliProperties.boundaryLeft + 16,
+      y: ecoliProperties.boundaryTop + 116,
     },
     {
-      x: ecoliProperties.boundaryLeft + 150,
+      x: ecoliProperties.boundaryLeft + 62,
       y: ecoliProperties.boundaryTop + 20,
     },
     {
-      x: ecoliProperties.boundaryLeft + 90,
+      x: ecoliProperties.boundaryLeft + 26,
       y: ecoliProperties.boundaryTop + 40,
     },
     {
-      x: ecoliProperties.boundaryLeft + 40,
+      x: ecoliProperties.boundaryLeft + 24,
       y: ecoliProperties.boundaryTop + 140,
     },
     {
-      x: ecoliProperties.boundaryLeft + 90,
+      x: ecoliProperties.boundaryLeft + 52,
       y: ecoliProperties.boundaryTop + 170,
     },
     {
-      x: ecoliProperties.boundaryLeft + 30,
+      x: ecoliProperties.boundaryLeft + 20,
       y: ecoliProperties.boundaryTop + 62,
     },
     {
-      x: ecoliProperties.boundaryLeft + 50,
-      y: ecoliProperties.boundaryTop + 40,
+      x: ecoliProperties.boundaryLeft + 100,
+      y: ecoliProperties.boundaryTop + 10,
     },
   ],
 };
