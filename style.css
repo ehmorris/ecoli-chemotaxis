@@ -296,6 +296,35 @@ figcaption {
   }
 }
 
+.blueButton {
+  width: 83px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background-image: url("./stepReverse/default.png");
+  background-size: 100%;
+  user-select: none;
+  font-size: 14px;
+  cursor: pointer;
+
+  &:hover {
+    filter: contrast(120%);
+  }
+
+  &:active {
+    background-image: url("./stepReverse/inset.png");
+    filter: contrast(100%);
+  }
+}
+
+.sideBySideControls {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
 footer {
   border-top: 4px solid #eeeeee;
   max-width: 720px;

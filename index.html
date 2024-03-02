@@ -233,10 +233,11 @@
           chemistry.
         </p>
         <p>
-          (Here‘s an aside: should we be surprised at how resilient people can be, 
-          given the mechanisms available to a single cell for accepting previously
-          extreme conditions as “a new normal”? No doubt our macro resilience is in 
-          some cases actually underwritten by similar cellular mechanisms.)
+          (Here‘s an aside: should we be surprised at how resilient people can
+          be, given the mechanisms available to a single cell for accepting
+          previously extreme conditions as “a new normal”? No doubt our macro
+          resilience is in some cases actually underwritten by similar cellular
+          mechanisms.)
         </p>
         <h3 class="articleHeadline">
           The full picture: a complex signaling network
@@ -828,58 +829,19 @@
           “Reverse” to flip the orientation of the FliGc proteins; Step again
           and you’ll see it run in the opposite direction.
         </p>
-        <div style="text-align: center">
-          <input id="reverse" type="button" value="Reverse" />
-          <input id="step" type="button" value="Step" />
-
-          <div id="box">
+        <div>
+          <div>
             <img
-              style="
-                width: 300px;
-                margin: 0 auto;
-                margin-top: 20px;
-                height: 300px;
-              "
+              id="stepReverse-image"
+              style="width: 300px; height: 300px; margin: 0 auto"
               src="./articleImages/rotor/rotor-0.png"
             />
           </div>
+          <div class="sideBySideControls" style="margin: 16px 0 0">
+            <div id="stepReverse-reverse" class="blueButton">Reverse</div>
+            <div id="stepReverse-step" class="blueButton">Step</div>
+          </div>
         </div>
-        <script>
-          let reversed = false;
-          let index = 0;
-
-          const nextFrame = () => {
-            const imageSrc = `./articleImages/rotor/${
-              reversed ? "reversed/" : ""
-            }rotor-${index}.png`;
-            document.querySelector("#box img").setAttribute("src", imageSrc);
-          };
-
-          const flipFrame = () => {
-            console.log("flip", "index", index);
-            const imageSrc = `./articleImages/rotor/${
-              reversed ? "reversed/" : ""
-            }rotor-${index}.png`;
-            document.querySelector("#box img").setAttribute("src", imageSrc);
-          };
-
-          document.querySelector("#step").addEventListener("click", () => {
-            if (reversed) {
-              index -= 1;
-              if (index < 0) index = 33;
-            } else {
-              index += 1;
-              if (index > 33) index = 0;
-            }
-
-            nextFrame();
-          });
-
-          document.querySelector("#reverse").addEventListener("click", () => {
-            reversed = !reversed;
-            flipFrame();
-          });
-        </script>
         <p>
           It would be nice if the original paper presenting this theory included
           an illustration like this. But even this crude version took me many
@@ -1489,5 +1451,6 @@
     </div>
     <script type="module" src="ecoliSimulation/index.js"></script>
     <script type="module" src="tumbleRun/tumblerun.js"></script>
+    <script type="module" src="stepReverse/stepReverse.js"></script>
   </body>
 </html>
