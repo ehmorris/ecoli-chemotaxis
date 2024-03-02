@@ -41,7 +41,7 @@ export const ecoliProperties = {
       : canvasProperties.width / 2.5 - ecoliWidth / 2,
   numMotor: 4,
   numReceptor: 8,
-  numCheY: 200,
+  numCheY: 150,
   boundaryPath:
     "M305.5 34.9995C208 4.71556 30.4998 -38.5 3.49985 69.9996C-18.9549 160.234 80.5 214.5 192.5 244.5C373.814 293.066 489.717 281.19 505 214.5C527 118.5 415.5 69.166 305.5 34.9995Z",
 };
@@ -56,9 +56,9 @@ export const cheYProperties = {
   movementJitter: 40,
   speedMin: 1,
   speedMax: 4,
-  receptorStickDuration: 40,
-  motorStickDuration: 400,
-  maxPhosphorylatedDuration: 8_000,
+  receptorStickDuration: 80,
+  motorStickDuration: 200,
+  maxPhosphorylatedDuration: 6_000,
   shapePath:
     "m8.8248 6.17225c0 .62539-.02729.83998-.27251 1.38756-.35155.78504-.62273.72377-.901 1.11465-.52174.36734-.85301.87696-1.50555 1.05263-.49354.13286-.75763.27291-1.29989.27291-.66208 0-1.08113-.20217-1.66686-.39694-.5283-.17567-1.23231-1.14896-1.66686-1.45492-.733221-.51624-.989024-.47315-1.340578-1.25818-.2452152-.54758-.155553-.66648-.155553-1.29187 0-.75543.339213-1.13504.689588-1.77034.224392-.40686.467443-1.34286.806543-1.67464.44074-.43122.32356-.94658.91408-1.211819.72729-.326667 2.19455-.94128808 3.06488-.94128808.97938 0 1.14482.75931608 1.9357 1.16641708.55011.28317 1.46876.55488 1.87338.98669.54745.58425.51118 1.5735.69634 2.3445.07779.32399-1.17171 1.32999-1.17171 1.67464z",
 };
@@ -113,7 +113,7 @@ export const motorProperties = {
   defaultColor: "#496380",
   tumbleColor: "#C2D6FF",
   defaultSize: motorSize,
-  cheYRequiredToTumble: 2,
+  cheYRequiredToTumble: 3,
   boundaryTop: ecoliProperties.boundaryTop,
   boundaryRight: ecoliProperties.boundaryRight - motorSize / 2,
   boundaryBottom: ecoliProperties.boundaryBottom - motorSize,
