@@ -80,12 +80,12 @@ p {
 
 .headlineSmall {
   font-family: "DM Sans", sans-serif;
-  font-size: 54px;
+  font-size: 40px;
   margin-top: 12px;
   display: block;
 
   @media (max-width: 600px) {
-    font-size: 32px;
+    font-size: 23px;
     margin-top: 8px;
   }
 }
