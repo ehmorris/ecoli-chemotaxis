@@ -67,12 +67,20 @@ export const transitionPath = (pathStart, pathEnd, progress, easingFunc) => {
 
 export const animate = (drawFunc) => {
   let startTime = Date.now();
+  let currentFrameTime = Date.now();
+  let previousTimestamp = false;
   const getTimeElapsed = () => Date.now() - startTime;
   const resetStartTime = () => (startTime = Date.now());
 
   const drawFuncContainer = (timestamp) => {
-    drawFunc(getTimeElapsed, resetStartTime, timestamp);
+    currentFrameTime = Date.now();
+    const deltaTime = previousTimestamp
+      ? timestamp - previousTimestamp
+      : performance.now() - timestamp;
+
+    drawFunc(getTimeElapsed, resetStartTime, timestamp, deltaTime);
     window.requestAnimationFrame(drawFuncContainer);
+    previousTimestamp = timestamp;
   };
 
   window.requestAnimationFrame(drawFuncContainer);

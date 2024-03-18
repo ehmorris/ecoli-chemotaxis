@@ -48,7 +48,7 @@ const chey = generateArrayOfX(ecoliProperties.numCheY, () => makeCheY(CTX));
 const flagella = makeFlagella(CTX);
 const backgroundFlagella = makeBackgroundFlagella(CTX);
 
-animate((millisecondsElapsed, resetElapsedTime) => {
+animate((millisecondsElapsed, resetElapsedTime, _, deltaTime) => {
   CTX.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 
   // Find all intersecting entities
@@ -153,7 +153,7 @@ animate((millisecondsElapsed, resetElapsedTime) => {
   flagella.draw(millisecondsElapsed, resetElapsedTime);
   receptors.forEach((r) => r.draw());
   motors.forEach((m) => m.draw());
-  chey.forEach((c) => c.draw());
+  chey.forEach((c) => c.draw(deltaTime));
 
   CTX.restore();
 });

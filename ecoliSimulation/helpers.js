@@ -104,8 +104,17 @@ export const getEntityIntersection = (entityArr1, entityArr2, scale) =>
     )
   );
 
-export const nextPositionAlongHeading = (position, speed, headingInDeg) => ({
-  x: position.x + speed * Math.cos(headingInDeg * (Math.PI / 180)),
-  y: position.y + speed * Math.sin(headingInDeg * (Math.PI / 180)),
+export const nextPositionAlongHeading = (
+  position,
+  speed,
+  headingInDeg,
+  deltaTimeMultiplier = 1
+) => ({
+  x:
+    position.x +
+    deltaTimeMultiplier * (speed * Math.cos(headingInDeg * (Math.PI / 180))),
+  y:
+    position.y +
+    deltaTimeMultiplier * (speed * Math.sin(headingInDeg * (Math.PI / 180))),
   heading: headingInDeg,
 });

@@ -62,7 +62,9 @@ export const makeCheY = (CTX) => {
     speed = randomBetween(cheYProperties.speedMin, cheYProperties.speedMax);
   };
 
-  const draw = () => {
+  const draw = (deltaTime) => {
+    const deltaTimeMultiplier = deltaTime / canvasProperties.interval;
+
     getNewRandomLocationInBoundary(
       CTX,
       heading,
@@ -71,7 +73,8 @@ export const makeCheY = (CTX) => {
       props.get("size"),
       containerPath,
       ecoliProperties.boundaryLeft,
-      ecoliProperties.boundaryTop
+      ecoliProperties.boundaryTop,
+      deltaTimeMultiplier
     ).then((nextPosition) => {
       const shapeCenter = {
         x: nextPosition.x + props.get("size") / 2,
@@ -116,10 +119,10 @@ export const makeCheY = (CTX) => {
         // Only change these props when unstuck
         props.set("position", { x: nextPosition.x, y: nextPosition.y });
         heading = nextPosition.heading;
-        rotation += 2;
+        rotation += deltaTimeMultiplier * 2;
       }
 
-      age += 1;
+      age += deltaTimeMultiplier * 1;
     });
   };
 
@@ -135,7 +138,8 @@ const getNewRandomLocationInBoundary = (
   currentSize,
   boundaryPath,
   boundaryPathXOffset,
-  boundaryPathYOffset
+  boundaryPathYOffset,
+  deltaTimeMultiplier
 ) => {
   // Add jitter to movement
   const headingWithJitter = heading + randomBetween(-20, 20);
@@ -145,7 +149,8 @@ const getNewRandomLocationInBoundary = (
     const prospectiveNewLocation = nextPositionAlongHeading(
       currentLocation,
       currentSpeed,
-      headingWithJitter
+      headingWithJitter,
+      deltaTimeMultiplier
     );
 
     if (
