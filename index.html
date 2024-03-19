@@ -36,6 +36,16 @@
         By <a rel="author" href="https://jsomers.net">James Somers</a> and
         <a rel="author" href="https://ehmorris.com">Edwin Morris</a>
       </h2>
+      <script type="module">
+        import { make24pxCornerRadiusSquirclePath } from "./makeSquircle.js";
+        const width = document.querySelector(".fullWidthContainer").clientWidth;
+        document.querySelector(
+          "#heroImage"
+        ).style.clipPath = `path('${make24pxCornerRadiusSquirclePath(
+          width,
+          width * 0.3902
+        )}')`;
+      </script>
       <article>
         <p>
           I want to tell the story of a beautiful phenomenon in biology. In some
