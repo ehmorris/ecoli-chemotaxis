@@ -107,13 +107,13 @@ p {
   margin: 0;
   font-size: 19px;
   text-align: center;
-  margin: 16px 0 80px;
+  margin: 16px 0 40px;
 }
 
 @media (max-width: 600px) {
   .author {
     font-size: 16px;
-    margin: 16px 0 60px;
+    margin: 16px 0 30px;
   }
 }
 

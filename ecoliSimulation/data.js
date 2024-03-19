@@ -4,7 +4,7 @@ export const canvasProperties = {
   width,
   height: Math.min(Math.max(width * 0.4, 400), width),
   illustrationScale: Math.min(width / 1000, 1),
-  interval: Math.floor(1000 / 120),
+  interval: Math.floor(500 / 120),
 };
 
 export const graphProperties = {
