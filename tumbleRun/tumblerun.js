@@ -7,18 +7,23 @@ import {
 } from "../ecoliSimulation/helpers.js";
 import { animate } from "../ecoliSimulation/animation.js";
 import { make24pxCornerRadiusSquirclePath } from "../makeSquircle.js";
+import { rightBarContainerWidth } from "../ecoliSimulation/data.js";
 
-const width = document.querySelector("#tumbleRunCanvasContainer").clientWidth;
+const width = rightBarContainerWidth;
 const height = width;
 const [CTX, canvasEl] = generateCanvas({
   width,
   height,
   attachNode: "#tumbleRunCanvasContainer",
 });
-canvasEl.style.clipPath = `path('${make24pxCornerRadiusSquirclePath(
-  width,
-  height
-)}')`;
+const cornerRadiusPathTumble = make24pxCornerRadiusSquirclePath(width, height);
+
+// canvasEl.setAttribute(
+//   "style",
+//   `clip-path: path('${cornerRadiusPathTumble}'); -webkit-clip-path: path('${cornerRadiusPathTumble}');`
+// );
+
+canvasEl.style.clipPath = `path('${cornerRadiusPathTumble}')`;
 
 const runColor = "#C2D6FF";
 const tumbleColor = "#C2D6FF";

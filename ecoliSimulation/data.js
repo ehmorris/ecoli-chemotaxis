@@ -1,9 +1,18 @@
-const width = document.querySelector(".fullWidthContainer").clientWidth;
+const innerWidth = window.innerWidth;
+const fullWidthContainerWidth =
+  innerWidth < 600 ? innerWidth - 48 : Math.min(innerWidth, 1570) - 96;
+export const rightBarContainerWidth =
+  innerWidth < 1190
+    ? fullWidthContainerWidth
+    : Math.min(innerWidth, 1570) - 720 - 48 - 48 - 48;
 
 export const canvasProperties = {
-  width,
-  height: Math.min(Math.max(width * 0.4, 400), width),
-  illustrationScale: Math.min(width / 1000, 1),
+  width: fullWidthContainerWidth,
+  height: Math.min(
+    Math.max(fullWidthContainerWidth * 0.4, 400),
+    fullWidthContainerWidth
+  ),
+  illustrationScale: Math.min(fullWidthContainerWidth / 1000, 1),
   interval: Math.floor(1000 / 80),
 };
 

@@ -31,10 +31,17 @@ const [CTX, heroCanvasElement] = generateCanvas({
   attachNode: "#heroCanvasContainer",
 });
 
-heroCanvasElement.style.clipPath = `path('${make24pxCornerRadiusSquirclePath(
+const cornerRadiusPath = make24pxCornerRadiusSquirclePath(
   canvasProperties.width,
   canvasProperties.height
-)}')`;
+);
+
+// heroCanvasElement.setAttribute(
+//   "style",
+//   `clip-path: path('${cornerRadiusPath}'); -webkit-clip-path: path('${cornerRadiusPath}');`
+// );
+
+heroCanvasElement.style.clipPath = `path('${cornerRadiusPath}')`;
 
 const state = new Map()
   .set("numAttractantPerReceptor", attractantSliderProperties.defaultAmount)

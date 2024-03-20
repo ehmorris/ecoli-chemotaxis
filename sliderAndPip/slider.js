@@ -1,9 +1,7 @@
 import { animate, progress, transition } from "../ecoliSimulation/animation.js";
 import { generateCanvas, clampNumber } from "../ecoliSimulation/helpers.js";
 import { make24pxCornerRadiusSquirclePath } from "../makeSquircle.js";
-
-// TODO:
-// * Move common files like helpers and animation to top level
+import { canvasProperties } from "../ecoliSimulation/data.js";
 
 const cursorImage = new Image();
 cursorImage.src = "./sliderAndPip/images/Cursor.png";
@@ -13,9 +11,9 @@ meterImage.src = "./sliderAndPip/images/Meter.png";
 
 export const makeSlider = ({ max, min, attachNode, onInput }) => {
   const attachNodeElement = document.querySelector(attachNode);
-  const width = attachNodeElement.clientWidth;
+  const width = canvasProperties.width;
   const leftViewportOffset = attachNodeElement.getBoundingClientRect().left;
-  const height = attachNodeElement.clientHeight;
+  const height = 64;
   const rootElement = document.documentElement;
   let controlPositionInPixels =
     clampNumber(progress(min, max, 0), 0, 100) / width;
