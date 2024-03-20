@@ -13,7 +13,7 @@ export const canvasProperties = {
     fullWidthContainerWidth
   ),
   illustrationScale: Math.min(fullWidthContainerWidth / 1000, 1),
-  interval: Math.floor(1000 / 60),
+  interval: Math.floor(1000 / 60 / illustrationScale),
 };
 
 export const graphProperties = {
