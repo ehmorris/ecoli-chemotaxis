@@ -5,6 +5,7 @@ export const rightBarContainerWidth =
   innerWidth < 1190
     ? fullWidthContainerWidth
     : Math.min(innerWidth, 1570) - 720 - 48 - 48 - 48;
+const illustrationScale = Math.min(fullWidthContainerWidth / 1000, 1);
 
 export const canvasProperties = {
   width: fullWidthContainerWidth,
@@ -12,7 +13,7 @@ export const canvasProperties = {
     Math.max(fullWidthContainerWidth * 0.4, 400),
     fullWidthContainerWidth
   ),
-  illustrationScale: Math.min(fullWidthContainerWidth / 1000, 1),
+  illustrationScale,
   interval: Math.floor(1000 / 60 / illustrationScale),
 };
 
