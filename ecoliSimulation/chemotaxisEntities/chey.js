@@ -174,7 +174,8 @@ const getNewRandomLocationInBoundary = (
           currentSize,
           boundaryPath,
           boundaryPathXOffset,
-          boundaryPathYOffset
+          boundaryPathYOffset,
+          deltaTimeMultiplier
         )
       );
     } else {
