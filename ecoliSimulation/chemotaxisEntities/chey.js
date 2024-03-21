@@ -105,14 +105,14 @@ export const makeCheY = (CTX) => {
       CTX.restore();
 
       if (props.get("isStuck") && stuckTo.props.get("type") === "motor") {
-        if (age > stuckAt + cheYProperties.motorStickDuration) {
+        if (age > stuckAt + cheYProperties.motorStickDuration * canvasProperties.illustrationScale) {
           unstick();
         }
       } else if (
         props.get("isStuck") &&
         stuckTo.props.get("type") === "receptor"
       ) {
-        if (age > stuckAt + cheYProperties.receptorStickDuration) {
+        if (age > stuckAt + cheYProperties.receptorStickDuration * canvasProperties.illustrationScale) {
           unstick();
         }
       } else {
