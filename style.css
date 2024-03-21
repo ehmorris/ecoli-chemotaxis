@@ -152,7 +152,7 @@ article {
 }
 
 article img, article video {
-  max-width: 50%;
+  max-width: 100%;
 }
 
 @media (max-width: 600px) {
@@ -197,17 +197,17 @@ figure img, figure video {
   margin-bottom: 14px;
 }
 
-.figure.video169 {
+figure.video169 {
   aspect-ratio: 16 / 9;
   width: 100%;
 }
 
-.figure.video169 iframe {
+figure.video169 iframe {
   width: 100%;
   height: 100%;
 }
 
-.figure.rightBar {
+figure.rightBar {
   position: absolute;
   left: 100%;
   width: calc(min(100vw, 1570px) - 720px - 48px);
@@ -216,20 +216,20 @@ figure img, figure video {
 }
 
 @media (max-width: 1190px) {
-  .figure.rightBar {
+  figure.rightBar {
     position: static;
     width: auto;
     padding: 0;
   }
 }
 
-.figure .sideBySide {
+figure .sideBySide {
   display: grid;
   grid-template-columns: auto auto;
   grid-gap: 1em;
 }
 
-.figure .sideBySide img {
+figure .sideBySide img {
   max-width: 100%;
 }
 
