@@ -30,6 +30,13 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" type="text/css" href="./style.css" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:image" content="articleImages/hero.jpg">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="articleImages/hero.jpg">
   </head>
 
   <body>
@@ -43,30 +50,6 @@
         By <a rel="author" href="https://jsomers.net">James Somers</a> and
         <a rel="author" href="https://ehmorris.com">Edwin Morris</a>
       </h2>
-      <img
-        class="fullWidthContainer"
-        id="heroImage"
-        src="articleImages/hero.jpg"
-      />
-      <script type="module">
-        import { make24pxCornerRadiusSquirclePath } from "./makeSquircle.js";
-        import { canvasProperties } from "./ecoliSimulation/data.js";
-
-        const width = canvasProperties.width;
-        const cornerRadiusPathHero = make24pxCornerRadiusSquirclePath(
-          width,
-          width * 0.3902
-        );
-        // document
-        //   .querySelector("#heroImage")
-        //   .setAttribute(
-        //     "style",
-        //     `clip-path: path('${cornerRadiusPathHero}'); -webkit-clip-path: path('${cornerRadiusPathHero}');`
-        //   );
-        document.querySelector(
-          "#heroImage"
-        ).style.clipPath = `path('${cornerRadiusPathHero}')`;
-      </script>
       <article>
         <p>
           I want to tell the story of a beautiful phenomenon in biology. In some
